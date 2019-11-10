@@ -4,7 +4,9 @@
   "description": "A scripting language.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": "Shafil Alam",
   "dependencies": {
@@ -14,9 +16,11 @@
     "grapesjs-preset-webpage": "^0.1.11",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
-    "toastr": "^2.1.4"
+    "toastr": "^2.1.4",
+    "snyk": "^1.244.0"
   },
   "devDependencies": {
     "electron-packager": "^14.1.0"
-  }
+  },
+  "snyk": true
 }
