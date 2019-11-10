@@ -1,6 +1,7 @@
 ![](https://github.com/alamshafil/simple/blob/master/logo-full-black.png)
 
 [![](https://david-dm.org/alamshafil/simple.svg)](https://david-dm.org/alamshafil/simple)
+[![](https://snyk.io/test/github/alamshafil/simple/badge.svg)](https://snyk.io/test/github/alamshafil/simple)
 
 A scripting language designed to be robust and easy.
 
@@ -44,7 +45,6 @@ For example I want to compile a 64-bit `.exe` for Windows, I would type:
 ```
 electron-packager . Simple —-platform=win32 —-arch=x64
 ```
-
 
 
 
