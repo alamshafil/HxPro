@@ -71,9 +71,9 @@
     </div>
 
     <div class="content">
-      <div class="left">
-          <div style="float: right; margin: auto; padding-right: 10px; color: white; padding: 8px;">
-              close
+      <div id="win-left" class="left">
+          <div id="collapse" style="float: right; margin: auto; padding-right: 10px; color: white; padding: 2px;">
+            <button class="btn btn-dark" onclick="collapse()"><i class="fa fa-angle-right"></i></button>
           </div>
           <ul left-tabs id="left-tab">
               <li><a style="color:white" data-tabby-default href="#code" href="#code"><i class="fa fa-code" aria-hidden="true"></i>
@@ -90,7 +90,7 @@
             <div id="model"><div class="left" id="inner-model">What you find a error</div></div>
       </div>
             
-        <div class="right">
+        <div id="win-right" class="right">
           <div id="main">  
               <ul right-tabs id="right-tab">
                   <li><a style="color:white" data-tabby-default href="#output"><i class="fa fa-terminal" aria-hidden="true"></i>

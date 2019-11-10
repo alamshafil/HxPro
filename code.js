@@ -227,3 +227,18 @@ window.onload = (function() {
 function string(e){
   return `"${e}"`
 }
+
+function collapse() {
+  $('#win-right').css('display', 'none');
+  $('#win-left').removeClass('left');
+  $('#editor').removeClass('left');
+  document.getElementById('collapse').innerHTML = '<button class="btn btn-dark" onclick="un_collapse()"><i class="fa fa-angle-left"></i></button>';
+
+}
+
+function un_collapse() {
+  $('#win-left').addClass('left');
+  $('#editor').addClass('left');
+  $('#win-right').css('display', 'block');
+  document.getElementById('collapse').innerHTML = '<button class="btn btn-dark" onclick="collapse()"><i class="fa fa-angle-right"></i></button>';
+}
