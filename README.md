@@ -24,7 +24,6 @@ I would type the following in the terminal:
 ```
 cd C:\Users\Admin\Desktop\simple
 ```
-*Note: This command should work on Windows, Linux, and MacOS.*
 
 Once you have performed the command, type:
 ```
