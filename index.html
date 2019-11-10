@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Simple</title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="theme.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/fontawesome.min.css" integrity="sha256-/sdxenK1NDowSNuphgwjv8wSosSNZB0t5koXqd7XqOI=" crossorigin="anonymous" />
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+
+        <link rel="stylesheet" href="https://unpkg.com/grapesjs/dist/css/grapes.min.css">
+
+        <link rel="stylesheet" href="node_modules/grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css">
+
+    </head>
+
+    <body> 
+
+      <div class="se-pre-con"></div>
+
+        <div id="titlebar">
+            <div id="drag-region">
+              <div id="window-title">
+                <div id="window-inner">
+                  <a class="navbar-brand" href="#">
+                      <img src="logo.png" width="31" height="31" class="d-inline-block align-top" alt="">
+                      <span>Simple</span>
+                    </a>
+                      <button class="btn btn-dark" onclick="initFS()"><i class="fa fa-plus-square"></i></i> New</button>
+                      <button class="btn btn-dark" onclick="saveProject()"><i class="fa fa-save"></i> Save</button>
+                      <button class="btn btn-dark" onclick="openProject()"><i class="fa fa-folder-open"></i></i> Open</button>
+                      <button id="run-btn" class="btn btn-dark" onclick="run(editor.getValue(), ui.getHtml(), ui.getCss(), ui.getJs())"><i class="fa fa-wrench"></i> Run</button>
+                      <button class="btn btn-dark" onclick="compile(editor.getValue(), getData())"><i class="fa fa-cogs"></i> Compile</button>
+                </div>
+              </div>
+              
+              <div id="window-controls">
+                <div class="button" id="min-button">
+                  <span>&#xE921;</span>
+                </div>
+                <div class="button" id="max-button">
+                  <span>&#xE922;</span>
+                </div>
+                <div class="button" id="restore-button">
+                  <span>&#xE923;</span>
+                </div>
+                <div class="button" id="close-button">
+                  <span>&#xE8BB;</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+    <div class="pre" style="background-color: #343a40; text-align:center; padding: 70px 0; background: url('intro.png'); background-size: cover;">
+      <div class="card" style="background-color: rgb(59, 59, 59); color: white;">
+        <div class="container">
+          <img width="250" height="95" src="logo-full-white.png"></img>
+          <br>
+          <button style="background-color: rgb(59, 59, 59);" class="btn btn-dark" onclick="initFS()"><i class="fa fa-plus-square"></i></i> New</button>
+          <button style="background-color: rgb(59, 59, 59);" class="btn btn-dark" onclick="openProject()"><i class="fa fa-folder-open"></i></i> Open</button>
+          <button style="background-color: rgb(59, 59, 59);" class="btn btn-dark" onclick="compile(editor.getValue(), getData())"><i class="fa fa-cogs"></i> Compile</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="left">
+          <div style="float: right; margin: auto; padding-right: 10px; color: white; padding: 8px;">
+              test
+          </div>
+          <ul left-tabs id="left-tab">
+              <li><a style="color:white" data-tabby-default href="#code" href="#code"><i class="fa fa-code" aria-hidden="true"></i>
+                Code Editor</a></li>
+              <li><a style="color:white" href="#ui"><i class="fa fa-pencil" aria-hidden="true"></i>
+                UI Editor</a></li>
+                 <li><a style="color:white" href="#model"><i class="fa fa-cube" aria-hidden="true"></i>
+                3D Viewport</a></li>
+            </ul>
+            
+            <div id="code"><div class="left" id="editor"></div></div>
+            <div id="ui"><div class="left" id="html"></div></div>
+
+            <div id="model"><div class="left" id="inner-model">What you find a error</div></div>
+      </div>
+            
+        <div class="right">
+          <div id="main">  
+              <ul right-tabs id="right-tab">
+                  <li><a style="color:white" data-tabby-default href="#output"><i class="fa fa-terminal" aria-hidden="true"></i>
+                    Output</a></li>
+                  <li><a style="color:white" href="#doc"><i class="fa fa-book" aria-hidden="true"></i>
+                    Docs</a></li>
+                </ul>
+                
+                <div id="output" style="width:100%; height:100%"><div class="left" style="height: calc(100% - 272px); position: absolute; background: rgb(46, 46, 46)" id="window"> <figure style="text-align:center; padding: 70px 0;">
+                    <i class="fa fa-code" style="font-size: 50px; color: grey;"></i>
+                    <figcaption style="color:gray"><i>Press 'Run' to see your project here.</i></figcaption>
+                  </figure> 
+                </div>
+              </div>
+                
+                <div id="doc"><div class="left" id="docs"></div></div>  
+
+                <div class="output">
+                    <ul term-tabs id="term-tab">
+                        <li><a style="color:white" data-tabby-default href="#term-inner"><i class="fa fa-terminal" aria-hidden="true"></i>
+                          Terminal</a></li>
+                        <li><a style="color:white" href="#console-inner"><i class="fa fa-book" aria-hidden="true"></i>
+                          Console</a></li>
+                      </ul>
+                      
+                      <div id="term-inner"><div class="left" id="term"><iframe id="i-term" style="border: 0; width: 100%; height: 100%;" src="term.html"></iframe></div></div>
+                      <div id="console-inner" style="height: 150px; background-color: rgb(46, 46, 46);"><div class="left" style="height: 150px; background-color: rgb(46, 46, 46);" id="console">
+                        <p><font color="red">Error</font> NullPointerExpe - e is not a value!</p>
+                      </div></div> 
+                </div>
+          </div>
+        </div> 
+    </div>  
+
+    <div id='cntnr'>
+        <ul id='items'>
+          <li onclick=" var sel = editor.selection.toJSON(); // save selection
+          document.execCommand('copy');
+          editor.selection.fromJSON(sel); // restore selection">Copy</li>
+          <li onclick=" var sel = editor.selection.toJSON(); // save selection
+          document.execCommand('paste');
+          editor.selection.fromJSON(sel); // restore selection">Paste</li>
+          <li onclick=" var sel = editor.selection.toJSON(); // save selection
+          document.execCommand('cut');
+          editor.selection.fromJSON(sel); // restore selection">Delete</li>  
+        </ul>
+        <hr />
+        <ul id="items">
+          <li>New</li>
+          <li>Open</li>
+          <li>Save</li>
+        </ul>
+        <hr />
+        <ul id='items'>
+          <li>Run</li>
+          <li>Compile</li>  
+        </ul>
+      </div>
+
+        <script>window.$ = window.jQuery = require('jquery');</script>
+  
+        <script src="code.js"></script>
+        
+        <script src="commands.js"></script>
+
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/gh/cferdinandi/tabby@12.0/dist/js/tabby.polyfills.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/6.0.3/math.min.js"></script>
+
+        <script src="https://ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js"></script>
+
+        <script src="https://ajaxorg.github.io/ace-builds/src-min-noconflict/ext-language_tools.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/grapesjs/0.15.8/grapes.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/grapesjs-preset-webpage@0.1.11/dist/grapesjs-preset-webpage.min.js"></script>
+
+        <script>
+
+    window.toastr = require('toastr');
+
+    require('./window.js');
+
+    var left_tabs = new Tabby('[left-tabs]');
+    var right_tabs = new Tabby('[right-tabs]');
+    var term_tabs = new Tabby('[term-tabs]');
+
+     var ui = grapesjs.init({
+      container : '#ui',
+      plugins: ['gjs-preset-webpage'],
+      pluginsOpts: {
+        'gjs-preset-webpage': {
+          // options
+        }
+      }
+  });
+
+  window.onerror = function(error, url, line) {
+    $('#console').append(`<p><font color="red">Error </font>${error}</p>`);
+    return false;
+};
+
+const { remote } = require('electron');
+const { BrowserWindow } = remote;
+
+var dialog = remote.dialog;
+var fs = require('fs');
+
+function initFS()
+{
+  bootbox.prompt("Please enter the name for your app.", function(result){ 
+    if(result = "")
+    {
+      return;
+    }
+    sessionStorage['name'] = result; 
+    newProject();
+});
+}
+
+function newProject(){
+$('.content').css('display', 'block');
+$('.content').css('display', 'block');
+dialog.showOpenDialog({
+    title:"Select a folder",
+    properties: ["openDirectory"]
+}, (folderPaths) => {
+    // folderPaths is an array that contains all the selected paths
+    if(folderPaths === undefined){
+        console.log("No destination folder selected");
+        return;
+    }else{
+        console.log(folderPaths);
+        var path = folderPaths[0];
+
+        sessionStorage['project'] = path;
+
+        fs.mkdirSync(path+'/code');
+        fs.mkdirSync(path+'/files');
+
+        fs.writeFile(path+'/code/main.simple', 'use: simple.main \nuse: simple.ui\n\nMain<> \n\n', (err) => {
+            if(err){
+                console.log("An error ocurred creating the file "+ err.message)
+            }
+        }); 
+
+        fs.writeFile(path+'/app.json', sessionStorage['name'], (err) => {
+            if(err){
+                console.log("An error ocurred creating the file "+ err.message)
+            }
+        }); 
+        
+        fs.readFile(path+'/code/main.simple', 'utf-8', (err, data) => {
+            if(err){
+                alert("An error ocurred reading the file :" + err.message);
+                return;
+            }
+    
+            // Change how to handle the file content
+            console.log("The file content is : " + data);
+            editor.setValue(data);
+        });
+
+        fs.readFile(path+'/app.json', 'utf-8', (err, data) => {
+            if(err){
+                alert("An error ocurred reading the file :" + err.message);
+                return;
+            }
+    
+            // Change how to handle the file content
+            console.log("The file content is : " + data);
+            sessionStorage["app"] = data;
+        }); 
+    }
+});
+}
+
+function openProject(){
+  $('.content').css('display', 'block');
+  $('.pre').css('display', 'none');
+    dialog.showOpenDialog({
+        title:"Select a folder",
+        properties: ["openDirectory"]
+    }, (folderPaths) => {
+        // folderPaths is an array that contains all the selected paths
+        if(folderPaths === undefined){
+            console.log("No destination folder selected");
+            return;
+        }else{
+            console.log(folderPaths);
+            var path = folderPaths[0];
+    
+            sessionStorage['project'] = path;
+    
+            fs.readFile(path+'/code/main.simple', 'utf-8', (err, data) => {
+            if(err){
+                alert("An error ocurred reading the file :" + err.message);
+                return;
+            }
+    
+            // Change how to handle the file content
+            console.log("The file content is : " + data);
+            editor.setValue(data);
+        }); 
+
+        fs.readFile(path+'/app.json', 'utf-8', (err, data) => {
+            if(err){
+                alert("An error ocurred reading the file :" + err.message);
+                return;
+            }
+    
+            // Change how to handle the file content
+            console.log("The file content is : " + data);
+            sessionStorage["app"] = data;
+        }); 
+        }
+    });
+    }
+
+    function saveProject(){
+            var path = sessionStorage['project'];
+    
+            fs.writeFile(path+'/code/main.simple', editor.getValue(), (err) => {
+            if(err){
+                alert("An error ocurred creating the file "+ err.message)
+            }
+        });   
+    }
+
+    function term_install(args){
+      args.shift()
+      var e = args.join(' ');
+      if(!args[0]){
+        return 'Object is null.'
+      } else if(e.includes('file:///') || e.includes('file://') || e.includes('https://') || e.includes('http://')){
+        return "The argument {file} doesn't take in a URL object."
+        } else {
+            var data;
+
+            function readFile(file)
+            {
+              var f = new XMLHttpRequest();
+              f.open("GET", file, false);
+              f.onreadystatechange = function ()
+              {
+                  if(f.readyState === 4)
+                  {
+                      if(f.status === 200 || f.status == 0)
+                      {
+                          var res= f.responseText;
+                          setData(res); 
+                      }
+                  }
+                }
+
+              f.send(null);
+            }
+
+
+            function setData(xhr)
+            {
+              data = xhr;
+            }
+
+            readFile("file:///C:/Users/Shafil/Desktop/Simple/test.json")
+
+            var dat = JSON.parse(data);
+
+            var array;
+
+            var f = new XMLHttpRequest();
+              f.open("GET", 'file:///C:/Users/Shafil/Desktop/Simple/test.simple', false);
+              f.onreadystatechange = function ()
+              {
+                  if(f.readyState === 4)
+                  {
+                      if(f.status === 200 || f.status == 0)
+                      {
+                          var res= f.responseText;
+                          array = JSON.parse(res); 
+                      }
+                  }
+                }
+
+              f.send(null);
+
+            if(array.indexOf(e) > -1){      
+              for (i = 0; i < dat['apps'].length; i++) {
+                if(e == dat['apps'][i].name)
+                {
+                   var url = dat['apps'][i].path;
+                   var path = sessionStorage['project'];
+                   var file = url.match(/([^\/]*)\/*$/)[1]
+                   var data;
+
+                   var f = new XMLHttpRequest();
+                    f.open("GET", url, false);
+                    f.onreadystatechange = function ()
+                    {
+                        if(f.readyState === 4)
+                        {
+                            if(f.status === 200 || f.status == 0)
+                            {
+                                var res= f.responseText;
+                                data = res; 
+                            } else {
+                              return "Failed to install!"
+                            }
+                        }
+                      }
+
+                      f.send(null);
+
+                      var content = data;
+
+                      if(sessionStorage['project'] == undefined)
+                      {
+                        return 'Please create or open a project.'
+                      } else {
+                        fs.writeFile(path+'/files/'+file, content, (err) => {
+                            if(err){
+                                return "An error ocurred creating the file.";
+                            }
+                        }); 
+                      }
+
+                  return 'Installed the extension ' + `${e}` + '<br> To use it your project, type the following: <br>' + `<i>use: files.${e}</i>`
+                }
+              }
+            } else {
+              return 'Could not find ' + e; 
+            }
+        }
+    }
+
+    var langTools = ace.require("ace/ext/language_tools");
+    var editor = ace.edit("editor");
+
+    editor.setTheme("ace/theme/monokai");
+
+    // editor.session.setMode("ace/mode/javascript");
+
+    editor.setOptions({
+      enableBasicAutocompletion: true,
+      enableLiveAutocompletion: true,
+      enableSnippets: false
+    });
+
+var staticWordCompleter = {
+    getCompletions: function(editor, session, pos, prefix, callback) {
+        var wordList = ["alert:", "toast:", "write:", "math:", "eval:", "use:"];
+        callback(null, wordList.map(function(word) {
+            return {
+                caption: word,
+                value: word,
+                meta: "function"
+            };
+        }));
+
+    }
+}
+
+langTools.setCompleters([staticWordCompleter]);
+
+    $("#defaultOpen").click();
+
+    editor.getSession().on('change', function() {
+      updateBar()
+    });
+
+      function updateBar() {
+        var ln = document.getElementById('bar-ln');
+        ln.innerHTML = `Ln ${editor.getCursorPosition().row+1}, Col ${editor.getCursorPosition().column+1}`
+      }
+
+      $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+        $('.pre').css('display', 'block');
+        $('.content').css('display', 'none');
+      });
+
+    ////////////////////////////////
+
+function runEditor(data)
+{
+var txt = data;
+var n = txt.split("\n");
+
+for(var x in n){   
+n[x]= '>'+n[x]; 
+var array = (n[x].replace(">", ""));
+var args = array.split(" ");
+
+if(args[0] == "use:") {
+        if(args.join(' ').replace(args[0], '').includes('"'))
+          
+            var url = args.join(' ').replace(args[0], '').split('"')[1];
+            loadAPI(url);
+          } else if(args.join(' ').replace(args[0], '').includes('files')) {        
+            var e = editor.getValue().replace(editor.getValue().split(' ')[0], '');
+            var file = e.split(".")[1];
+            var path;
+            if(sessionStorage['project'] == undefined){
+              console.log('No project is open.');
+            } else {
+              path = 'file:///' + (sessionStorage['project'] + '/files/' + file + '.js');
+            }
+            loadAPI(path);
+          }
+
+if(args[0] == "write:")
+  {
+  var msg = args.join(" ").replace(args[0], "");
+  if(msg.includes('"'))
+  {
+    msg = msg.replace('"', "").replace('"', "");
+    send(msg);
+  } else if(msg.includes('.') || msg.includes(':')) {
+    var cmd = args.join(' ').replace(args[0],'').trim().split(' ')
+    try {
+      eval(command(cmd));
+    } catch(e) {
+      send(`${command(cmd)}`)
+      return;
+    }
+    
+    send(eval(command(cmd)).toString().trim().replace('"', '').replace('"', ''));
+
+  }else {
+  
+    try {
+      eval(`window.${args[1]}`);
+    }
+    catch(error) {
+    }
+  
+    try {
+      eval(`window.${args[1]}`);
+    }
+    catch(error) {
+      var err = error.toString().replace("window.", 'var ');
+      send(err.toString());
+    }
+    
+    try { 
+      eval(eval(eval(`window.${args[1]}`)))
+    }
+    catch(e) {
+      send(eval(`window.${args[1]}`));
+      return;
+    }
+
+    send(eval(eval(eval(`window.${args[1]}`))));
+  }
+  }
+  
+  if(args[0] == "math:")
+  {
+  
+  var msg;
+  
+  if(args.join(' ').includes('"'))
+  {
+    msg = args.join(" ").replace(args[0], "").replace('"', '').replace('"', '');
+  } else {
+  
+    try {
+      eval(`window.${args[1]}`);
+    }
+    catch(error) {
+      var err = error.toString().replace("window.", 'var ');
+      send(err.toString());
+    }
+  
+    try {
+      eval(`window.${args[1]}`);
+    }
+    catch(error) {
+      var err = error.toString().replace("window.", 'var ');
+      send(err.toString());
+    }
+    
+    try { 
+      eval(eval(eval(`window.${args[1]}`)))
+    }
+    catch(e) {
+      msg = (eval(`window.${args[1]}`));
+      return;
+    }
+
+    msg = (eval(eval(eval(`window.${args[1]}`))));
+
+  }
+  
+  try {
+    math.evaluate(msg);
+  }
+  catch(error) {
+  }
+  
+  var data = math.evaluate(msg);
+  send(data);
+  return data;
+  }
+
+if(args[0] == "let")
+{
+  if(args.join(" ").replace(args[0], "").includes('"')){
+    var name = args[1];
+    var data = args.join(" ").replace(args[0], "").replace(args[1], "").replace("=", "").replace("\\", '').replace("\\", '');
+    eval(`window.${name} = ${data};`);
+  } else if(args.join(" ").replace(args[0], "").includes('.') || args.join(" ").replace(args[0], "").includes(':')) {
+    var name = args[1];
+    var data = args.join(" ").replace(args[0], "").replace('=', '').replace(args[1], '').replace(' ', '').replace(' ', '').replace(' ', '');
+    data = data.split(' ');
+    eval(`window.${name}`);
+    eval(`${name} = "eval(command(['${data}']))"`);
+  }
+}
+
+if(args[0] == "if:")
+{
+var array = args.join(" ").replace("if:", '').split(":");
+var statement = array[0].replace("then", '');
+var if_then = `${array[1]}: ${array[2]}`.replace("else", '');
+var if_else;
+
+if(args.join(" ").includes("else:"))
+{
+  if_else = `${array[3]}: ${array[4]}`;
+  
+  if(eval(statement) == true)
+  {
+    command(if_then.trim().split(' '));
+
+  } else if(eval(statement) == false) {
+    command(if_else.trim().split(' '));
+  }
+
+} else {
+
+  if(eval(statement) == true)
+  {
+    command(if_then.trim().split(' '));
+  }
+}
+}
+
+
+  
+if(args[0].split(".").includes('ui') && args[0].split(".").includes('buttons') && args[0].split('.').includes('clicked:'))
+      {
+        var id = args[0].split('.')[2];
+        var cmd = args.join(" ").replace(args[0], '').trim().split(' ');
+
+        $(`.${id}`).unbind('click');
+        $(`.${id}`).click(function()
+        {
+          command(cmd);
+        });
+      }
+
+        
+if(args[0].split(".").includes('ui') && args[0].split(".").includes('inputs') && args[0].split('.').includes('value'))
+      {
+        var id = args[0].split('.')[2];
+        var cmd = args.join(" ").replace(args[0], '').trim().split(' ');
+
+        return `string($('.${id}').val())`;
+      }
+
+      if(args[0] == "alert:")
+        {  
+          var e = args.join(" ").replace(args[0], "");
+          if(e.includes('"') && ! e.includes(':'))
+          {
+          var msg = args.join(' ').replace(args[0],'').split('"')[1];
+          bootbox.alert(msg);
+          } else if(e.includes('.') || e.includes(':')) {
+            var cmd = args.join(' ').replace(args[0],'').trim().split(' ')
+            try {
+              eval(command(cmd));
+            } catch(e) {
+              bootbox.alert(`${command(cmd)}`)
+              return;
+            }
+            
+            bootbox.alert(eval(command(cmd)).toString().trim().replace('"', '').replace('"', ''));
+
+          } else {
+            try {
+              eval(`window.${args[1]}`);
+            }
+            catch(error) {
+            }
+            
+            try { 
+              eval(eval(eval(`window.${args[1]}`)))
+            }
+            catch(e) {
+              bootbox.alert(eval(`window.${args[1]}`));
+              return;
+            }
+
+            bootbox.alert(eval(eval(eval(`window.${args[1]}`))));
+          }
+        }
+  
+        if(args[0] == "toast:")
+        {
+          var e = args.join(" ").replace(args[0], "");
+          if(e.includes('"') && !e.includes(':'))
+          {
+          var msg = args.join(' ').replace(args[0], '').split('"')[1];
+          window.toastr.info(msg);
+          }else if(e.includes('.') || e.includes(':')) {
+            var cmd = args.join(' ').replace(args[0],'').trim().split(' ')
+            try {
+              eval(command(cmd));
+            } catch(e) {
+              window.toastr.info(`${command(cmd)}`)
+              return;
+            }
+            
+            window.toastr.info(eval(command(cmd)).toString().trim().replace('"', '').replace('"', ''));
+
+          } else {
+            try {
+              eval(`window.${args[1]}`);
+            }
+            catch(error) {
+              var err = error.toString().replace("window.", 'var ');
+              send(err.toString());
+            }
+            
+            try {
+              eval(`window.${args[1]}`);
+            }
+            catch(error) {
+            }
+            
+            try { 
+              eval(eval(eval(`window.${args[1]}`)))
+            }
+            catch(e) {
+              window.toastr.info(eval(`window.${args[1]}`));
+              return;
+            }
+
+            window.toastr.info(eval(eval(eval(`window.${args[1]}`))));
+          }
+        }
+    }
+  }
+      </script>
+
+      <div class="footer" style="width: 100%; height: 20px;">
+          <span data-toggle="tooltip" title="Current project"><i class="fa fa-folder-open"></i> No project is open.</span>
+
+          <span data-toggle="tooltip" title="Errors" style="padding-left: 10px"><i class="fa fa-exclamation-triangle"></i> 0</span>
+
+          <span data-toggle="tooltip" title="Status" style="padding-left: 10px"><i class="fa fa-wifi"></i> Updating virus...</span>
+
+          <span data-toggle="tooltip" title="Version" style="text-align: right; float: right; padding-right: 10px"><i>alpha 1.1a</i></span>
+          
+          <span data-toggle="tooltip" title="Cursor Position" id="bar-ln" style="text-align: right; float: right; padding-right: 10px">Ln 0, Col 0</span>
+
+        </div>
+
+    </body>
+
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>An app made in Simple</title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Testing Only -->
+        <script src="http://erikosterberg.com/terminaljs/terminal-v2.0.js"></script>
+        <!-- Testing Only-->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/6.0.3/math.min.js"></script>
+
+        <script
+			  src="https://code.jquery.com/jquery-3.4.1.min.js"
+			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+        
+    </head>
+
+    <body>
+            <h1>An app made in Simple</h1>
+    </body>
+   
+    <script>
+        var t1 = new Terminal()
+          t1.setHeight(window.innerHeight)
+          t1.setWidth(window.innerWidth)
+    document.body.appendChild(t1.html)
+
+    $(document).ready(function() {
+      run()
+});
+
+// Sends data from the run function.
+function send(data)
+{
+  t1.print(data); // To delete
+}
+
+
+    function run()
+{
+  t1.clear(); // To delete
+
+  var data;
+
+  function readFile(file)
+  {
+    var f = new XMLHttpRequest();
+    f.open("GET", file, false);
+    f.onreadystatechange = function ()
+    {
+        if(f.readyState === 4)
+        {
+            if(f.status === 200 || f.status == 0)
+            {
+                var res= f.responseText;
+                setData(res); 
+            }
+        }
+      }
+    f.send(null);
+  }
+
+
+  function setData(xhr)
+  {
+    data = xhr;
+  }
+
+  readFile(window.location.href.replace("/index.html", '/code.simple'))
+
+  var txt = data;
+  var n = txt.split("\n");
+
+  for(var x in n){   
+  n[x]= '>'+n[x]; 
+  var array = (n[x].replace(">", ""));
+  var args = array.split(" ");
+
+      if(args[0] == "write:")
+      {
+        var msg = args.join(" ").replace(args[0], "");
+        if(msg.includes('"'))
+        {
+          msg = msg.replace('"', "").replace('"', "");
+          send(msg);
+        } else {
+
+          try {
+            eval(`window.${args[1]}.toString()`);
+          }
+          catch(error) {
+            send(error.toString());
+          }
+
+        send(eval(`window.${args[1]}.toString()`));
+        }
+      }
+      
+      if(args[0] == "math:")
+      {
+
+        var msg;
+
+        if(args.includes('"'))
+        {
+          msg = args.join(" ").replace(args[0], "");
+        } else {
+
+          try {
+            eval(`window.${args[1]}.toString()`);
+          }
+          catch(error) {
+            var err = error.toString().replace("window.", 'var  n');
+            send(err.toString());
+          }
+  
+          msg = eval(`window.${args[1]}.toString()`);
+        }
+
+        try {
+          math.evaluate(msg);
+        }
+        catch(error) {
+          send(error.toString());
+        }
+
+        var data = math.evaluate(msg);
+        send(data);
+      }
+      
+      if(args[0] == "let")
+      {
+        var name = args[1];
+        var data = args.join(" ").replace(args[0], "").replace(args[1], "").replace("=", "").replace("\\", '').replace("\\", '');
+        eval(`window.${name} = ${data};`);
+        
+      }
+    }
+}
+
+      </script>
+
+</html>

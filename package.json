@@ -1,0 +1,22 @@
+{
+  "name": "simple",
+  "version": "1.0.0",
+  "description": "A scripting language.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Shafil Alam",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "electron": "^5.0.7",
+    "grapejs": "^2.1.2",
+    "grapesjs-preset-webpage": "^0.1.11",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0",
+    "toastr": "^2.1.4"
+  },
+  "devDependencies": {
+    "electron-packager": "^14.1.0"
+  }
+}

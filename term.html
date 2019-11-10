@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Terminal</title>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <script>
+    /**
+ * pseudo-terminal adapted from https://github.com/avgp/terminal.js
+ */
+var Terminal = (function () {
+  var history = (localStorage.getItem('history') ? localStorage.getItem('history').split(',') : [])
+  var historyIndex = history.length
+  var self = {}
+
+  var KEY_UP = 38
+  var KEY_DOWN = 40
+  var KEY_TAB = 9
+
+  // Auxiliary functions
+
+  var resetPrompt = function (terminal, prompt) {
+    var newPrompt = prompt.parentNode.cloneNode(true)
+
+    prompt.setAttribute('contenteditable', false)
+    newPrompt.querySelector('.terminal-prompt').textContent = getPrompt(self.options.prompt)
+    terminal.appendChild(newPrompt)
+    newPrompt.querySelector('.terminal-input').innerHTML = ' '
+    newPrompt.querySelector('.terminal-input').focus()
+  }
+  
+  var tryCommand = function (terminal, cmd, args) {
+    if (cmd in self.commands) {
+      runCommand(terminal, cmd, args)
+    } else {
+      commandNotFound(terminal, cmd)
+    }
+  }
+
+  var runCommand = function (terminal, cmd, args) {
+    terminal.innerHTML += (self.commands[cmd](args))
+  }
+
+  var commandNotFound = function (terminal, cmd) {
+    terminal.innerHTML += cmd + ': command not found'
+  }
+
+  var updateHistory = function (cmd) {
+    history.push(cmd)
+    localStorage.setItem('history', history)
+    historyIndex = history.length
+  }
+
+  var browseHistory = function (prompt, direction) {
+    var changedPrompt = false
+
+    if (direction === KEY_UP && historyIndex > 0) {
+      prompt.textContent = history[--historyIndex]
+      changedPrompt = true
+    } else if (direction === KEY_DOWN) {
+      if (historyIndex < history.length) ++historyIndex
+      if (historyIndex < history.length) prompt.textContent = history[historyIndex]
+      else prompt.textContent = " "
+      changedPrompt = true
+    }
+
+    if (changedPrompt) {
+      var range = document.createRange()
+      var sel = window.getSelection()
+      range.setStart(prompt.childNodes[0], prompt.textContent.length)
+      range.collapse(true)
+      sel.removeAllRanges()
+      sel.addRange(range)
+    }
+  }
+
+  var autoCompleteInput = function (input) {
+    var cmds = self.commands
+    var re = new RegExp("^" + input, "ig")
+    var suggestions = []
+    for (var cmd in cmds) {
+      if (cmds.hasOwnProperty(cmd) && cmd.match(re)) {
+        suggestions.push(cmd)
+      }
+    }
+    return suggestions
+  }
+  
+  var getPrompt = function (str, opts) {
+    return str
+      .replace('\\u', self.user)
+      .replace('\\H', window.location.hostname)
+      .replace('\\h', window.location.hostname.split('.')[0])
+  }
+  
+  var createElements = function (opts) {
+    var container = document.createElement('div')
+    container.classList.add('terminal')
+    
+    var fragment = document.createDocumentFragment()
+    var elem = document.createElement('div')
+    elem.className = 'terminal-output'
+    elem.setAttribute('spellcheck', false)
+    
+    var intro = document.createElement('div')
+    intro.innerHTML = opts.intro
+    elem.appendChild(intro)
+    
+    var line = document.createElement('p')
+    var prompt = document.createElement('span')
+    prompt.className = 'terminal-prompt'
+    prompt.innerHTML = getPrompt(opts.prompt, opts)
+    line.appendChild(prompt)
+    var input = document.createElement('span')
+    input.className = 'terminal-input'
+    input.setAttribute('contenteditable', true)
+    line.appendChild(input)
+    elem.appendChild(line)
+
+    fragment.appendChild(elem)
+    container.appendChild(fragment)
+
+    self.output = elem
+    return container
+  }
+  
+  var mountTerminalElement = function (mount, el) {
+    if (mount instanceof window.HTMLElement) {
+      mount.appendChild(el)
+    } else if (typeof mount === 'string') {
+      var existing = document.getElementById(mount)
+      if (!existing) return
+      existing.appendChild(el)
+    }
+
+    return
+  }
+
+  // Terminal functions
+
+  self.init = function (containerId, opts) {
+    self.options = opts
+    self.user = opts.user || 'root'
+    self.commands = opts.commands
+    self.container = createElements(opts)
+    
+    mountTerminalElement(containerId, self.container)
+    
+    self.output.addEventListener('keydown', function (event) {
+      if (event.keyCode === KEY_TAB) {
+        var prompt = event.target
+        var suggestions = autoCompleteInput(prompt.textContent.replace(/\s+/g, ''))
+
+        if (suggestions.length === 1) {
+          prompt.textContent = suggestions[0]
+          var range = document.createRange()
+          var sel = window.getSelection()
+          range.setStart(prompt.childNodes[0], suggestions[0].length)
+          range.collapse(true)
+          sel.removeAllRanges()
+          sel.addRange(range)
+        }
+
+        event.preventDefault(true)
+        return false
+      }
+    })
+
+    self.output.addEventListener('keyup', function (event) {
+      if (historyIndex < 0) return
+      browseHistory(event.target, event.keyCode)
+    })
+
+    self.output.addEventListener('keypress', function (event) {
+      var prompt = event.target
+      if (event.keyCode !== 13) return false
+
+      updateHistory(prompt.textContent)
+
+      var input = prompt.textContent.trim().split(' ')
+      if (input[0]) tryCommand(self.output, input[0], input)
+
+      resetPrompt(self.output, prompt)
+      event.preventDefault()
+    })
+    
+    /**
+     * Clicking anywhere on terminal should put cursor on the command line
+     * Do not focus on command line if action creates a text selection range
+     */
+    self.output.addEventListener('click', function (event) {
+      // Sometimes there is more than one editable input, force it to be the last one
+      // TODO: fix the bug where there is more than one contenteditable element
+      var temp = self.output.querySelectorAll('.terminal-input[contenteditable=true]')
+      var el = temp[temp.length - 1]
+      var selection = window.getSelection()
+      if (selection.isCollapsed === true && selection.rangeCount <= 1 && el) {
+        el.focus()
+      }
+    }, false)
+    
+    self.output.querySelector('.terminal-input').focus()
+    return self
+  }
+  
+  self.exit = function () {
+    var removeThis = self.container.parentNode.removeChild(self.container)
+    removeThis = null
+  }
+
+  return self
+})()
+
+/* global Terminal */
+/**
+* Instance of Terminal
+*/
+var commands = {}
+var state = {}
+
+commands.help = function() {
+  var output = "<div>" +
+    "<p>Here are the currently available commands:</p>" +
+    "<ul>" +
+    "<li><strong>help</strong> - display this help.</li>" +
+    "<li><strong>echo &lt;string&gt</strong> - write arguments to the standard output</li>" +
+    "<li><strong>inject</strong> - inject code into the engine</li>" +
+    "</ul></div>"
+  return output
+}
+
+commands.echo = function (args) {
+  args.shift()
+  return args.join(' ')
+}
+
+commands.clear = function (args) {
+  window.location.reload();
+  return ''
+}
+
+commands.install = function (args) {
+  return window.parent.term_install(args);
+}
+
+commands.inject = function (args) {
+  args.shift()
+  try {
+                var result = window.eval(args.join(' '));
+                if (result !== undefined) {
+                    return (new String(result));
+                }
+            } catch(e) {
+                return (new String(e));
+            }
+}
+
+function initTerminal() {
+  console.log('Terminal access granted.')
+
+  Terminal.init(document.body, {
+    commands: commands,
+    prompt: 'simple> ',
+    intro: '<p>Welcome to the Simple Terminal. Type \'help\' to get started.</p><p>&nbsp;</p>'
+  })
+}
+
+initTerminal();
+
+
+    </script>
+
+    <style>
+
+
+        @import url('https://fonts.googleapis.com/css?family=Inconsolata:400,700');
+
+        * {
+          user-select: none;
+        }
+
+
+.terminal {
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  margin: 0;
+  font-family: 'pxplus_ibm_vga8regular', monospace;
+  background-color: rgb(46, 46, 46);
+  color: lightgray;
+  line-height: 1.2;
+  overflow-y: auto;
+
+  -webkit-font-smoothing: none;
+}
+
+.terminal-output {
+  width: 100%;
+  height: 100%;
+}
+
+/**
+* The input span where the input happens.
+* Also applied to the previous inputs made in the current session.
+*/
+.terminal .terminal-input {
+  height: 1em;
+  min-width: 1em;
+  outline: none;
+  border: none;
+  display: inline-block;
+}
+
+.terminal p {
+  margin: 0;
+   padding: 0;
+}
+
+.terminal ul {
+  margin-top: 1.2em; /* match line-height */
+  margin-bottom: 1.2em;
+  list-style-type: none;
+  padding-left: 2em; /* four spaces */
+}
+
+.terminal .terminal-prompt {
+  color: cyan;
+}
+
+.terminal a,
+.terminal a:visited,
+.terminal a:active,
+.terminal a:hover {
+  color: magenta;
+}
+
+.terminal strong {
+  font-weight: normal;
+  color: white;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgb(46, 46, 46);
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+    </style>
+
+</body>
+</html>
