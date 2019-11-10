@@ -1,4 +1,5 @@
-# Simple
+![](https://github.com/alamshafil/simple/blob/master/logo-full-black.png)
+
 ![](https://david-dm.org/alamshafil/simple.svg)
 
 A scripting language designed to be robust and easy.
@@ -38,12 +39,11 @@ The following is basic usage of `electron-packager` in the command line:
 electron-packager <sourcedir> <appname> --platform=<platform> --arch=<arch> [optional flags...]
 ```
 
-For instance I want to compile a 64-bit `.exe` for Windows, I would type:
+For example I want to compile a 64-bit `.exe` for Windows, I would type:
 
 ```
 electron-packager . Simple —-platform=win32 —-arch=x64
 ```
-
 
 
 
