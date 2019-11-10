@@ -1,7 +1,0 @@
-directories:
-  output: dist
-  buildResources: build
-appId: com.electron.simple
-asar: true
-productName: Simple
-electronVersion: 5.0.7
