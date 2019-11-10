@@ -478,6 +478,8 @@ langTools.setCompleters([staticWordCompleter]);
         $('[data-toggle="tooltip"]').tooltip();
         $('.pre').css('display', 'block');
         $('.content').css('display', 'none');
+        document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Checking for updates...</i>';
+        setTimeout(function(){document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.';}, 10000);
       });
 
     ////////////////////////////////

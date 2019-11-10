@@ -1,26 +1,33 @@
 {
   "name": "simple",
-  "version": "1.0.0",
-  "description": "A scripting language.",
+  "version": "0.0.1",
+  "description": "A scripting language designed to be robust and easy.",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "prepare": "npm run snyk-protect",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "author": "Shafil Alam",
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "electron": "^5.0.7",
+    "electron-updater": "^4.2.0",
     "grapejs": "^2.1.2",
     "grapesjs-preset-webpage": "^0.1.11",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
-    "toastr": "^2.1.4",
-    "snyk": "^1.244.0"
+    "snyk": "^1.244.0",
+    "toastr": "^2.1.4"
   },
   "devDependencies": {
-    "electron-packager": "^14.1.0"
+    "electron": "^5.0.7"
   },
-  "snyk": true
+  "snyk": true,
+  "build": {
+    "appId": "com.electron.simple",
+    "asar": true,
+    "productName": "Simple"
+  }
 }

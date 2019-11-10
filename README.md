@@ -46,10 +46,3 @@ For example I want to compile a 64-bit `.exe` for Windows, I would type:
 ```
 electron-packager . Simple —-platform=win32 —-arch=x64
 ```
-
-
-
-
-
-
-

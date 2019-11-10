@@ -4,9 +4,9 @@
 function run(dat, html, css, js)
 {
 
-  document.getElementById('status').innerHTML = '<i class="fa fa-sync-alt"></i> Running <i>main.simple</i>'
+  document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Running <i>main.simple</i>'
 
-  setTimeout(2000, function(){alert("hi")});
+  setTimeout(function(){document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.'}, 3000);
 
   if(editor.getValue().includes('use: simple.ui'))
   {
