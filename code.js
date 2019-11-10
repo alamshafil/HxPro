@@ -4,6 +4,10 @@
 function run(dat, html, css, js)
 {
 
+  document.getElementById('status').innerHTML = '<i class="fa fa-sync-alt"></i> Running <i>main.simple</i>'
+
+  setTimeout(2000, function(){alert("hi")});
+
   if(editor.getValue().includes('use: simple.ui'))
   {
   var data = initData(html, css, js)

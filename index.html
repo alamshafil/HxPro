@@ -221,7 +221,7 @@ function initFS()
 
 function newProject(){
 $('.content').css('display', 'block');
-$('.content').css('display', 'block');
+$('.pre').css('display', 'none');
 dialog.showOpenDialog({
     title:"Select a folder",
     properties: ["openDirectory"]
@@ -760,7 +760,7 @@ if(args[0].split(".").includes('ui') && args[0].split(".").includes('inputs') &&
 
           <span data-toggle="tooltip" title="Errors" style="padding-left: 10px"><i class="fa fa-exclamation-triangle"></i> 0</span>
 
-          <span data-toggle="tooltip" title="Status" style="padding-left: 10px"><i class="fa fa-wifi"></i> Updating virus...</span>
+          <span id='status' data-toggle="tooltip" title="Status" style="padding-left: 10px"><i class="fa fa-check"></i> Everything is okay.</span>
 
           <span data-toggle="tooltip" title="Version" style="text-align: right; float: right; padding-right: 10px"><i>alpha 1.1a</i></span>
           
