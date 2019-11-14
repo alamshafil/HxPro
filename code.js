@@ -15,6 +15,8 @@ function run(dat, html, css, js)
     data = 'Using basic rendering window. <br>'
   }
 
+  $('#window').css('background', 'white');
+
   $('#console').empty();
   $('#window').empty();
   $('#window').off();
@@ -52,7 +54,7 @@ function initData(h, c, j)
     data = xhr;
   }
 
-  readFile(window.location.href.replace('/index.html', '/run.html'));
+  readFile(require('electron').remote.app.getAppPath() + "/run.html");
 
   var init = data;
   init = init.replace(/\r/g, "").replace(/\n/g, "");
@@ -71,15 +73,261 @@ function initData(h, c, j)
 }
 
 // Compiles code, and turns it into a exe file.
-function compile(code, data)
+function compile(code)
 {
-  var zip = new JSZip();
-zip.file("index.html", data);
-zip.file("code.simple", code);
-zip.generateAsync({type:"blob"})
-.then(function(content) {
-    saveAs(content, "test.zip");
+  var data;
+
+  function readFile(file)
+  {
+    var f = new XMLHttpRequest();
+    f.open("GET", file, false);
+    f.onreadystatechange = function ()
+    {
+        if(f.readyState === 4)
+        {
+            if(f.status === 200 || f.status == 0)
+            {
+                var res= f.responseText;
+                setData(res); 
+            }
+        }
+      }
+
+    f.send(null);
+  }
+
+
+  function setData(xhr)
+  {
+    data = xhr;
+  }
+
+  readFile(require('electron').remote.app.getAppPath() + "/compile.html");
+
+  bootbox.dialog({
+    title: 'Compile App',
+    message: "<p>Choose a platform to compile your app.</p>",
+    size: 'large',
+    buttons: {
+        win: {
+            label: "Windows",
+            className: 'btn-info',
+            callback: function(){
+              var fs_ = require("fs-extra");
+              var fs = require("fs");
+
+              document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Compiling to Windows...'
+           
+              var dir = require('electron').remote.app.getAppPath() + '/';
+              var source = dir + '/data/nw-win'
+              var destination = sessionStorage["project"] + `/builds/win32_${Math.random().toString(36).slice(2)}/`
+              var res = destination + "res/";
+          
+              fs.mkdirSync(destination);
+              fs.mkdirSync(res);
+              fs.mkdirSync(res + "simple/");
+              fs.mkdirSync(res + "files/");
+          
+              fs_.copy(source, destination, function (err) {
+                if (err){
+                    console.log('An error occured while copying the folder.')
+                    console.error(err);
+                }
+          
+              fs_.copy(dir+'commands.js', res + "simple/commands.js");
+              
+              fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
+                  if (err){
+                      console.log('An error occured while copying the folder.')
+                      return console.error(err)
+                  }
+          
+                  var html = initData(ui.getHtml(), ui.getCss(), ui.getJs());
+          
+              html.replace(/\r/g, "").replace(/\n/g, "");
+          
+              if(editor.getValue().includes('use: simple.ui'))
+              {
+                data = data.replace('<simple></simple>', html);
+              } else {
+                data = data.replace('<simple></simple>', '');
+              }
+          
+              data = data.replace('simple_app', sessionStorage["app"]);
+          
+              data = data.replace('<simple.code>', c);
+          
+              fs.writeFile(res + "simple/"+'ui.html', data, (err) => {
+                if(err){
+                    console.log("An error ocurred creating the file "+ err.message)
+                }
+              }); 
+          
+              var c = code;
+          
+              fs.writeFile(res + "simple/"+'main.simple', c, (err) => {
+                if(err){
+                    console.log("An error ocurred creating the file "+ err.message)
+                }
+              });
+          
+              bootbox.alert("done!");
+
+              document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.'
+          
+              });  
+          
+            });
+          
+            }
+        },
+        noclose: {
+            label: "Linux",
+            className: 'btn-info',
+            callback: function(){
+              var fs_ = require("fs-extra");
+              var fs = require("fs");
+
+              document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Compiling to Linux...'
+           
+              var dir = require('electron').remote.app.getAppPath() + '/';
+              var source = dir + '/data/nw-linux'
+              var destination = sessionStorage["project"] + `/builds/linux_${Math.random().toString(36).slice(2)}/`
+              var res = destination + "res/";
+          
+              fs.mkdirSync(destination);
+              fs.mkdirSync(res);
+              fs.mkdirSync(res + "simple/");
+              fs.mkdirSync(res + "files/");
+          
+              fs_.copy(source, destination, function (err) {
+                if (err){
+                    console.log('An error occured while copying the folder.')
+                    console.error(err);
+                }
+          
+              fs_.copy(dir+'commands.js', res + "simple/commands.js");
+              
+              fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
+                  if (err){
+                      console.log('An error occured while copying the folder.')
+                      return console.error(err)
+                  }
+          
+                  var html = initData(ui.getHtml(), ui.getCss(), ui.getJs());
+          
+              html.replace(/\r/g, "").replace(/\n/g, "");
+          
+              if(editor.getValue().includes('use: simple.ui'))
+              {
+                data = data.replace('<simple></simple>', html);
+              } else {
+                data = data.replace('<simple></simple>', '');
+              }
+          
+              data = data.replace('simple_app', sessionStorage["app"]);
+          
+              data = data.replace('<simple.code>', c);
+          
+              fs.writeFile(res + "simple/"+'ui.html', data, (err) => {
+                if(err){
+                    console.log("An error ocurred creating the file "+ err.message)
+                }
+              }); 
+          
+              var c = code;
+          
+              fs.writeFile(res + "simple/"+'main.simple', c, (err) => {
+                if(err){
+                    console.log("An error ocurred creating the file "+ err.message)
+                }
+              });
+          
+              bootbox.alert("done!");
+
+              document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.'
+          
+              });  
+          
+            });
+            }
+        },
+        ok: {
+            label: "macOS",
+            className: 'btn-info',
+            callback: function(){
+              var fs_ = require("fs-extra");
+              var fs = require("fs");
+
+              document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Compiling to macOS...'
+           
+              var dir = require('electron').remote.app.getAppPath() + '/';
+              var source = dir + '/data/nw-mac/'
+              var destination = sessionStorage["project"] + `/builds/mac_${Math.random().toString(36).slice(2)}/`
+              var res = destination + "/simple_runtime_nw.app/Contents/Frameworks/nwjs Framework.framework/Versions/78.0.3904.97/Resources/res/";
+
+              fs.mkdirSync(destination);
+          
+              fs_.copy(source, destination, function (err) {
+                if (err){
+                    console.log('An error occured while copying the folder.')
+                    console.error(err);
+                }
+
+                fs.mkdirSync(res);
+                fs.mkdirSync(res + "simple/");
+                fs.mkdirSync(res + "files/");
+          
+              fs_.copy(dir+'commands.js', res + "simple/commands.js");
+              
+              fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
+                  if (err){
+                      console.log('An error occured while copying the folder.')
+                      return console.error(err)
+                  }
+          
+                  var html = initData(ui.getHtml(), ui.getCss(), ui.getJs());
+          
+              html.replace(/\r/g, "").replace(/\n/g, "");
+          
+              if(editor.getValue().includes('use: simple.ui'))
+              {
+                data = data.replace('<simple></simple>', html);
+              } else {
+                data = data.replace('<simple></simple>', '');
+              }
+          
+              data = data.replace('simple_app', sessionStorage["app"]);
+          
+              data = data.replace('<simple.code>', c);
+          
+              fs.writeFile(res + "simple/"+'ui.html', data, (err) => {
+                if(err){
+                    console.log("An error ocurred creating the file "+ err.message)
+                }
+              }); 
+          
+              var c = code;
+          
+              fs.writeFile(res + "simple/"+'main.simple', c, (err) => {
+                if(err){
+                    console.log("An error ocurred creating the file "+ err.message)
+                }
+              });
+          
+              bootbox.alert("done!");
+
+              document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.'
+          
+              });  
+          
+            });
+            }
+        }
+    }
 });
+
+
 }
 
 // Get data to compile file.
@@ -245,4 +493,62 @@ function un_collapse() {
   $('#editor').addClass('left');
   $('#win-right').css('display', 'block');
   document.getElementById('collapse').innerHTML = '<button class="btn btn-dark" onclick="collapse()"><i class="fa fa-angle-right"></i></button>';
+}
+
+function requestFullScreen() {
+
+  if ((document.fullScreenElement && document.fullScreenElement !== null) ||    
+   (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+    if (document.documentElement.requestFullScreen) {  
+      document.documentElement.requestFullScreen();  
+    } else if (document.documentElement.mozRequestFullScreen) {  
+      document.documentElement.mozRequestFullScreen();  
+    } else if (document.documentElement.webkitRequestFullScreen) {  
+      document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
+    }  
+  } else {  
+    if (document.cancelFullScreen) {  
+      document.cancelFullScreen();  
+    } else if (document.mozCancelFullScreen) {  
+      document.mozCancelFullScreen();  
+    } else if (document.webkitCancelFullScreen) {  
+      document.webkitCancelFullScreen();  
+    }  
+  }  
+}
+
+function java(){
+  let win;
+    win = new BrowserWindow({
+      width: 600,
+      height: 300,
+      icon: "./logo.png",
+      webPreferences: {
+        nodeIntegration: true,
+        webSecurity: false
+      }
+    })
+  
+    win.loadFile('./java.html')
+  
+    win.on('closed', () => {
+      win = null
+    });
+
+    $('#win-left').append('<div id="java"><div class="left" id="jedit"></div></div>');
+    $('#left-tab').append('<li role="presentation"><a style="color:white" href="#java" id="tabby-toggle_code" role="tab" aria-controls="java" tabindex="0"><i class="fa fa-code" aria-hidden="true"></i> jvm-window</a></li>');
+
+    ace.require("ace/ext/language_tools");
+
+    var jedit = ace.edit("jedit");
+
+    jedit.setTheme("ace/theme/monokai");
+
+    jedit.session.setMode("ace/mode/java");
+
+    jedit.setOptions({
+      enableBasicAutocompletion: true,
+      enableLiveAutocompletion: true,
+      enableSnippets: true
+    });
 }

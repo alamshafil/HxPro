@@ -37,7 +37,18 @@
                       <button class="btn btn-dark" onclick="saveProject()"><i class="fa fa-save"></i> Save</button>
                       <button class="btn btn-dark" onclick="openProject()"><i class="fa fa-folder-open"></i></i> Open</button>
                       <button id="run-btn" class="btn btn-dark" onclick="run(editor.getValue(), ui.getHtml(), ui.getCss(), ui.getJs())"><i class="fa fa-wrench"></i> Run</button>
-                      <button class="btn btn-dark" onclick="compile(editor.getValue(), getData())"><i class="fa fa-cogs"></i> Compile</button>
+                      <button class="btn btn-dark" onclick="compile(editor.getValue())"><i class="fa fa-cogs"></i> Compile</button>
+                        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fa fa-ellipsis-h"></i> More
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" onclick="requestFullScreen()"><i class="fa fa-compress"></i> Fullscreen</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" onclick="java()"><i class="fa fa-file-code"></i> Create Java Applet</a>
+                          <a class="dropdown-item" onclick=""><i class="fa fa-file-code"></i> Create C++ Applet</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" onclick=""><i class="fa fa-info"></i> About</a>
+                        </div>
                 </div>
               </div>
               
@@ -80,14 +91,11 @@
                 Code Editor</a></li>
               <li><a style="color:white" href="#ui"><i class="fa fa-pencil" aria-hidden="true"></i>
                 UI Editor</a></li>
-                 <li><a style="color:white" href="#model"><i class="fa fa-cube" aria-hidden="true"></i>
-                3D Viewport</a></li>
             </ul>
             
             <div id="code"><div class="left" id="editor"></div></div>
             <div id="ui"><div class="left" id="html"></div></div>
 
-            <div id="model"><div class="left" id="inner-model">What you find a error</div></div>
       </div>
             
         <div id="win-right" class="right">
@@ -156,7 +164,7 @@
         
         <script src="commands.js"></script>
 
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
 
         <script src="https://cdn.jsdelivr.net/gh/cferdinandi/tabby@12.0/dist/js/tabby.polyfills.min.js"></script>
 
@@ -238,6 +246,7 @@ dialog.showOpenDialog({
 
         fs.mkdirSync(path+'/code');
         fs.mkdirSync(path+'/files');
+        fs.mkdirSync(path+'/builds');
 
         fs.writeFile(path+'/code/main.simple', 'use: simple.main \nuse: simple.ui\n\nMain<> \n\n', (err) => {
             if(err){
@@ -461,7 +470,7 @@ var staticWordCompleter = {
     }
 }
 
-langTools.setCompleters([staticWordCompleter]);
+//langTools.setCompleters([staticWordCompleter]);
 
     $("#defaultOpen").click();
 
