@@ -4,8 +4,8 @@ tagline: The Robust language
 email: alamshafild@gmail.com
 description: >
   A scripting language designed to be robust and easy.
-baseurl: "/bulma-clean-theme"
-url: "https://alamshafild.github.io"
+baseurl: "/simple"
+url: "https://alamshafil.github.io/"
 permalink: pretty
 #favicon: /path/to/favicon.png
 
