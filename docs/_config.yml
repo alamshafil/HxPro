@@ -1,11 +1,11 @@
 # Site Settings
-title: Bulma Clean Theme
-tagline: Bulma Clean Theme
-email: your-email@domain.com
+title: Simple
+tagline: The Robust language
+email: alamshafild@gmail.com
 description: >
-  The demo site for Bulma Clean Theme, made for Jekyll and GitHub pages websites
+  A scripting language designed to be robust and easy.
 baseurl: "/bulma-clean-theme"
-url: "https://www.csrhymes.com"
+url: "https://alamshafild.github.io"
 permalink: pretty
 #favicon: /path/to/favicon.png
 
