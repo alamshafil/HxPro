@@ -1,6 +1,6 @@
 {
   "name": "simple",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A scripting language designed to be robust and easy.",
   "main": "main.js",
   "scripts": {
@@ -12,8 +12,7 @@
   },
   "author": "Shafil Alam",
   "dependencies": {
-    "bootstrap": "^4.3.1",
-    "electron-updater": "^4.2.0",
+    "bootstrap": "^4.3.1",   
     "fs-extra": "^8.1.0",
     "grapejs": "^2.1.2",
     "grapesjs-preset-webpage": "^0.1.11",
@@ -27,8 +26,9 @@
   },
   "snyk": true,
   "build": {
-    "appId": "com.electron.simple",
+    "appId": "com.alamshafil.simple",
     "asar": true,
-    "productName": "Simple"
+    "productName": "Simple",
+    "icon": "logo.png"
   }
 }
