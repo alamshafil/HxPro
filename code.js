@@ -517,38 +517,8 @@ function requestFullScreen() {
   }  
 }
 
-function java(){
-  let win;
-    win = new BrowserWindow({
-      width: 600,
-      height: 300,
-      icon: "./logo.png",
-      webPreferences: {
-        nodeIntegration: true,
-        webSecurity: false
-      }
-    })
-  
-    win.loadFile('./java.html')
-  
-    win.on('closed', () => {
-      win = null
-    });
+function browser(){
 
-    $('#win-left').append('<div id="java"><div class="left" id="jedit"></div></div>');
-    $('#left-tab').append('<li role="presentation"><a style="color:white" href="#java" id="tabby-toggle_code" role="tab" aria-controls="java" tabindex="0"><i class="fa fa-code" aria-hidden="true"></i> jvm-window</a></li>');
-
-    ace.require("ace/ext/language_tools");
-
-    var jedit = ace.edit("jedit");
-
-    jedit.setTheme("ace/theme/monokai");
-
-    jedit.session.setMode("ace/mode/java");
-
-    jedit.setOptions({
-      enableBasicAutocompletion: true,
-      enableLiveAutocompletion: true,
-      enableSnippets: true
-    });
+    $('#win-left').append('<div id="browser"><div class="left" id="browser-inner"> <iframe style="width: 50%; height: 100%; postion: absolute;" src="https://alamshafil.github.io/simple/"></div></div>');
+    $('#left-tab').append('<li role="presentation"><a style="color:white" href="#browser" id="tabby-toggle_code" role="tab" aria-controls="browser" tabindex="0"><i class="fas fa-globe"></i> App Store</a></li>');
 }
