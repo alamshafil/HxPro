@@ -3,6 +3,13 @@
   src: url(fonts/window.ttf);
 }
 
+@font-face {
+  font-family: 'MetropolisLight';
+  src: url(fonts/MetropolisLight.otf) format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   -webkit-user-select: none;
   list-style: none;
@@ -59,8 +66,8 @@ html, body {
 
 body {
   font-family: "Segoe UI", sans-serif;
-  font-size: 8px;
 }
+
 body {
   background-color: #343a40;
 }
