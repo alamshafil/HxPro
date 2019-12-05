@@ -1,6 +1,6 @@
 {
   "name": "simple",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A scripting language designed to be robust and easy.",
   "license": "MIT",
   "main": "main.js",
@@ -14,7 +14,6 @@
     "bootstrap": "^4.3.1",
     "electron-updater": "^4.2.0",
     "fs-extra": "^8.1.0",
-    "grapejs": "^2.1.2",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
     "snyk": "^1.244.0",
