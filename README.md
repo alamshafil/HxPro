@@ -1,4 +1,4 @@
-![](https://github.com/alamshafil/simple/blob/master/logo-full-black.png)
+![](https://github.com/alamshafil/simple/blob/master/logos/logo-full-black.png)
 
 
 [![](https://api.travis-ci.com/alamshafil/simple.svg?branch=master)](https://travis-ci.com/alamshafil/simple)
@@ -9,15 +9,15 @@
 A scripting language designed to be robust and easy.
 
 # Build Instructions
-To get started, install the latest source code from Github.
+To get started, download the latest source code from Github.
 
 To build [Simple](https://github.com/alamshafil/simple/) you need to install the following:
-* [`Node.js`](https://nodejs.org/)
+* [`node.js`](https://nodejs.org/)
 * [`electron-packager`](https://github.com/electron/electron-packager)
 
-First install [`Node.js`](https://nodejs.org/), you will install [`electron-packager`](https://github.com/electron/electron-packager) later.
+First install [`node.js`](https://nodejs.org/), you will install [`electron-packager`](https://github.com/electron/electron-packager) later.
 
-Once you have installed [`Node.js`](https://nodejs.org/) open your terminal and go to where have downloaded the source code.
+Once you have installed [`node.js`](https://nodejs.org/) open your terminal and go to where have downloaded the source code.
 
 For example, I downloaded the source to `C:\Users\Admin\Desktop\simple` 
 
