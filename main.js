@@ -12,7 +12,7 @@ function createWindow () {
     height: 600,
     frame: false,
     backgroundColor: '#343a40',
-    icon: "./logo.png",
+    icon: "./logos/logo.png",
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false

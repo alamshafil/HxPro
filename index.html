@@ -6,10 +6,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="theme.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/theme.css">
         
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/fontawesome.min.css" integrity="sha256-/sdxenK1NDowSNuphgwjv8wSosSNZB0t5koXqd7XqOI=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/fontawesome.min.css"/>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
@@ -17,7 +17,7 @@
 
         <link rel="stylesheet" href="https://unpkg.com/grapesjs/dist/css/grapes.min.css">
 
-        <link rel="stylesheet" href="node_modules/grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/grapesjs-preset-webpage@0.1.11/dist/grapesjs-preset-webpage.min.css">
 
     </head>
 
@@ -30,7 +30,7 @@
               <div id="window-title">
                 <div id="window-inner">
                   <a class="navbar-brand" href="#">
-                      <img src="logo.png" width="31" height="31" class="d-inline-block align-top" alt="">
+                      <img src="logos/logo.png" width="31" height="31" class="d-inline-block align-top" alt="">
                       <span>Simple</span>
                     </a>
                       <button class="btn btn-dark" onclick="initFS()"><i class="fa fa-plus-square"></i></i> New</button>
@@ -68,10 +68,10 @@
             </div>
           </div>
 
-    <div class="pre" style="background-color: #343a40; text-align:center; padding: 70px 0; background: url('intro.png'); background-size: cover;">
+    <div class="pre" style="background-color: #343a40; text-align:center; padding: 70px 0; background: url('logos/intro.png'); background-size: cover;">
       <div class="card" style="background-color: rgb(59, 59, 59); color: white;">
         <div class="container">
-          <img width="250" height="95" src="logo-full-white.png"></img>
+          <img width="250" height="95" src="logos/logo-full-white.png"></img>
           <br>
           <button style="background-color: rgb(59, 59, 59);" class="btn btn-dark" onclick="initFS()"><i class="fa fa-plus-square"></i></i> New</button>
           <button style="background-color: rgb(59, 59, 59);" class="btn btn-dark" onclick="openProject()"><i class="fa fa-folder-open"></i></i> Open</button>
@@ -125,7 +125,7 @@
                             Files</a></li>
                       </ul>
                       
-                      <div id="term-inner"><div class="left" id="term"><iframe id="i-term" style="border: 0; width: 100%; height: 100%;" src="term.html"></iframe></div></div>
+                      <div id="term-inner"><div class="left" id="term"><iframe id="i-term" style="border: 0; width: 100%; height: 100%;" src="html/term.html"></iframe></div></div>
                       <div id="console-inner" style="height: 150px; background-color: rgb(46, 46, 46);"><div class="left" style="height: 150px; background-color: rgb(46, 46, 46);" id="console">
                         <p><font color="red">Error</font> NullPointerExpe - e is not a value!</p>
                       </div></div> 
@@ -164,9 +164,9 @@
 
         <script>window.$ = window.jQuery = require('jquery');</script>
   
-        <script src="code.js"></script>
+        <script src="js/code.js"></script>
         
-        <script src="commands.js"></script>
+        <script src="js/commands.js"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
 
@@ -192,7 +192,7 @@
 
     window.toastr = require('toastr');
 
-    require('./window.js');
+    require('./js/window.js');
 
     var left_tabs = new Tabby('[left-tabs]');
     var right_tabs = new Tabby('[right-tabs]');
