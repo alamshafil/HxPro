@@ -11,7 +11,7 @@ A scripting language designed to be robust and easy.
 # Build Instructions
 To get started, download the latest source code from Github.
 
-To build [Simple](https://github.com/alamshafil/simple/) you need to install the following:
+To build [HxPro](https://github.com/alamshafil/HxPro/) you need to install the following:
 * [`node.js`](https://nodejs.org/)
 * [`electron-packager`](https://github.com/electron/electron-packager)
 
@@ -19,7 +19,7 @@ First install [`node.js`](https://nodejs.org/), you will install [`electron-pack
 
 Once you have installed [`node.js`](https://nodejs.org/) open your terminal and go to where have downloaded the source code.
 
-For example, I downloaded the source to `C:\Users\Admin\Desktop\simple` 
+For example, I downloaded the source to `C:\Users\Admin\Desktop\HxPro` 
 
 I would type the following in the terminal:
 ```
@@ -45,5 +45,5 @@ electron-packager <sourcedir> <appname> --platform=<platform> --arch=<arch> [opt
 For example I want to compile a 64-bit `.exe` for Windows, I would type:
 
 ```
-electron-packager . Simple —-platform=win32 —-arch=x64
+electron-packager . HxPro —-platform=win32 —-arch=x64
 ```
