@@ -11,7 +11,7 @@ A scripting language designed to be robust and easy.
 # Build Instructions
 To get started, download the latest source code from Github.
 
-To build [HxPro](https://github.com/alamshafil/HxPro/) you need to install the following:
+To build [HaxPro](https://github.com/alamshafil/HaxPro/) you need to install the following:
 * [`node.js`](https://nodejs.org/)
 * [`electron-packager`](https://github.com/electron/electron-packager)
 
@@ -45,5 +45,5 @@ electron-packager <sourcedir> <appname> --platform=<platform> --arch=<arch> [opt
 For example I want to compile a 64-bit `.exe` for Windows, I would type:
 
 ```
-electron-packager . HxPro —-platform=win32 —-arch=x64
+electron-packager . HaxPro —-platform=win32 —-arch=x64
 ```
