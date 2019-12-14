@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Simple</title>
+        <title>HaxPro</title>
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,8 +30,7 @@
               <div id="window-title">
                 <div id="window-inner">
                   <a class="navbar-brand" href="#">
-                      <img src="logos/logo.png" width="31" height="31" class="d-inline-block align-top" alt="">
-                      <span>Simple</span>
+                      <img src="logos/logo-full.png" width="100" height="30" class="d-inline-block align-top" style=" display: inline-block; vertical-align: center;">
                     </a>
                       <button class="btn btn-dark" onclick="initFS()"><i class="fa fa-plus-square"></i></i> New</button>
                       <button class="btn btn-dark" onclick="saveProject()"><i class="fa fa-save"></i> Save</button>
@@ -69,13 +68,14 @@
           </div>
 
     <div class="pre" style="background-color: #343a40; text-align:center; padding: 70px 0; background: url('logos/intro.png'); background-size: cover;">
-      <div class="card" style="background-color: rgb(59, 59, 59); color: white;">
+      <div class="card" style="background-color: white; color: black;">
         <div class="container">
-          <img width="250" height="95" src="logos/logo-full-white.png"></img>
+          <img width="200" height="60" style="margin-top: 20px; margin-bottom: 15px;" src="logos/logo-full.png"></img>
           <br>
-          <button style="background-color: rgb(59, 59, 59);" class="btn btn-dark" onclick="initFS()"><i class="fa fa-plus-square"></i></i> New</button>
-          <button style="background-color: rgb(59, 59, 59);" class="btn btn-dark" onclick="openProject()"><i class="fa fa-folder-open"></i></i> Open</button>
-          <button style="background-color: rgb(59, 59, 59);" class="btn btn-dark" onclick="compile(editor.getValue(), getData())"><i class="fa fa-cogs"></i> Compile</button>
+          <p style="text-align: center;">version 0.2.0~alpha3</p>
+          <button class="btn btn-light" onclick="initFS()"><i class="fa fa-plus-square"></i></i> New</button>
+          <button class="btn btn-light" onclick="openProject()"><i class="fa fa-folder-open"></i></i> Open</button>
+          <button class="btn btn-light" onclick="compile(editor.getValue(), getData())"><i class="fa fa-cogs"></i> Compile</button>
         </div>
       </div>
     </div>
@@ -121,17 +121,23 @@
                           Terminal</a></li>
                         <li><a style="color:white" href="#console-inner"><i class="fa fa-book" aria-hidden="true"></i>
                           Console</a></li>
-                          <li><a style="color:white" href="#files"><i class="fa fa-book" aria-hidden="true"></i>
+                          <li><a style="color:white" href="#files-inner"><i class="fa fa-book" aria-hidden="true"></i>
                             Files</a></li>
                       </ul>
                       
                       <div id="term-inner"><div class="left" id="term"><iframe id="i-term" style="border: 0; width: 100%; height: 100%;" src="html/term.html"></iframe></div></div>
-                      <div id="console-inner" style="height: 150px; background-color: rgb(46, 46, 46);"><div class="left" style="height: 150px; background-color: rgb(46, 46, 46);" id="console">
-                        <p><font color="red">Error</font> NullPointerExpe - e is not a value!</p>
-                      </div></div> 
-                      <div id="files-inner"><div class="left" id="files">
 
-                      </div></div>
+                      <div id="console-inner" style="height: 150px; background-color: rgb(46, 46, 46);">
+                        <div class="left" style="height: 150px; background-color: rgb(46, 46, 46);" id="console">
+                          <p><font color="red">Error</font> NullPointerExpe - e is not a value!</p>
+                       </div>
+                      </div> 
+
+                      <div id="files-inner" style="height: 150px; background-color: rgb(46, 46, 46);">
+                        <div class="left" style="height: 150px; background-color: rgb(46, 46, 46);" id="files">
+                          <p><font color="red">Error</font>I'm still working on this!</p>
+                       </div>
+                      </div>
                 </div>
           </div>
         </div> 
@@ -256,7 +262,7 @@ dialog.showOpenDialog({
         fs.mkdirSync(path+'/files');
         fs.mkdirSync(path+'/builds');
 
-        fs.writeFile(path+'/code/main.simple', 'use: simple.main \nuse: simple.ui\n\nMain<> \n\n', (err) => {
+        fs.writeFile(path+'/code/main.hax', 'use: haxpro.main \nuse: haxpro.ui\n\nMain<> \n\n', (err) => {
             if(err){
                 console.log("An error ocurred creating the file "+ err.message)
             }
@@ -268,7 +274,7 @@ dialog.showOpenDialog({
             }
         }); 
         
-        fs.readFile(path+'/code/main.simple', 'utf-8', (err, data) => {
+        fs.readFile(path+'/code/main.hax', 'utf-8', (err, data) => {
             if(err){
                 alert("An error ocurred reading the file :" + err.message);
                 return;
@@ -310,7 +316,7 @@ function openProject(){
     
             sessionStorage['project'] = path;
     
-            fs.readFile(path+'/code/main.simple', 'utf-8', (err, data) => {
+            fs.readFile(path+'/code/main.hax', 'utf-8', (err, data) => {
             if(err){
                 alert("An error ocurred reading the file :" + err.message);
                 return;
@@ -338,7 +344,7 @@ function openProject(){
     function saveProject(){
             var path = sessionStorage['project'];
     
-            fs.writeFile(path+'/code/main.simple', editor.getValue(), (err) => {
+            fs.writeFile(path+'/code/main.hax', editor.getValue(), (err) => {
             if(err){
                 alert("An error ocurred creating the file "+ err.message)
             }

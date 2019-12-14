@@ -4,11 +4,11 @@
 function run(dat, html, css, js)
 {
 
-  document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Running <i>main.simple</i>'
+  document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Running <i>main.hax</i>'
 
   setTimeout(function(){document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.'}, 3000);
 
-  if(editor.getValue().includes('use: simple.ui'))
+  if(editor.getValue().includes('use: haxpro.ui'))
   {
   var data = initData(html, css, js)
   } else {
@@ -67,7 +67,7 @@ function initData(h, c, j)
   css = css.replace(/\r/g, "").replace(/\n/g, "");
   js = js.replace(/\r/g, "").replace(/\n/g, "");
 
-  init = init.replace('<!-- [simple.html] -->', html).replace('/* [simple.css] */', css).replace('// [simple.js] //', js);
+  init = init.replace('<!-- [hax.html] -->', html).replace('/* [hax.css] */', css).replace('// [hax.js] //', js);
 
   return init;
 }
@@ -125,7 +125,7 @@ function compile(code)
           
               fs.mkdirSync(destination);
               fs.mkdirSync(res);
-              fs.mkdirSync(res + "simple/");
+              fs.mkdirSync(res + "hax/");
               fs.mkdirSync(res + "files/");
           
               fs_.copy(source, destination, function (err) {
@@ -134,7 +134,7 @@ function compile(code)
                     console.error(err);
                 }
           
-              fs_.copy(dir+'commands.js', res + "simple/commands.js");
+              fs_.copy(dir+'commands.js', res + "hax/commands.js");
               
               fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
                   if (err){
@@ -146,18 +146,18 @@ function compile(code)
           
               html.replace(/\r/g, "").replace(/\n/g, "");
           
-              if(editor.getValue().includes('use: simple.ui'))
+              if(editor.getValue().includes('use: hax.ui'))
               {
-                data = data.replace('<simple></simple>', html);
+                data = data.replace('<hax></hax>', html);
               } else {
-                data = data.replace('<simple></simple>', '');
+                data = data.replace('<hax></hax>', '');
               }
           
-              data = data.replace('simple_app', sessionStorage["app"]);
+              data = data.replace('hax_app', sessionStorage["app"]);
           
-              data = data.replace('<simple.code>', c);
+              data = data.replace('[hax.code]', c);
           
-              fs.writeFile(res + "simple/"+'ui.html', data, (err) => {
+              fs.writeFile(res + "hax/"+'ui.html', data, (err) => {
                 if(err){
                     console.log("An error ocurred creating the file "+ err.message)
                 }
@@ -165,13 +165,13 @@ function compile(code)
           
               var c = code;
           
-              fs.writeFile(res + "simple/"+'main.simple', c, (err) => {
+              fs.writeFile(res + "hax/"+'main.hax', c, (err) => {
                 if(err){
                     console.log("An error ocurred creating the file "+ err.message)
                 }
               });
           
-              bootbox.alert("done!");
+              bootbox.alert("Finished compiling file!");
 
               document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.'
           
@@ -197,7 +197,7 @@ function compile(code)
           
               fs.mkdirSync(destination);
               fs.mkdirSync(res);
-              fs.mkdirSync(res + "simple/");
+              fs.mkdirSync(res + "hax/");
               fs.mkdirSync(res + "files/");
           
               fs_.copy(source, destination, function (err) {
@@ -206,7 +206,7 @@ function compile(code)
                     console.error(err);
                 }
           
-              fs_.copy(dir+'commands.js', res + "simple/commands.js");
+              fs_.copy(dir+'commands.js', res + "hax/commands.js");
               
               fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
                   if (err){
@@ -218,18 +218,18 @@ function compile(code)
           
               html.replace(/\r/g, "").replace(/\n/g, "");
           
-              if(editor.getValue().includes('use: simple.ui'))
+              if(editor.getValue().includes('use: hax.ui'))
               {
-                data = data.replace('<simple></simple>', html);
+                data = data.replace('<hax></hax>', html);
               } else {
-                data = data.replace('<simple></simple>', '');
+                data = data.replace('<hax></hax>', '');
               }
           
-              data = data.replace('simple_app', sessionStorage["app"]);
+              data = data.replace('hax_app', sessionStorage["app"]);
           
-              data = data.replace('<simple.code>', c);
+              data = data.replace('[hax.code]', c);
           
-              fs.writeFile(res + "simple/"+'ui.html', data, (err) => {
+              fs.writeFile(res + "hax/"+'ui.html', data, (err) => {
                 if(err){
                     console.log("An error ocurred creating the file "+ err.message)
                 }
@@ -237,13 +237,13 @@ function compile(code)
           
               var c = code;
           
-              fs.writeFile(res + "simple/"+'main.simple', c, (err) => {
+              fs.writeFile(res + "hax/"+'main.hax', c, (err) => {
                 if(err){
                     console.log("An error ocurred creating the file "+ err.message)
                 }
               });
           
-              bootbox.alert("done!");
+              bootbox.alert("Finished compiling file!");
 
               document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.'
           
@@ -275,10 +275,10 @@ function compile(code)
                 }
 
                 fs.mkdirSync(res);
-                fs.mkdirSync(res + "simple/");
+                fs.mkdirSync(res + "hax/");
                 fs.mkdirSync(res + "files/");
           
-              fs_.copy(dir+'commands.js', res + "simple/commands.js");
+              fs_.copy(dir+'commands.js', res + "hax/commands.js");
               
               fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
                   if (err){
@@ -290,18 +290,18 @@ function compile(code)
           
               html.replace(/\r/g, "").replace(/\n/g, "");
           
-              if(editor.getValue().includes('use: simple.ui'))
+              if(editor.getValue().includes('use: haxpro.ui'))
               {
-                data = data.replace('<simple></simple>', html);
+                data = data.replace('<hax></hax>', html);
               } else {
-                data = data.replace('<simple></simple>', '');
+                data = data.replace('<hax></hax>', '');
               }
           
-              data = data.replace('simple_app', sessionStorage["app"]);
+              data = data.replace('hax_app', sessionStorage["app"]);
           
-              data = data.replace('<simple.code>', c);
+              data = data.replace('[hax.code]', c);
           
-              fs.writeFile(res + "simple/"+'ui.html', data, (err) => {
+              fs.writeFile(res + "hax/"+'ui.html', data, (err) => {
                 if(err){
                     console.log("An error ocurred creating the file "+ err.message)
                 }
@@ -309,13 +309,13 @@ function compile(code)
           
               var c = code;
           
-              fs.writeFile(res + "simple/"+'main.simple', c, (err) => {
+              fs.writeFile(res + "hax/"+'main.hax', c, (err) => {
                 if(err){
                     console.log("An error ocurred creating the file "+ err.message)
                 }
               });
           
-              bootbox.alert("done!");
+              bootbox.alert("Finished compiling file!");
 
               document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.'
           

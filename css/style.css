@@ -182,9 +182,36 @@ body {
   position:absolute;
 }
 
+.toastify {
+  padding: 12px 20px;
+  color: #ffffff;
+  display: inline-block;
+  box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.12), 0 10px 36px -4px rgba(77, 96, 232, 0.3);
+  background: -webkit-linear-gradient(315deg, #73a5ff, #5477f5);
+  background: linear-gradient(135deg, #73a5ff, #5477f5);
+  position: fixed;
+  top: -150px;
+  right: 15px;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.toastify.on { opacity: 1; }
+
 @import url('https://fonts.googleapis.com/css?family=Inconsolata:400,700');
 
 #console {
+  padding: 12px;
+  margin: 0;
+  color: lightgray;
+  overflow: scroll; 
+  font-family: 'pxplus_ibm_vga8regular', monospace;
+  font-size: 14px;
+}
+
+#files {
   padding: 12px;
   margin: 0;
   color: lightgray;
@@ -211,6 +238,10 @@ body {
 
 #console::-webkit-scrollbar-thumb:hover {
   background: #555; 
+}
+
+#output {
+  overflow: hidden;
 }
 
 

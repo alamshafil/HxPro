@@ -1,5 +1,5 @@
 {
-  "name": "simple",
+  "name": "haxpro",
   "version": "0.2.0",
   "description": "A scripting language designed to be robust and easy.",
   "license": "MIT",
@@ -15,6 +15,7 @@
     "electron-updater": "^4.2.0",
     "fs-extra": "^8.1.0",
     "jquery": "^3.4.1",
+    "npm": "^6.13.4",
     "popper.js": "^1.15.0",
     "snyk": "^1.244.0",
     "toastr": "^2.1.4"
@@ -24,9 +25,9 @@
   },
   "snyk": true,
   "build": {
-    "appId": "com.alamshafil.simple",
+    "appId": "com.alamshafil.haxpro",
     "asar": true,
-    "productName": "Simple",
+    "productName": "HaxPro",
     "icon": "logos/logo.png"
   }
 }
