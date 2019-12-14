@@ -1,9 +1,9 @@
-![](https://github.com/alamshafil/simple/blob/master/logos/logo-full-black.png)
+![](https://github.com/alamshafil/HaxPro/blob/master/logos/logo-full.png)
 
 
-[![](https://api.travis-ci.com/alamshafil/simple.svg?branch=master)](https://travis-ci.com/alamshafil/simple)
-[![](https://david-dm.org/alamshafil/simple.svg)](https://david-dm.org/alamshafil/simple)
-[![](https://snyk.io/test/github/alamshafil/simple/badge.svg)](https://snyk.io/test/github/alamshafil/simple)
+[![](https://api.travis-ci.com/alamshafil/HaxPro.svg?branch=master)](https://travis-ci.com/alamshafil/HaxPro)
+[![](https://david-dm.org/alamshafil/HaxPro.svg)](https://david-dm.org/alamshafil/HaxPro)
+[![](https://snyk.io/test/github/alamshafil/HaxPro/badge.svg)](https://snyk.io/test/github/alamshafil/HaxPro)
 [![](https://img.shields.io/twitter/follow/FuriousDevYT?style=social)](https://www.twitter.com/FuriousDevYT)
 
 A scripting language designed to be robust and easy.
