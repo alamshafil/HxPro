@@ -1,9 +1,9 @@
-![](https://github.com/alamshafil/simple/blob/master/logos/logo-full-black.png)
+![](https://github.com/alamshafil/HaxPro/blob/master/logos/logo-full.png)
 
 
-[![](https://api.travis-ci.com/alamshafil/simple.svg?branch=master)](https://travis-ci.com/alamshafil/simple)
-[![](https://david-dm.org/alamshafil/simple.svg)](https://david-dm.org/alamshafil/simple)
-[![](https://snyk.io/test/github/alamshafil/simple/badge.svg)](https://snyk.io/test/github/alamshafil/simple)
+[![](https://api.travis-ci.com/alamshafil/HaxPro.svg?branch=master)](https://travis-ci.com/alamshafil/HaxPro)
+[![](https://david-dm.org/alamshafil/HaxPro.svg)](https://david-dm.org/alamshafil/HaxPro)
+[![](https://snyk.io/test/github/alamshafil/HaxPro/badge.svg)](https://snyk.io/test/github/alamshafil/HaxPro)
 [![](https://img.shields.io/twitter/follow/FuriousDevYT?style=social)](https://www.twitter.com/FuriousDevYT)
 
 A scripting language designed to be robust and easy.
@@ -11,7 +11,7 @@ A scripting language designed to be robust and easy.
 # Build Instructions
 To get started, download the latest source code from Github.
 
-To build [Simple](https://github.com/alamshafil/simple/) you need to install the following:
+To build [HaxPro](https://github.com/alamshafil/HaxPro/) you need to install the following:
 * [`node.js`](https://nodejs.org/)
 * [`electron-packager`](https://github.com/electron/electron-packager)
 
@@ -19,7 +19,7 @@ First install [`node.js`](https://nodejs.org/), you will install [`electron-pack
 
 Once you have installed [`node.js`](https://nodejs.org/) open your terminal and go to where have downloaded the source code.
 
-For example, I downloaded the source to `C:\Users\Admin\Desktop\simple` 
+For example, I downloaded the source to `C:\Users\Admin\Desktop\HxPro` 
 
 I would type the following in the terminal:
 ```
@@ -45,5 +45,5 @@ electron-packager <sourcedir> <appname> --platform=<platform> --arch=<arch> [opt
 For example I want to compile a 64-bit `.exe` for Windows, I would type:
 
 ```
-electron-packager . Simple —-platform=win32 —-arch=x64
+electron-packager . HaxPro —-platform=win32 —-arch=x64
 ```
