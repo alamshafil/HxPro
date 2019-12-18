@@ -484,6 +484,10 @@ function requestFullScreen() {
 
 function browser(){
 
-    $('#win-left').append('<div id="browser"><div class="left" id="browser-inner"> <iframe style="width: 50%; height: 100%; postion: absolute;" src="https://alamshafil.github.io/simple/"></div></div>');
+    $('#win-left').append('<div id="browser"><div class="left" id="browser-inner"> <iframe style="width: 100%; height: 100%; postion: absolute;" src="https://alamshafil.github.io/HaxPro/"></div></div>');
     $('#left-tab').append('<li role="presentation"><a style="color:white" href="#browser" id="tabby-toggle_code" role="tab" aria-controls="browser" tabindex="0"><i class="fas fa-globe"></i> App Store</a></li>');
+}
+
+function getTip() {
+  return "hi"
 }

@@ -37,8 +37,11 @@ const { BrowserWindow } = remote;
         // occurs by means other than button clicks e.g. double-clicking
         // the title bar:
         toggleMaxRestoreButtons();
-        window.on('maximize', toggleMaxRestoreButtons);
-        window.on('unmaximize', toggleMaxRestoreButtons);
+
+        window.addListener('beforeunload', ()=>{
+            window.on('maximize', toggleMaxRestoreButtons);
+            window.on('unmaximize', toggleMaxRestoreButtons);
+          });
 
         closeButton.addEventListener("click", event => {
             window = remote.getCurrentWindow();
