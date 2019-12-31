@@ -1,10 +1,10 @@
 # Site Settings
-title: Simple
+title: HaxPro
 tagline: The Robust language
 email: alamshafild@gmail.com
 description: >
   A scripting language designed to be robust and easy.
-baseurl: "/simple"
+baseurl: "/HaxPro"
 url: "https://alamshafil.github.io/"
 permalink: pretty
 #favicon: /path/to/favicon.png
@@ -50,7 +50,7 @@ defaults:
       path: ""
       type: "posts"
     values:
-      author: "C.S. Rhymes"
+      author: "alamshafil"
       layout: post
       image: https://via.placeholder.com/1200x800
       show_sidebar: true
