@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Home
+title: HaxPro
 subtitle: A scripting language designed to be robust and easy.
 hero_height: is-large
 hero_link: /download/
