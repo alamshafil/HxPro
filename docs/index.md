@@ -5,6 +5,7 @@ subtitle: A scripting language designed to be robust and easy.
 hero_height: is-large
 hero_link: /download/
 hero_link_text: Download Now
+hero_image: hero.png
 show_sidebar: false
 callouts: main_callouts
 ---
