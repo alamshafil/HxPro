@@ -10,71 +10,69 @@ show_sidebar: false
 callouts: main_callouts
 ---
 
-## General page content
+## Getting started
 
-This is the rest of the page content. You can add what you like here.
+First, download the [HaxPro IDE](https://alamshafil.github.io/HaxPro/download) or open your perfered IDE and install the [HaxPro CLI](https://alamshafil.github.io/HaxPro/download).
 
-## Hero Link
 
-If you would like to add a call to action button in the hero then add `hero_link` and `hero_link_text` to the page's frontmatter
+## Create a new project
 
-```yaml
-layout: page
-title: Example Landing Page
-subtitle: This is an example landing page with callouts
-hero_height: is-large
-hero_link: /page-1/
-hero_link_text: Download
+In the HaxPro IDE, press `New.`
+
+![](https://alamshafil.github.io/HaxPro/res/new.png)
+
+Or, open your perfered IDE and a command prompt.
+
+In the command prompt, type
+
+```
+hax init {name}
 ```
 
+Make sure you replace `{name}` with the name of your project!
 
-## Create a callout data file
+Type to start coding!
 
-Create a data file following the below format. The style is for classes to set the background colour and sizes you would like to use of the Bulma hero container for the callouts.
+## Import basic packages
 
-**New in 0.5.7** You can set the height of the callouts in the data file, such as is-small, is-medium or is-large. If unset it will be is-medium by default.
+Start by using `use:` to import some basic packages.
 
-The items have 5 fields, but only the title and subtitle are required. 
-
-```yaml
-style: is-light
-height: is-medium
-items:
-  - title: Read the Docs
-    subtitle: 
-    icon: fa-space-shuttle
-    description: >
-      Use Simple to it's full power by the reading the easy-to-read documentation!
-
-      For example, such as this. 
-    call_to_action_name: Go to Docs
-    call_to_action_link: /page-1/
-  - title: Get extension
-    subtitle: 
-    icon: fa-wrench
-    description: >
-      Simple allows for users to create extensions and can upload them to our extension store!
-
-    call_to_action_name: Go to Store
-    call_to_action_link: /page-2/
-  - title: Visit our GitHub!
-    subtitle: 
-    icon: fab fa-github
-    description: >
-      You can view my GitHub or clone it! Any help and collaboration will help the growth of this project, thank you!
-
-      For example, such as this.
-    call_to_action_name: Go to GitHub
-    call_to_action_link: https://github.com/alamshafil/simple
+```
+use: haxpro.main
+use: haxpro.ui
 ```
 
-## Set the callouts in the frontmatter
+* `use: haxpro.main` imports the basic function and object of the language.
 
-To display the callouts on your page, add a callouts property in the frontmatter and set it to the name of your data file without the extension.
+* `use: haxpro.ui` imports the built-in UI package of HaxPro. The UI can be created in the `UI Editor` in the HaxPro IDE.
 
-```yaml
-layout: page
-title: Simple
-subtitle: The Robust language
-callouts: example_callouts
+Then, we will use the `write:` to print some text to the screen. *Note: the `write:` function comes from `haxpro.ui`*
+
+Finally, we will write `Hello World!`
+
 ```
+use: haxpro.main
+use: haxpro.ui
+
+write: "Hello World!
+```
+
+You're done, let's test it!
+
+## Testing your project
+
+To test your project in the HaxPro IDE, press `Run.`
+
+![](https://alamshafil.github.io/HaxPro/res/run.png)
+
+Or, type in the command prompt:
+
+```
+hax build
+```
+
+You should end up with this:
+
+![](https://alamshafil.github.io/HaxPro/res/hello-world.png)
+
+You just made your first HaxPro app!
