@@ -3,8 +3,8 @@ layout: page
 title: HaxPro
 subtitle: A scripting language designed to be robust and easy.
 hero_height: is-large
-hero_link: /page-1/
-hero_link_text: HaxPro is a scripting language designed to be robust and easy.
+hero_link: /download/
+hero_link_text: Download
 show_sidebar: false
 callouts: example_callouts
 ---
