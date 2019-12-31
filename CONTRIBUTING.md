@@ -1,10 +1,10 @@
-## How to contribute to Simple!
+## How to contribute to HaxPro!
 
 #### **Did you find a bug?**
 
-* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/alamshafil/simple/issues).
+* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/alamshafil/HaxPro/issues).
 
-* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/alamshafil/simple/issues/new).
+* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/alamshafil/HaxPro/issues/new).
 
 #### **Did you write a patch that fixes a bug?**
 
@@ -17,13 +17,13 @@
 
 #### **Do you intend to add a new feature or change an existing one?**
 
-* Suggest your change by [creating an issue](https://github.com/alamshafil/simple/issues/new) and start writing code.
+* Suggest your change by [creating an issue](https://github.com/alamshafil/HaxPro/issues/new) and start writing code.
 
 #### **Do you have questions about the source code?**
 
-* Ask any question about by [creating an issue](https://github.com/alamshafil/simple/issues/new) and explain your question in detail.
+* Ask any question about by [creating an issue](https://github.com/alamshafil/HaxPro/issues/new) and explain your question in detail.
 
-I have very little time to work on Simple, with the community's help, we can do this.
+I have very little time to work on HaxPro, with the community's help, we can do this.
 
 Thanks! :heart: :heart: :heart:
 
