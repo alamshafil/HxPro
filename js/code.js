@@ -206,7 +206,7 @@ function compile(code)
                     console.error(err);
                 }
           
-              fs_.copy(dir+'commands.js', res + "hax/commands.js");
+              fs_.copy(dir+'/js/commands.js', res + "hax/commands.js");
               
               fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
                   if (err){
@@ -278,7 +278,7 @@ function compile(code)
                 fs.mkdirSync(res + "hax/");
                 fs.mkdirSync(res + "files/");
           
-              fs_.copy(dir+'commands.js', res + "hax/commands.js");
+              fs_.copy(dir+'/js/commands.js', res + "hax/commands.js");
               
               fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
                   if (err){
