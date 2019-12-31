@@ -12,7 +12,7 @@ callouts: main_callouts
 
 ## Getting started
 
-First, download the [HaxPro IDE](https://alamshafil.github.io/HaxPro/download) or open your perfered IDE and install the [HaxPro CLI](https://alamshafil.github.io/HaxPro/download).
+First, download the [HaxPro IDE](https://alamshafil.github.io/HaxPro/download) or open your preferred IDE and install the [HaxPro CLI](https://alamshafil.github.io/HaxPro/download).
 
 
 ## Create a new project
@@ -21,7 +21,7 @@ In the HaxPro IDE, press `New.`
 
 ![](https://alamshafil.github.io/HaxPro/res/new.png)
 
-Or, open your perfered IDE and a command prompt.
+Or, open your preferred IDE and a command prompt.
 
 In the command prompt, type
 
@@ -54,7 +54,7 @@ Finally, we will write `Hello World!`
 use: haxpro.main
 use: haxpro.ui
 
-write: "Hello World!
+write: "Hello World!"
 ```
 
 You're done, let's test it!
