@@ -6,10 +6,10 @@ categories: development
 description: "Happy 2020 Everyone!"
 image: 'https://alamshafil.github.io/HaxPro/img/fireworks.jpg'
 published: true
-canonical_url: https://alamshafil.github.io/HaxPro/blog/2020/1/1/new-years.html
+canonical_url: https://alamshafil.github.io/HaxPro/development/2020/1/1/new-years.html
 ---
 
-# Happy New Years
+# 2020
 First, I want to tell everyone happy 2020, and a new decade! I cannot belive that we just finished the 2010s, they left it behind. Time goes by to fast.
 
 # The last decade
