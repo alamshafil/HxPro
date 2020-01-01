@@ -4,9 +4,9 @@ title:  "Why simple is trash"
 date:   2019-11-18 10:50:07
 categories: development
 description: "HaxorTube is the best"
-image: 'https://alamshafil.github.io/simple/img/haxor.png'
+image: 'https://alamshafil.github.io/HaxPro/img/haxor.png'
 published: true
-canonical_url: https://alamshafil.github.io/simple/development/2019/11/18/why-simple-is-trash.html
+canonical_url: https://alamshafil.github.io/HaxPro/development/2019/11/18/why-simple-is-trash.html
 ---
 
 There are many ways to make a website, but Simple is trash for it.

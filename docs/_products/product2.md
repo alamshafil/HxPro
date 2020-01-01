@@ -2,5 +2,5 @@
 title: HaxPro CLI
 subtitle: This CLI allows you to install packages and use your preferred IDE.
 layout: product
-image: https://via.placeholder.com/640x480
+image: https://alamshafil.github.io/HaxPro/res/cli-download.png
 ---

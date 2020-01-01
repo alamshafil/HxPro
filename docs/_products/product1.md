@@ -1,6 +1,6 @@
 ---
 title: HaxPro IDE
-subtitle: This IDE was created to easily devlop apps with a built-in UI editor and sytanx checking.
+subtitle: This IDE was created to easily devlop apps with a built-in UI editor.
 layout: product
-image: https://via.placeholder.com/640x480
+image: https://alamshafil.github.io/HaxPro/res/ide-download.png
 ---
