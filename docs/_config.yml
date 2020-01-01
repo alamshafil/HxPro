@@ -50,7 +50,7 @@ defaults:
       path: ""
       type: "posts"
     values:
-      author: "alamshafil"
+      author: "Shafil Alam"
       layout: post
       image: https://via.placeholder.com/1200x800
       show_sidebar: true
