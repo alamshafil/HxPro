@@ -1,8 +1,6 @@
-    - name: Home
-      link: /
     - name: Docs
       link: /#
-      items:
+      dropdown:
         - name: Page With Sidebar 
           link: /page-1/
         - name: Page Without Sidebar
@@ -21,7 +19,7 @@
           link: /landing/
     - name: Tutorials
       link: /#
-      items:
+      dropdown:
         - name: Page With Sidebar 
           link: /page-1/
         - name: Page Without Sidebar
