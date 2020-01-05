@@ -1,6 +1,6 @@
 {
         "apps": [
-            {"name":"fake", "path":"apps.haxor.com/simple/fake_1.2/fake.js"},
-            {"name":"stuff", "path":"https://alamshafil.github.io/HaxPro/store/data/package.hax"}
+            {"name":"test", "path":"https://alamshafil.github.io/HaxPro/store/data/package.hax"},
+            {"name":"test2", "path":"https://alamshafil.github.io/HaxPro/store/data/package.hax"}
         ]
 }
