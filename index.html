@@ -19,6 +19,8 @@
 
         <link rel="stylesheet" href="css/grapes-webpage.css">
 
+        <link rel="stylesheet" href="node_modules/xterm/css/xterm.css">
+
     </head>
 
     <body> 
@@ -124,11 +126,14 @@
                             Files</a></li>
                       </ul>
                       
-                      <div id="term-inner"><div class="left" id="term"><iframe id="i-term" style="border: 0; width: 100%; height: 100%;" src="html/term.html"></iframe></div></div>
+                      <div id="term-inner" style="height: 130px;">
+                        <div style="height: 130px;" class="left" id="term">
+                        </div>
+                      </div>
 
                       <div id="console-inner" style="height: 150px; background-color: rgb(46, 46, 46);">
                         <div class="left" style="height: 150px; background-color: rgb(46, 46, 46);" id="console">
-                          <p><font color="red">Error</font> NullPointerExpe - e is not a value!</p>
+                          <p><font color="red">Error</font> HaxProInvaild - 'haxpro.main' is a invaild object</p>
                        </div>
                       </div> 
 
@@ -168,6 +173,14 @@
       </div>
 
         <script>window.$ = window.jQuery = require('jquery');</script>
+
+        <!--<script>window.xterm = require('xterm');</script>-->
+
+        <script>window.os = require('os');</script>
+
+        <script>window.pty = require('node-pty');</script>
+
+        <script src="node_modules/xterm/lib/xterm.js"></script>
   
         <script src="js/code.js"></script>
         
@@ -221,6 +234,30 @@
     $('#console').append(`<p><font color="red">Error </font>${error}</p>`);
     return false;
 };
+
+var term = new Terminal.Terminal({
+  theme: {
+    background: 'rgb(46, 46, 46)'
+  },
+  fontSize: 12,
+  experimentalCharAtlas: 'dynamic'
+});
+
+term.open(document.getElementById('term'));
+
+const shell = process.env[os.platform() === 'win32' ? 'COMSPEC' : 'SHELL'];
+const ptyProcess = pty.spawn(shell, [], {
+  name: 'xterm-color',
+  cols: term.cols,
+  rows: term.rows,
+  cwd: process.cwd(),
+  env: process.env
+});
+
+term.onData(data => ptyProcess.write(data));
+ptyProcess.on('data', function (data) {
+  term.write(data);
+});
 
 const { remote } = require('electron');
 const { BrowserWindow } = remote;
