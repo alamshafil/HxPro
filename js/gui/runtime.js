@@ -1,4 +1,4 @@
-function command_gui(args)
+function command(args)
 {
 
   if(args[0] == "write:")

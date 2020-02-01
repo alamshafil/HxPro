@@ -1,8 +1,0 @@
-use: simple.apis.js
-use: simple.main 
-use: simple.ui
-
-Main<> 
-
-write: "Welcome to my Simple App!"
-ui.buttons.send.clicked: toast: ui.inputs.test.value
