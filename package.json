@@ -11,25 +11,21 @@
   },
   "author": "Shafil Alam",
   "dependencies": {
-    "electron-rebuild": "^1.8.8",
+    "electron-rebuild": "^1.10.0",
     "electron-updater": "^4.2.0",
     "fs-extra": "^8.1.0",
     "jquery": "^3.4.1",
     "monaco-editor": "^0.19.3",
     "node-pty": "^0.9.0",
-    "npm": "^6.13.4",
-<<<<<<< HEAD
-    "snyk": "^1.260.0",
-=======
+    "npm": "^6.13.7",
     "popper.js": "^1.15.0",
-    "snyk": "^1.278.2",
->>>>>>> 494afb7b075d31cb59640394b10d61c8343298de
+    "snyk": "^1.290.2",
     "toastr": "^2.1.4",
-    "xterm": "^4.0.0",
+    "xterm": "^4.4.0",
     "xterm-addon-fit": "^0.3.0"
   },
   "devDependencies": {
-    "electron": "^5.0.7"
+    "electron": "^5.0.13"
   },
   "snyk": true,
   "build": {
