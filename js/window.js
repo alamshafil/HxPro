@@ -46,7 +46,6 @@ const { BrowserWindow } = remote;
         closeButton.addEventListener("click", event => {
             window = remote.getCurrentWindow();
             window.close();
-            alert("hi")
         });
 
         function toggleMaxRestoreButtons() {

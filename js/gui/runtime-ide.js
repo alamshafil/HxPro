@@ -7,17 +7,18 @@ function run_gui(dat, html, css, js)
 
   if(editor.getValue().includes('use: haxpro.ui'))
   {
-  var data = initData_gui(html, css, js)
+  //var data = initData_gui(html, css, js)
+  data = '';
   } else {
     data = 'Using basic rendering window. <br>'
   }
 
-  $('#window').css('background', 'white');
+  $('#output').css('background', 'white');
 
   $('#console').empty();
-  $('#window').empty();
-  $('#window').off();
-  $('#window').append(data);
+  $('#output').empty();
+  $('#output').off();
+  $('#output').append(data);
   runEditor_gui(dat);
 }
 
@@ -116,7 +117,7 @@ function compile_gui(code)
               document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Compiling to Windows...'
            
               var dir = require('electron').remote.app.getAppPath() + '/';
-              var source = dir + '/data/nw-win'
+              var source = 'C:\\Program Files (x86)\\HaxPro SDK\\compilers-win\\gui\\nw-win'
               var destination = sessionStorage["project"] + `/builds/win32_${Math.random().toString(36).slice(2)}/`
               var res = destination + "res/";
           
@@ -138,7 +139,8 @@ function compile_gui(code)
                     return;
                   }
           
-                  var html = initData(ui.getHtml(), ui.getCss(), ui.getJs());
+                  //var html = initData_gui(ui.getHtml(), ui.getCss(), ui.getJs());
+                  var html = '';
           
               html.replace(/\r/g, "").replace(/\n/g, "");
           
@@ -187,7 +189,7 @@ function compile_gui(code)
               document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Compiling to Linux...'
            
               var dir = require('electron').remote.app.getAppPath() + '/';
-              var source = dir + '/data/nw-linux'
+              var source = dir + 'C:\\Program Files (x86)\\HaxPro SDK\\compilers-linux\\gui\\nw-linux'
               var destination = sessionStorage["project"] + `/builds/linux_${Math.random().toString(36).slice(2)}/`
               var res = destination + "res/";
           
@@ -209,7 +211,7 @@ function compile_gui(code)
                       return;
                   }
           
-                  var html = initData(ui.getHtml(), ui.getCss(), ui.getJs());
+                  var html = initData_gui(ui.getHtml(), ui.getCss(), ui.getJs());
           
               html.replace(/\r/g, "").replace(/\n/g, "");
           
@@ -257,7 +259,7 @@ function compile_gui(code)
               document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Compiling to macOS...'
            
               var dir = require('electron').remote.app.getAppPath() + '/';
-              var source = dir + '/data/nw-mac/'
+              var source = dir + 'C:\\Program Files (x86)\\HaxPro SDK\\compilers-mac\\gui\\nw-mac'
               var destination = sessionStorage["project"] + `/builds/mac_${Math.random().toString(36).slice(2)}/`
               var res = destination + "/simple_runtime_nw.app/Contents/Frameworks/nwjs Framework.framework/Versions/78.0.3904.97/Resources/res/";
 
@@ -280,7 +282,7 @@ function compile_gui(code)
                     return;
                   }
           
-                  var html = initData(ui.getHtml(), ui.getCss(), ui.getJs());
+                  var html = initData_gui(ui.getHtml(), ui.getCss(), ui.getJs());
           
               html.replace(/\r/g, "").replace(/\n/g, "");
           

@@ -23,6 +23,10 @@
 
         <link rel="stylesheet" data-name="vs/editor/editor.main" href="node_modules/monaco-editor/min/vs/editor/editor.main.css">
 
+
+<link type="text/css" rel="stylesheet" href="https://golden-layout.com/assets/css/goldenlayout-base.css" />
+<link type="text/css" rel="stylesheet" href="https://golden-layout.com/assets/css/goldenlayout-dark-theme.css" />
+
     </head>
 
     <body> 
@@ -36,12 +40,13 @@
                   <a style="margin-right: 10px;">
                       <img src="logos/logo-full.png" width="100" height="30" style=" display: inline-block; vertical-align: center;">
                     </a>
-                      <button class="btn btn-dark" onclick="initFS()"><i class="fa fa-plus-square"></i></i> New</button>
-                      <button class="btn btn-dark" onclick="saveProject()"><i class="fa fa-save"></i> Save</button>
-                      <button class="btn btn-dark" onclick="openProject()"><i class="fa fa-folder-open"></i></i> Open</button>
-                      <button id="run-btn" class="btn btn-dark" onclick="if(sessionStorage['type'] == 'gui'){if(editor.getValue().includes('use: haxpro.ui')){run_gui(editor.getValue(), ui.getHtml(), ui.getCss(), ui.getJs())} else {run_gui(editor.getValue())}} else if(sessionStorage['type'] == 'cmd'){}"><i class="fa fa-wrench"></i> Run</button>
-                      <button class="btn btn-dark" onclick="if(sessionStorage['type'] == 'gui'){compile_gui(editor.getValue())} else if(sessionStorage['type'] == 'cmd'){}"><i class="fa fa-cogs"></i> Compile</button>
-                        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <button class="btn btn-dark btn-flat" onclick="initFS()"><i class="fa fa-plus-square"></i></i> New</button>
+                      <button class="btn btn-dark btn-flat" onclick="saveProject()"><i class="fa fa-save"></i> Save</button>
+                      <button class="btn btn-dark btn-flat" onclick="openProject()"><i class="fa fa-folder-open"></i></i> Open</button>
+                      <!--Fix-->
+                      <button id="run-btn" class="btn btn-dark btn-flat" onclick="if(sessionStorage['type'] == 'gui'){if(editor.getValue().includes('use: haxpro.ui')){run_gui(editor.getValue(), '','','','')} else {run_gui(editor.getValue())}} else if(sessionStorage['type'] == 'cmd'){}"><i class="fa fa-wrench"></i> Run</button>
+                      <button class="btn btn-dark btn-flat" onclick="if(sessionStorage['type'] == 'gui'){compile_gui(editor.getValue())} else if(sessionStorage['type'] == 'cmd'){}"><i class="fa fa-cogs"></i> Compile</button>
+                        <button class="btn btn-dark dropdown-toggle btn-flat" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fa fa-ellipsis-h"></i> More
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -84,92 +89,129 @@
       </div>
     </div>
 
-    <div class="content">
-      <div id="win-left" class="left">
-          <div id="collapse" style="float: right; margin: auto; padding-right: 10px; color: white; padding: 2px;">
-            <button style="color: white;" class="btn btn-darker shadow-none" onclick="collapse()"><i class="fa fa-angle-right"></i></button>
-          </div>
-          <ul left-tabs id="left-tab">
-              <li><a style="color:white" data-tabby-default href="#code" href="#code"><i class="fa fa-code" aria-hidden="true"></i>
-                Code Editor</a></li>
+  <div class="sidenav" style="display: none;">
+    <span onclick="openTab(event, 'code')"><i class="fas fa-code"></i></span>
+    <span onclick="openTab(event, 'ui')"><i class="fas fa-pen"></i></span>
+    <span onclick="openTab(event, 'output')"><i class="fas fa-wrench"></i></span>
+    <span onclick="openTab(event, 'git')"><i class="fas fa-code-branch"></i></span>
+    <span onclick="openTab(event, 'docs')"><i class="fas fa-book"></i></span>
+    <span onclick="openTab(event, 'apps')"><i class="fas fa-store"></i></span>
+    <span onclick="openTab(event, 'settings')"><i class="fas fa-cog"></i></span>
+    <span onclick="openTab(event, 'debug')"><i class="fas fa-bug"></i></span>
+  </div>
 
-      </div>
-
-      <div id="code"><div class="left" id="editor"></div></div>
-            
-        <div id="win-right" class="right">
+    <div class="content" style="display: none;">
+          
           <div id="main">  
-              <ul right-tabs id="right-tab">
-                  <li><a style="color:white" data-tabby-default href="#output"><i class="fa fa-terminal" aria-hidden="true"></i>
-                    Output</a></li>
-                  <li><a style="color:white" href="#doc"><i class="fa fa-book" aria-hidden="true"></i>
-                    Docs</a></li>
-                </ul>
-                
-                <div id="output" style="width:100%; height:100%"><div class="left" style="height: calc(100% - 268px); position: absolute; background: rgb(46, 46, 46)" id="window"> <figure style="text-align:center; padding: 70px 0;">
-                    <i class="fa fa-code" style="font-size: 50px; color: grey;"></i>
-                    <figcaption style="color:gray"><i>Press 'Run' to see your project here.</i></figcaption>
-                  </figure> 
-                </div>
+
+            <div id="code" class="tabcontent" style="display: block;"></div>
+          
+            <div id="ui" class="tabcontent">
+              <h3>UI</h3>
+            </div>
+            
+            <div id="output" class="tabcontent">
+              <div style="background: rgb(46, 46, 46); height: 100%;" id="window"> <figure style="text-align:center; padding: 70px 0;">
+                <i class="fa fa-code" style="font-size: 50px; color: grey;"></i>
+                <figcaption style="color:gray"><i>Press 'Run' to see your project here.</i></figcaption>
+                </figure> 
               </div>
-                
-                <div id="doc"><div class="left" id="docs"></div></div>  
+            </div>
 
-                <div class="output">
-                    <ul term-tabs id="term-tab">
-                        <li><a style="color:white" data-tabby-default href="#term-inner"><i class="fa fa-terminal" aria-hidden="true"></i>
-                          Terminal</a></li>
-                        <li><a style="color:white" href="#console-inner"><i class="fa fa-book" aria-hidden="true"></i>
-                          Console</a></li>
-                          <li><a style="color:white" href="#files-inner"><i class="fa fa-book" aria-hidden="true"></i>
-                            Files</a></li>
-                      </ul>
-                      
-                      <div id="term-inner" style="height: 130px;">
-                        <div style="height: 130px;" class="left" id="term">
-                        </div>
-                      </div>
+            <div id="git" class="tabcontent">
+              <div style="background: rgb(46, 46, 46); height: 100%;" id="window"> <figure style="text-align:center; padding: 70px 0;">
+                <i class="fa fa-code" style="font-size: 50px; color: grey;"></i>
+                <figcaption style="color:gray"><i>Git is coming soon</i></figcaption>
+                </figure> 
+              </div>
+            </div>
+            
+            
+            <div id="docs" class="tabcontent">
+              <div style="background: rgb(46, 46, 46); height: 100%;" id="window"> <figure style="text-align:center; padding: 70px 0;">
+                <i class="fa fa-book" style="font-size: 50px; color: grey;"></i>
+                <figcaption style="color:gray"><i>Docs will be uploaded soon</i></figcaption>
+                </figure> 
+              </div>
+            </div>
+            
+            <div id="apps" class="tabcontent">
+              <iframe id="webview" src="https://alamshafil.github.io/HaxPro/store"></iframe>
+            </div>
 
-                      <div id="console-inner" style="height: 150px; background-color: rgb(46, 46, 46);">
-                        <div class="left" style="height: 150px; background-color: rgb(46, 46, 46);" id="console">
-                          <p><font color="red">Error</font> HaxProInvaild - 'haxpro.main' is a invaild object</p>
-                       </div>
-                      </div> 
+            <div id="settings" class="tabcontent">
+              <div style="background: rgb(46, 46, 46); height: 100%;" id="window"> <figure style="text-align:center; padding: 70px 0;">
+                <i class="fa fa-cog" style="font-size: 50px; color: grey;"></i>
+                <figcaption style="color:gray"><i>I didn't make Settings yet...</i></figcaption>
+                </figure> 
+              </div>
+            </div>
 
-                      <div id="files-inner" style="height: 150px; background-color: rgb(46, 46, 46);">
-                        <div class="left" style="height: 150px; background-color: rgb(46, 46, 46);" id="files">
-                          <p><font color="red">Error</font> I'm still working on this!</p>
-                       </div>
-                      </div>
-                </div>
+            <div id="debug" class="tabcontent">
+              <div style="background: rgb(46, 46, 46); height: 100%;" id="window"> <figure style="text-align:center; padding: 70px 0;">
+                <i class="fa fa-cog" style="font-size: 50px; color: grey;"></i>
+                <figcaption style="color:gray"><i>wat</i></figcaption>
+                </figure> 
+              </div>
+            </div>
+
+
           </div>
         </div> 
-    </div>  
+    </div> 
 
-    <div id='cntnr'>
-        <ul id='items'>
-          <li onclick=" var sel = editor.selection.toJSON(); // save selection
-          document.execCommand('copy');
-          editor.selection.fromJSON(sel); // restore selection">Copy</li>
-          <li onclick=" var sel = editor.selection.toJSON(); // save selection
-          document.execCommand('paste');
-          editor.selection.fromJSON(sel); // restore selection">Paste</li>
-          <li onclick=" var sel = editor.selection.toJSON(); // save selection
-          document.execCommand('cut');
-          editor.selection.fromJSON(sel); // restore selection">Delete</li>  
-        </ul>
-        <hr />
-        <ul id="items">
-          <li>New</li>
-          <li>Open</li>
-          <li>Save</li>
-        </ul>
-        <hr />
-        <ul id='items'>
-          <li>Run</li>
-          <li>Compile</li>  
-        </ul>
-      </div>
+        
+  <script>window.$ = window.jQuery = require('jquery');</script>
+  <script>window.golden = require('golden-layout');</script>
+
+  <script>
+  var config = {"settings":{"hasHeaders":true,"constrainDragToContainer":true,"reorderEnabled":true,"selectionEnabled":false,"popoutWholeStack":false,"blockedPopoutsThrowError":true,"closePopoutsOnUnload":true,"showPopoutIcon":true,"showMaximiseIcon":true,"showCloseIcon":true,"responsiveMode":"onload","tabOverlapAllowance":0,"reorderOnTabMenuClick":true,"tabControlOffset":10},"dimensions":{"borderWidth":5,"borderGrabWidth":15,"minItemHeight":10,"minItemWidth":10,"headerHeight":20,"dragProxyWidth":300,"dragProxyHeight":200},"labels":{"close":"close","maximise":"maximise","minimise":"minimise","popout":"open in new window","popin":"pop in","tabDropdown":"additional tabs"},"content":[{"type":"column","isClosable":true,"reorderEnabled":true,"title":"","content":[{"type":"stack","width":100,"height":80.34800409416582,"isClosable":true,"reorderEnabled":true,"title":"","activeItemIndex":0,"content":[{"type":"component","componentName":"Code Editor","componentState":{"label":"code"},"isClosable":true,"reorderEnabled":true,"title":"Code Editor"}]},{"type":"stack","header":{},"isClosable":true,"reorderEnabled":true,"title":"","activeItemIndex":0,"height":19.651995905834184,"content":[{"type":"component","componentName":"Terminal","componentState":{"label":"term"},"isClosable":true,"reorderEnabled":true,"title":"Terminal"},{"type":"component","componentName":"Errors","componentState":{"label":"error"},"isClosable":true,"reorderEnabled":true,"title":"Errors"}]}]}],"isClosable":true,"reorderEnabled":true,"title":"","openPopouts":[],"maximisedItemId":null}
+
+
+var myLayout = new golden( config, $('#code') );
+
+myLayout.registerComponent( 'Code Editor', function( container, componentState ){
+container.getElement().html( '<div id="editor">' );
+});
+
+myLayout.registerComponent( 'Terminal', function( container, componentState ){
+container.getElement().html( '<div style="height: 130px;" class="left" id="term"></div></div>' );
+});
+
+myLayout.registerComponent( 'Errors', function( container, componentState ){
+container.getElement().html( '<div id="console-inner" style="height: 150px; background-color: rgb(46, 46, 46);"> <div class="left" style="height: 150px; background-color: rgb(46, 46, 46);" id="console"> <p><font color="red">Error</font> HaxProInvaild - haxpro.main is a invaild object</p> </div> </div> ' );
+});
+
+
+myLayout.init();
+
+
+$(window).resize(function () {
+myLayout.updateSize($("#code").width(), $("#code").height());
+});
+
+editor.onKeyDown(function(){
+              updateBar();
+          });
+
+          function openTab(evt, TabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(TabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+  </script>
+
+
+
+
 
         <script>window.$ = window.jQuery = require('jquery');</script>
 
@@ -178,6 +220,8 @@
         <script>window.os = require('os');</script>
 
         <script>window.pty = require('node-pty');</script>
+
+        <script>window.golden = require('golden-layout');</script>
 
         <script src="node_modules/xterm/lib/xterm.js"></script>
   
@@ -211,6 +255,8 @@
 
         <script src="js/bootbox.js"></script>
 
+        <script src="js/mdb.js"></script>
+
         <script src="js/grapes.js"></script>
 
         <script src="js/grapes-webpage.js"></script>
@@ -230,7 +276,11 @@
       
         <script>
           amdRequire.config({
+            // local build
             baseUrl: 'node_modules/monaco-editor/min'
+
+            // public build
+            //baseUrl: "resources/app.asar/node_modules/monaco-editor/min"
           });
       
           // workaround monaco-css not understanding the environment
@@ -243,120 +293,124 @@
 
             monaco.languages.register({ id: 'haxpro' });
 
-            // Register a tokens provider for the language
-            
-
             function getToken() {
-              // Create your own language definition here
-              // You can safely look at other samples without losing modifications.
-              // Modifications are not saved on browser refresh/close though -- copy often!
               return {
-                // Set defaultToken to invalid to see what you do not tokenize yet
-                // defaultToken: 'invalid',
+                  // Set defaultToken to invalid to see what you do not tokenize yet
+                  // defaultToken: 'invalid',
 
-                keywords: [
-                  'use:', 'write:', 'math:'
-                ],
+                  keywords: [
+                    'abstract', 'continue', 'for', 'new', 'switch', 'assert', 'goto', 'do',
+                    'if', 'private', 'this', 'break', 'protected', 'throw', 'else', 'public',
+                    'enum', 'return', 'catch', 'try', 'interface', 'static', 'class',
+                    'finally', 'const', 'super', 'while', 'true', 'false'
+                  ],
 
-                operators: [
-                  '<>', '()', '{}', '+', '-', '*', '/', '^'
-                ],
+                  typeKeywords: [
+                    'boolean', 'double', 'byte', 'int', 'short', 'char', 'void', 'long', 'float'
+                  ],
 
-                // we include these common regular expressions
-                symbols:  /[=><!~?:&|+\-*\/\^%]+/,
+                  operators: [
+                    '=', '>', '<', '!', '~', '?', ':', '==', '<=', '>=', '!=',
+                    '&&', '||', '++', '--', '+', '-', '*', '/', '&', '|', '^', '%',
+                    '<<', '>>', '>>>', '+=', '-=', '*=', '/=', '&=', '|=', '^=',
+                    '%=', '<<=', '>>=', '>>>='
+                  ],
 
-               // C# style strings
-                escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
+                  // we include these common regular expressions
+                  symbols:  /[=><!~?:&|+\-*\/\^%]+/,
 
-              // The main tokenizer for our languages
-              tokenizer: {
-                root: [
-                  // identifiers and keywords
-                  [/[a-z_$][\w$]*/, { cases: { '@typeKeywords': 'keyword',
-                                              '@keywords': 'keyword',
-                                              '@default': 'identifier' } }],
-                  [/[A-Z][\w\$]*/, 'type.identifier' ],  // to show class names nicely
+                  // C# style strings
+                  escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
 
-                  // whitespace
-                  { include: '@whitespace' },
+                  // The main tokenizer for our languages
+                  tokenizer: {
+                    root: [
+                      // identifiers and keywords
+                      [/[a-z_$][\w$]*/, { cases: { '@typeKeywords': 'keyword',
+                                                  '@keywords': 'keyword',
+                                                  '@default': 'identifier' } }],
+                      [/[A-Z][\w\$]*/, 'type.identifier' ],  // to show class names nicely
 
-                  // delimiters and operators
-                  [/[{}()\[\]]/, '@brackets'],
-                  [/[<>](?!@symbols)/, '@brackets'],
-                  [/@symbols/, { cases: { '@operators': 'operator',
-                                          '@default'  : '' } } ],
+                      // whitespace
+                      { include: '@whitespace' },
 
-                  // @ annotations.
-                  // As an example, we emit a debugging log message on these tokens.
-                  // Note: message are supressed during the first load -- change some lines to see them.
-                  [/@\s*[a-zA-Z_\$][\w\$]*/, { token: 'annotation', log: 'annotation token: $0' }],
+                      // delimiters and operators
+                      [/[{}()\[\]]/, '@brackets'],
+                      [/[<>](?!@symbols)/, '@brackets'],
+                      [/@symbols/, { cases: { '@operators': 'operator',
+                                              '@default'  : '' } } ],
 
-                  // numbers
-                  [/\d*\.\d+([eE][\-+]?\d+)?/, 'number.float'],
-                  [/0[xX][0-9a-fA-F]+/, 'number.hex'],
-                  [/\d+/, 'number'],
+                      // @ annotations.
+                      // As an example, we emit a debugging log message on these tokens.
+                      // Note: message are supressed during the first load -- change some lines to see them.
+                      [/@\s*[a-zA-Z_\$][\w\$]*/, { token: 'annotation', log: 'annotation token: $0' }],
 
-                  // delimiter: after number because of .\d floats
-                  [/[;,.]/, 'delimiter'],
+                      // numbers
+                      [/\d*\.\d+([eE][\-+]?\d+)?/, 'number.float'],
+                      [/0[xX][0-9a-fA-F]+/, 'number.hex'],
+                      [/\d+/, 'number'],
 
-                  // strings
-                  [/"([^"\\]|\\.)*$/, 'string.invalid' ],  // non-teminated string
-                  [/"/,  { token: 'string.quote', bracket: '@open', next: '@string' } ],
+                      // delimiter: after number because of .\d floats
+                      [/[;,.]/, 'delimiter'],
 
-                  // characters
-                  [/'[^\\']'/, 'string'],
-                  [/(')(@escapes)(')/, ['string','string.escape','string']],
-                  [/'/, 'string.invalid']
-                ],
+                      // strings
+                      [/"([^"\\]|\\.)*$/, 'string.invalid' ],  // non-teminated string
+                      [/"/,  { token: 'string.quote', bracket: '@open', next: '@string' } ],
 
-                comment: [
-                  [/[^\/*]+/, 'comment' ],
-                  [/\/\*/,    'comment', '@push' ],    // nested comment
-                  ["\\*/",    'comment', '@pop'  ],
-                  [/[\/*]/,   'comment' ]
-                ],
+                      // characters
+                      [/'[^\\']'/, 'string'],
+                      [/(')(@escapes)(')/, ['string','string.escape','string']],
+                      [/'/, 'string.invalid']
+                    ],
 
-                string: [
-                  [/[^\\"]+/,  'string'],
-                  [/@escapes/, 'string.escape'],
-                  [/\\./,      'string.escape.invalid'],
-                  [/"/,        { token: 'string.quote', bracket: '@close', next: '@pop' } ]
-                ],
+                    comment: [
+                      [/[^\/*]+/, 'comment' ],
+                      [/\/\*/,    'comment', '@push' ],    // nested comment
+                      ["\\*/",    'comment', '@pop'  ],
+                      [/[\/*]/,   'comment' ]
+                    ],
 
-                whitespace: [
-                  [/[ \t\r\n]+/, 'white'],
-                  [/\/\*/,       'comment', '@comment' ],
-                  [/\/\/.*$/,    'comment'],
-                ],
-              },
-              };  
+                    string: [
+                      [/[^\\"]+/,  'string'],
+                      [/@escapes/, 'string.escape'],
+                      [/\\./,      'string.escape.invalid'],
+                      [/"/,        { token: 'string.quote', bracket: '@close', next: '@pop' } ]
+                    ],
+
+                    whitespace: [
+                      [/[ \t\r\n]+/, 'white'],
+                      [/\/\*/,       'comment', '@comment' ],
+                      [/\/\/.*$/,    'comment'],
+                    ],
+                  },
+                };
 
             }
+
+                        
+            monaco.languages.setMonarchTokensProvider('haxpro', getToken());
 
             // Register a completion item provider for the new language
             monaco.languages.registerCompletionItemProvider('haxpro', {
               provideCompletionItems: () => {
                 var suggestions = [{
-                  label: 'simpleText',
-                  kind: monaco.languages.CompletionItemKind.Text,
-                  insertText: 'simpleText'
-                }, {
-                  label: 'testing',
-                  kind: monaco.languages.CompletionItemKind.Keyword,
-                  insertText: 'testing(${1:condition})',
-                  insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
-                }, {
-                  label: 'ifelse',
+                  label: 'use:',
                   kind: monaco.languages.CompletionItemKind.Function,
-                  insertText: [
-                    'if (${1:condition}) {',
-                    '\t$0',
-                    '} else {',
-                    '\t',
-                    '}'
-                  ].join('\n'),
-                  insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                  documentation: 'The Lodash library exported as Node.js modules.'
+                  detail: 'function',
+                  insertText: 'use:',
+                  documentation: 'Imports a HaxPro extension.\nExample: use: haxpro.main'
+                },{
+                  label: 'write:',
+                  kind: monaco.languages.CompletionItemKind.Function,
+                  detail: 'function',
+                  insertText: 'write:',
+                  documentation: 'Writes to the screen.\nExample: write: "Hello World"'
+                },{
+                  label: 'let',
+                  kind: monaco.languages.CompletionItemKind.Function,
+                  detail: 'var',
+                  insertText: 'let',
+                  documentation: 'Sets a variable.\nExample: let e = "Hello World"'
                 }];
                 return { suggestions: suggestions };
               }
@@ -376,10 +430,6 @@
     window.toastr = require('toastr');
 
     require('./js/window.js');
-
-    var left_tabs = new Tabby('[left-tabs]');
-    var right_tabs = new Tabby('[right-tabs]');
-    var term_tabs = new Tabby('[term-tabs]');
 
   window.onerror = function(error, url, line) {
     $('#console').append(`<p><font color="red">Error </font>${error}</p>`);
@@ -407,29 +457,31 @@
     return false;
 };
 
-var term = new Terminal({
-  theme: {
-    background: 'rgb(46, 46, 46)'
-  },
-  fontSize: 12,
-  experimentalCharAtlas: 'dynamic'
-});
+function term_init(){
+  var term = new Terminal({
+    theme: {
+      background: '#222222'
+    },
+    fontSize: 12,
+    experimentalCharAtlas: 'dynamic'
+  });
 
-term.open(document.getElementById('term'));
+  term.open(document.getElementById('term'));
 
-const shell = process.env[os.platform() === 'win32' ? 'COMSPEC' : 'SHELL'];
-const ptyProcess = pty.spawn(shell, [], {
-  name: 'xterm-color',
-  cols: term.cols,
-  rows: term.rows,
-  cwd: process.cwd(),
-  env: process.env
-});
+  const shell = process.env[os.platform() === 'win32' ? 'COMSPEC' : 'SHELL'];
+  const ptyProcess = pty.spawn(shell, [], {
+    name: 'xterm-color',
+    cols: term.cols,
+    rows: term.rows,
+    cwd: process.cwd(),
+    env: process.env
+  });
 
-term.onData(data => ptyProcess.write(data));
-ptyProcess.on('data', function (data) {
-  term.write(data);
-});
+  term.onData(data => ptyProcess.write(data));
+  ptyProcess.on('data', function (data) {
+    term.write(data);
+  });
+}
 
 const { remote } = require('electron');
 const { BrowserWindow } = remote;
@@ -476,8 +528,12 @@ function newJSON(name, type, tabs){
 }
 
 function newProject_gui(){
+checkSDK();
 $('.content').css('display', 'block');
+$('.sidenav').css('display', 'block');
 $('.pre').css('display', 'none');
+myLayout.updateSize($("#code").width(), $("#code").height());
+term_init();
 dialog.showOpenDialog({
     title:"Select a folder",
     properties: ["openDirectory"]
@@ -529,36 +585,24 @@ dialog.showOpenDialog({
 
             var dat = JSON.parse(data);
 
-            var type = dat.project.type;
-            var array = dat.project.tabs;
-            
-            for(i=0; i < array.length; i++) {
-              switch (array[i]) {
-                case "ui_editor":
-                  UI();
-                  break;
-              
-                default:
-                  break;
-              }
-            }
+            var type = dat.project.type;   
 
             sessionStorage["type"] = type;
-            sessionStorage["tabs"] = array;
 
             document.getElementById('current').innerHTML = `<i class="fa fa-folder-open"></i> ${sessionStorage["name"]}`;
         }); 
       }
 });
-
-editor.onKeyDown(function(){
-              updateBar();
-          });
 }
 
+
 function openProject(){
+  checkSDK();
   $('.content').css('display', 'block');
   $('.pre').css('display', 'none');
+  $('.sidenav').css('display', 'block');
+  myLayout.updateSize($("#code").width(), $("#code").height());
+  term_init();
     dialog.showOpenDialog({
         title:"Select a file",
         properties: ["openFile"],
@@ -597,32 +641,19 @@ function openProject(){
 
             var name = dat.project.name;
             var type = dat.project.type;
-            var array = dat.project.tabs;
-            
-            for(i=0; i < array.length; i++) {
-              switch (array[i]) {
-                case "ui_editor":
-                  UI();
-                  break;
-              
-                default:
-                  break;
-              }
-            }
 
             sessionStorage["name"] = name;
             sessionStorage["type"] = type;
-            sessionStorage["tabs"] = array;
 
             document.getElementById('current').innerHTML = `<i class="fa fa-folder-open"></i> ${sessionStorage["name"]}`;
         }); 
       }
     });
+  }
         
     editor.onKeyDown(function(){
               updateBar();
           });
-    }
 
     function saveProject(){
             var path = sessionStorage['project'];
@@ -636,6 +667,15 @@ function openProject(){
         document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Saving project...</i>';
         setTimeout(function(){document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.';}, 10000);
 
+    }
+
+    function checkSDK(){
+      var fs = require('fs');
+      try {
+        fs.statSync('C:\\Program Files (x86)\\HaxPro SDK');
+      } catch(e) {
+        bootbox.alert("Please install the HaxPro SDK in order to use HaxPro. It can be downloaded here: <a href='https://github.com/alamshafil/haxpro-cli/'>HaxPro SDK Download</a>.");
+      }
     }
    
     $("#defaultOpen").click();
@@ -661,7 +701,7 @@ function openProject(){
 
           <span id='status' data-toggle="tooltip" title="Status" style="padding-left: 10px"><i class="fa fa-check"></i> Everything is okay.</span>
 
-          <span data-toggle="tooltip" title="Version" style="text-align: right; float: right; padding-right: 10px"><i>v0.2-alpha</i></span>
+          <span data-toggle="tooltip" title="Version" style="text-align: right; float: right; padding-right: 10px"><i>v0.3-alpha</i></span>
           
           <span data-toggle="tooltip" title="Cursor Position" id="bar-ln" style="text-align: right; float: right; padding-right: 10px">Ln 0, Col 0</span>
 
