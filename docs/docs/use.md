@@ -4,66 +4,52 @@ subtitle: Infomation on "use:"
 layout: page
 show_sidebar: false
 menubar: example_menu
+hide_hero: true
 ---
 
-This is another sample page showing how a page can look with a menubar. 
+## use:
 
-## Displaying a menubar
+`use:` is a function that is imported from `haxpro.main`.
 
-The menubar gets its content from a data file in your site's `_data` directory. Simply set the name of your data file in the page's menubar setting in the frontmatter. 
+The function `use:` is used to import a HaxPro extension.
 
-```yml
-title: Page with menubar
-subtitle: Demo page with a menubar
-layout: page
-show_sidebar: false
-menubar: example_menu
+There are mulitple way to import a HaxPro extension, and install them.
+
+## Using the HaxPro CLI
+You can use the `HaxPro CLI` to download extensions for use in your project. 
+
+To install an extension, type in the terminal:
+```
+hax install (extension name)
 ```
 
-You will probably want to disable the show_sidebar otherwise there will be little room for the page's content. 
-
-## Creating a menubar data file
-
-Create a data file in the _data directory and use the following format (if using yml)
-
-```yml
-- label: Example Menu
-  items:
-    - name: Home
-      link: /
-    - name: Pages
-      link: #
-      items:
-        - name: Page With Sidebar 
-          link: /page-1/
-        - name: Page Without Sidebar
-          link: /page-2/
-        - name: Page With Menubar
-          link: /page-3/
-    - name: Blog
-      link: /blog/
+Then, you can import it by typing:
+```
+use: files.(extension name)
 ```
 
-### Multiple menus
+## Using an external source
+You can import a extension from an external source.
 
-You may make multiple menus in the same file, separated by the label
+*Note: You must know the location (URL) for your external source, and must be an uncompiled `.js` file.*
+*Example : `https://alamshafil.github.io/HaxPro/store/extensions/test/test.js`*
 
-```yml
-- label: Menu Label
-  items:
-    - name: Example item
-      link: /example-item/
-- label: Second Menu Label
-  items:
-    - name: Parent Item
-      link: /parent-item/
-      items:
-        - name: Sublink 
-          link: /sublink/
-        - name: Sublink 2
-          link: /sublink2/
-- label: Third Menu Label
-  items:
-    - name: Another example item
-      link: /another-example-item/
+To import it, you can type:
+```
+use: https://(url of file)/
+```
+
+## Using an internal extension
+HaxPro has many internal extension, but there are two main ones.
+
+There are `haxpro.main` and `haxpro.ui`.
+
+You would use `haxpro.main` to access all basic functions of HaxPro, and you would type:
+```
+use: haxpro.main
+```
+
+You would use `haxpro.ui` to access all UI functions and use the UI designer, and you would type:
+```
+use: haxpro.ui
 ```
