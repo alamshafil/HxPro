@@ -1,6 +1,6 @@
 ---
-title: Page with menubar
-subtitle: Demo page with a menubar
+title: "use:"
+subtitle: Infomation on "use:"
 layout: page
 show_sidebar: false
 menubar: example_menu
