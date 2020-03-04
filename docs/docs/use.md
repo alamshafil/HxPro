@@ -31,6 +31,7 @@ use: files.(extension name)
 You can import a extension from an external source.
 
 *Note: You must know the location (URL) for your external source, and must be an uncompiled `.js` file.*
+
 *Example : `https://alamshafil.github.io/HaxPro/store/extensions/test/test.js`*
 
 To import it, you can type:
