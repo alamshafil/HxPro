@@ -1,6 +1,6 @@
 ---
 name: Question
-about: Ask a question about Simple!
+about: Ask a question about HaxPro
 title: ''
 labels: question
 assignees: alamshafil
