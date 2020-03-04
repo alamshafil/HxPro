@@ -4,7 +4,6 @@ subtitle: Demo page with a menubar
 layout: page
 show_sidebar: false
 menubar: example_menu
-hide_hero: true 
 ---
 
 This is another sample page showing how a page can look with a menubar. 

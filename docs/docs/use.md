@@ -4,7 +4,6 @@ subtitle: Infomation on "use:"
 layout: page
 show_sidebar: false
 menubar: example_menu
-hide_hero: true
 ---
 
 ## use:
