@@ -30,7 +30,7 @@
 
 #code {
   position: absolute;
-  width: calc(100% - 60px - 1px);
+  width: calc(100% - 60px );
   height: 94.5%;
   top: 40px;
   left: 60px;
@@ -38,7 +38,7 @@
 
 #ui {
   position: absolute;
-  width: calc(100% - 60px - 1px);
+  width: calc(100% - 60px );
   height: 94.5%;
   top: 40px;
   left: 60px;
@@ -46,7 +46,7 @@
 
 #output {
   position: absolute;
-  width: calc(100% - 60px - 1px);
+  width: calc(100% - 60px );
   height: 94.5%;
   top: 40px;
   left: 60px;
@@ -54,7 +54,7 @@
 
 #docs {
   position: absolute;
-  width: calc(100% - 60px - 1px);
+  width: calc(100% - 60px );
   height: 94.5%;
   top: 40px;
   left: 60px;
@@ -62,7 +62,7 @@
 
 #apps {
   position: absolute;
-  width: calc(100% - 60px - 1px);
+  width: calc(100% - 60px );
   height: 94.5%;
   top: 40px;
   left: 60px;
@@ -70,7 +70,7 @@
 
 #settings {
   position: absolute;
-  width: calc(100% - 60px - 1px);
+  width: calc(100% - 60px );
   height: 94.5%;
   top: 40px;
   left: 60px;
@@ -78,7 +78,7 @@
 
 #git {
   position: absolute;
-  width: calc(100% - 60px - 1px);
+  width: calc(100% - 60px );
   height: 94.5%;
   top: 40px;
   left: 60px;
@@ -86,7 +86,7 @@
 
 #debug {
   position: absolute;
-  width: calc(100% - 60px - 1px);
+  width: calc(100% - 60px );
   height: 94.5%;
   top: 40px;
   left: 60px;

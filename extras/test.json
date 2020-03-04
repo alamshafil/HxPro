@@ -1,6 +1,0 @@
-{
-        "apps": [
-            {"name":"fake", "path":"apps.haxor.com/simple/fake_1.2/fake.js"},
-            {"name":"stuff", "path":"http://simplelang.droppages.com/extensions/stuff.js"}
-        ]
-}

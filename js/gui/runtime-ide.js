@@ -117,21 +117,25 @@ function compile_gui(code)
               document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Compiling to Windows...'
            
               var dir = require('electron').remote.app.getAppPath() + '/';
-              var source = 'C:\\Program Files (x86)\\HaxPro SDK\\compilers-win\\gui\\nw-win'
-              var destination = sessionStorage["project"] + `/builds/win32_${Math.random().toString(36).slice(2)}/`
-              var res = destination + "res/";
+              var source = 'C:/Program Files (x86)/HaxPro SDK/compilers-win/gui/nw-win'
+              var rnd = `/builds/win32_${Math.random().toString(36).slice(2)}`
+              var destination = sessionStorage["project"] + `${rnd}/temp/`
+              var outer_dist = sessionStorage["project"] + `${rnd}/`
+              var nsis = 'C:/Program Files (x86)/HaxPro SDK/compilers-win/gui/nsis/'
+              var res = outer_dist + "/temp/res/";
           
-              fs.mkdirSync(destination);
-              fs.mkdirSync(res);
-              fs.mkdirSync(res + "hax/");
-              fs.mkdirSync(res + "files/");
+              fs.mkdirSync(outer_dist);
+              fs.mkdirSync(outer_dist + '/temp/');
+              fs.mkdirSync(res + '');
+              fs.mkdirSync(res + "/hax/");
+              fs.mkdirSync(res + "/files/");
           
               fs_.copy(source, destination, function (err) {
                 if (err){
                     bootbox.alert(err);
                 }
           
-              fs_.copy(dir+'commands.js', res + "hax/commands.js");
+              fs_.copy(dir+'/js/gui/runtime.js', res + "hax/runtime.js");
               
               fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
                   if (err){
@@ -168,10 +172,28 @@ function compile_gui(code)
                   bootbox.alert("An error ocurred creating the file "+ err.message)
                 }
               });
-          
-              bootbox.alert("Finished compiling file!");
 
-              document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.'
+              fs_.copy(dir+'/extras/nsis/app.nsi', outer_dist + '/app.nsi', function (err) {
+                if (err){
+                    bootbox.alert(err);
+                }
+              });
+
+              fs_.copy(dir+'/extras/nsis/System.nsh', outer_dist + '/System.nsh', function (err) {
+                if (err){
+                    bootbox.alert(err);
+                }
+              });
+
+              bootbox.alert("Please wait until HaxPro is done compiling. Check the status bar for infomation.")
+
+              const nodeCmd = require('node-cmd');
+              nodeCmd.get(`cd ${nsis} && makensis.exe "/XOutFile ${outer_dist+'\\haxpro_app.exe'}" ${outer_dist+'/app.nsi'}`, (err, data, stderr) => done());
+        
+              function done(){
+              bootbox.alert("Finished compiling file!")
+              document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.';
+              }
           
               });  
           

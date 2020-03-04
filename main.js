@@ -2,14 +2,10 @@ const { app, BrowserWindow } = require('electron')
 
 let win;
 
-const { autoUpdater } = require("electron-updater");
-
-autoUpdater.checkForUpdatesAndNotify();
-
 function createWindow () {
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 720,
     frame: false,
     backgroundColor: '#343a40',
     icon: "./logos/logo.png",

@@ -1,4 +1,4 @@
-function command(args)
+function command_gui(args)
 {
 
   if(args[0] == "write:")
@@ -11,13 +11,13 @@ function command(args)
   } else if(msg.includes('.') || msg.includes(':')) {
     var cmd = args.join(' ').replace(args[0],'').trim().split(' ')
     try {
-      eval(command(cmd));
+      eval(command_gui(cmd));
     } catch(e) {
-      send(`${command(cmd)}`)
+      send(`${command_gui(cmd)}`)
       return;
     }
     
-    send(eval(command(cmd)).toString().trim().replace('"', '').replace('"', ''));
+    send(eval(command_gui(cmd)).toString().trim().replace('"', '').replace('"', ''));
 
   }else {
   
@@ -109,17 +109,17 @@ function command(args)
     
     if(eval(statement) == true)
     {
-      command(if_then.trim().split(' '));
+      command_gui(if_then.trim().split(' '));
   
     } else if(eval(statement) == false) {
-      command(if_else.trim().split(' '));
+      command_gui(if_else.trim().split(' '));
     }
   
   } else {
   
     if(eval(statement) == true)
     {
-      command(if_then.trim().split(' '));
+      command_gui(if_then.trim().split(' '));
     }
   }
   }
@@ -134,7 +134,7 @@ function command(args)
           $(`.${id}`).unbind('click');
           $(`.${id}`).click(function()
           {
-            command(cmd);
+            command_gui(cmd);
           });
         }
   
@@ -158,13 +158,13 @@ function command(args)
           } else if(e.includes('.') || e.includes(':')) {
             var cmd = args.join(' ').replace(args[0],'').trim().split(' ')
             try {
-              eval(command(cmd));
+              eval(command_gui(cmd));
             } catch(e) {
-              bootbox.alert(`${command(cmd)}`)
+              bootbox.alert(`${command_gui(cmd)}`)
               return;
             }
             
-            bootbox.alert(eval(command(cmd)).toString().trim().replace('"', '').replace('"', ''));
+            bootbox.alert(eval(command_gui(cmd)).toString().trim().replace('"', '').replace('"', ''));
 
           } else {
             try {
@@ -195,13 +195,13 @@ function command(args)
           }else if(e.includes('.') || e.includes(':')) {
             var cmd = args.join(' ').replace(args[0],'').trim().split(' ')
             try {
-              eval(command(cmd));
+              eval(command_gui(cmd));
             } catch(e) {
-              window.toastr.info(`${command(cmd)}`)
+              window.toastr.info(`${command_gui(cmd)}`)
               return;
             }
             
-            window.toastr.info(eval(command(cmd)).toString().trim().replace('"', '').replace('"', ''));
+            window.toastr.info(eval(command_gui(cmd)).toString().trim().replace('"', '').replace('"', ''));
 
           } else {
             try {

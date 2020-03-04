@@ -9,7 +9,7 @@ published: true
 canonical_url: https://alamshafil.github.io/HaxPro/development/2020/3/1/release-03.html
 ---
 
-# Ok, just tell me what's new!
+# Info on release v0.3
 This release contains a brand new UI design which is easier to use and a new editor! With this release, you need to install the [HaxPro SDK](https://github.com/alamshafil/haxpro-cli/releases) in order to compile and run your apps.
 
 # Ok, what else?
