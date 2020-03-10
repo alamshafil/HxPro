@@ -13,15 +13,14 @@
 
         <link rel="stylesheet" href="css/bootstrap.css">
 
-        <link rel="stylesheet" href="css/toastr.css">
-
         <link rel="stylesheet" href="css/grapes.css">
 
-        <link rel="stylesheet" href="css/grapes-webpage.css">
 
         <link rel="stylesheet" href="node_modules/xterm/css/xterm.css">
 
         <link rel="stylesheet" data-name="vs/editor/editor.main" href="node_modules/monaco-editor/min/vs/editor/editor.main.css">
+
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 
 <link type="text/css" rel="stylesheet" href="https://golden-layout.com/assets/css/goldenlayout-base.css" />
@@ -44,7 +43,7 @@
                       <button class="btn btn-dark btn-flat" onclick="saveProject()"><i class="fa fa-save"></i> Save</button>
                       <button class="btn btn-dark btn-flat" onclick="openProject()"><i class="fa fa-folder-open"></i></i> Open</button>
                       <!--Fix-->
-                      <button id="run-btn" class="btn btn-dark btn-flat" onclick="if(sessionStorage['type'] == 'gui'){if(editor.getValue().includes('use: haxpro.ui')){run_gui(editor.getValue(), '','','','')} else {run_gui(editor.getValue())}} else if(sessionStorage['type'] == 'cmd'){}"><i class="fa fa-wrench"></i> Run</button>
+                      <button id="run-btn" class="btn btn-dark btn-flat" onclick="if(sessionStorage['type'] == 'gui'){if(editor.getValue().includes('use: haxpro.ui')){run_gui(editor.getValue(), ui.getHtml(), ui.getCss(), ui.getJs())} else {run_gui(editor.getValue())}} else if(sessionStorage['type'] == 'cmd'){}"><i class="fa fa-wrench"></i> Run</button>
                       <button class="btn btn-dark btn-flat" onclick="if(sessionStorage['type'] == 'gui'){compile_gui(editor.getValue())} else if(sessionStorage['type'] == 'cmd'){}"><i class="fa fa-cogs"></i> Compile</button>
                         <button class="btn btn-dark dropdown-toggle btn-flat" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fa fa-ellipsis-h"></i> More
@@ -96,8 +95,8 @@
     <span onclick="openTab(event, 'git')"><i class="fas fa-code-branch"></i></span>
     <span onclick="openTab(event, 'docs')"><i class="fas fa-book"></i></span>
     <span onclick="openTab(event, 'apps')"><i class="fas fa-store"></i></span>
-    <span onclick="openTab(event, 'settings')"><i class="fas fa-cog"></i></span>
     <span onclick="openTab(event, 'debug')"><i class="fas fa-bug"></i></span>
+    <span onclick="openTab(event, 'debug')"><i class="fas fa-bell"></i></span>
   </div>
 
     <div class="content" style="display: none;">
@@ -186,10 +185,6 @@ $(window).resize(function () {
 myLayout.updateSize($("#code").width(), $("#code").height());
 });
 
-editor.onKeyDown(function(){
-              updateBar();
-          });
-
           function openTab(evt, TabName, icon) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
@@ -231,8 +226,6 @@ editor.onKeyDown(function(){
 
         <script src="js/tabs.js"></script>
 
-        <script src="js/fa/js/all.min.js"></script>
-
         <script src="js/modernizr.js"></script>
 
         <script src="js/tabby.js"></script>
@@ -256,6 +249,8 @@ editor.onKeyDown(function(){
         <script src="js/grapes.js"></script>
 
         <script src="js/grapes-webpage.js"></script>
+
+        <script src="js/toast.js"></script>
 
         <script>
           // Monaco uses a custom amd loader that over-rides node's require.
@@ -420,10 +415,9 @@ editor.onKeyDown(function(){
 
           });
         </script>
-
         <script>
 
-    window.toastr = require('toastr');
+  //window.toastr = require('toastr');
 
     require('./js/window.js');
 
@@ -452,6 +446,21 @@ editor.onKeyDown(function(){
     });
     return false;
 };
+
+    
+window.ui = grapesjs.init({
+        container : '#ui',
+        avoidInlineStyle: 1,
+        fromElement: 1,
+        plugins: ['gjs-preset-webpage'],
+        pluginsOpts: {
+          'gjs-preset-webpage': {
+            // options
+          }
+        }
+    });
+
+    ui.getModel().set('dmode', 'absolute');
 
 function term_init(){
   var term = new Terminal({
@@ -646,10 +655,6 @@ function openProject(){
       }
     });
   }
-        
-    editor.onKeyDown(function(){
-              updateBar();
-          });
 
     function saveProject(){
             var path = sessionStorage['project'];
@@ -666,12 +671,47 @@ function openProject(){
     }
 
     function checkSDK(){
+      editor.onKeyDown(function(){
+              updateBar();
+          });
+
       var fs = require('fs');
       try {
         fs.statSync('C:\\Program Files (x86)\\HaxPro SDK');
       } catch(e) {
         bootbox.alert("Please install the HaxPro SDK in order to use HaxPro. It can be downloaded here: <a href='https://github.com/alamshafil/haxpro-cli/'>HaxPro SDK Download</a>.");
       }
+    }
+
+    function update() {
+      var data;
+
+      function readFile(file)
+      {
+        var f = new XMLHttpRequest();
+        f.open("GET", file, false);
+        f.onreadystatechange = function ()
+        {
+            if(f.readyState === 4)
+            {
+                if(f.status === 200 || f.status == 0)
+                {
+                    var res= f.responseText;
+                    setData(res); 
+                }
+            }
+          }
+
+        f.send(null);
+      }
+
+
+      function setData(xhr)
+      {
+        data = xhr;
+      }
+
+      readFile("");
     }
    
     $("#defaultOpen").click();
@@ -686,6 +726,7 @@ function openProject(){
         $('.pre').css('display', 'block');
         $('.content').css('display', 'none');
         document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Checking for updates...</i>';
+        update();
         setTimeout(function(){document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.';}, 10000);
       });
       </script>
@@ -697,7 +738,7 @@ function openProject(){
 
           <span id='status' data-toggle="tooltip" title="Status" style="padding-left: 10px"><i class="fa fa-check"></i> Everything is okay.</span>
 
-          <span data-toggle="tooltip" title="Version" style="text-align: right; float: right; padding-right: 10px"><i>v0.3-alpha</i></span>
+          <span data-toggle="tooltip" title="Version" style="text-align: right; float: right; padding-right: 10px"><i>v0.4-alpha</i></span>
           
           <span data-toggle="tooltip" title="Cursor Position" id="bar-ln" style="text-align: right; float: right; padding-right: 10px">Ln 0, Col 0</span>
 

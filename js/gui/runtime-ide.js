@@ -7,8 +7,8 @@ function run_gui(dat, html, css, js)
 
   if(editor.getValue().includes('use: haxpro.ui'))
   {
-  //var data = initData_gui(html, css, js)
-  data = '';
+  var data = initData_gui(html, css, js)
+  //data = '';
   } else {
     data = 'Using basic rendering window. <br>'
   }
@@ -143,12 +143,12 @@ function compile_gui(code)
                     return;
                   }
           
-                  //var html = initData_gui(ui.getHtml(), ui.getCss(), ui.getJs());
-                  var html = '';
+                  var html = initData_gui(ui.getHtml(), ui.getCss(), ui.getJs());
+                  //var html = '';
           
               html.replace(/\r/g, "").replace(/\n/g, "");
           
-              if(editor.getValue().includes('use: hax.ui'))
+              if(editor.getValue().includes('use: haxpro.ui'))
               {
                 data = data.replace('<hax></hax>', html);
               } else {
