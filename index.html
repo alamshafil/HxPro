@@ -98,7 +98,6 @@
     <span onclick="openTab(event, 'debug')"><i class="fas fa-bug"></i></span>
     <span onclick="openTab(event, 'debug')"><i class="fas fa-bell"></i></span>
     <span onclick="openTab(event, 'settings')"><i class="fas fa-gear"></i></span>
-    <span id="btn-update" style="display: none;" onclick="openTab(event, 'update')"><i class="fas fa-sync"></i></span>
   </div>
 
     <div class="content" style="display: none;">
@@ -136,11 +135,13 @@
               <iframe id="webview" src="https://alamshafil.github.io/HaxPro/store"></iframe>
             </div>
 
-            <div id="settings" class="tabcontent">
-              <div style="background: rgb(46, 46, 46); height: 100%;" id="window"> <figure style="text-align:center; padding: 70px 0;">
-                <i class="fa fa-cog" style="font-size: 50px; color: grey;"></i>
-                <figcaption style="color:gray"><i>I didn't make Settings yet...</i></figcaption>
-                </figure> 
+            <div id="settings" class="tabcontent" style="background: rgb(46, 46, 46); height: 100%; color: white; padding-top: 30px;">
+              <div class="container">
+                <h1 class="display-3"><i class="fas fa-gear"></i> Settings</h1>
+                <br>
+                <p class="h6">HAXPRO IDE</p>
+                <p class="h4"><span>Current version:</span> <span id="update-ver" style="color: grey"></span></p>
+                <p class="h4"><span>Latest version:</span> <span id="update-latest" style="color: grey"></span></p>
               </div>
             </div>
 
@@ -149,14 +150,6 @@
                 <i class="fa fa-cog" style="font-size: 50px; color: grey;"></i>
                 <figcaption style="color:gray"><i>wat</i></figcaption>
                 </figure> 
-              </div>
-            </div>
-
-            <div id="update" class="tabcontent" style="background-color: rgb(46, 46, 46);">
-              <div class="container" style="background: rgb(46, 46, 46); height: 100%; color: white; padding-top: 10px;">
-                <h1 class="display-3">Updates</h1>
-                <br>
-                <p class="lead"><span style="color: grey">Current version:</span> <script>document.write(document.getElementById('bar-update'))</script></p>
               </div>
             </div>
 
@@ -424,8 +417,6 @@ myLayout.updateSize($("#code").width(), $("#code").height());
             });
 
           });
-        </script>
-        <script>
 
   //window.toastr = require('toastr');
 
@@ -686,6 +677,24 @@ function openProject(){
           });
     }
 
+    function checkSDK() {
+      function trySDK(){     
+        var fs = require('fs');
+
+        try {
+          fs.statSync('C:\\Program Files (x86)\\HaxPro SDK');
+        } catch(e) {
+          return false;
+        }
+      }
+
+      if(trySDK() == false){
+        return false;
+      } else if(trySDK() == null) {
+        return true;
+      }
+    }
+
     function update() {
       var data;
 
@@ -714,13 +723,12 @@ function openProject(){
         data = xhr;
       }
 
-      readFile("https://alamshafil.github.io/HaxPro/updates/update.hax");
+      readFile("https://alamshafil.github.io/HaxPro/updates/haxpro.hax");
 
       var cur = document.getElementById('bar-ver').innerText;
 
       if(cur == data){
       } else {
-        document.getElementById('btn-update').style.display = 'block';
         tata.text('Update', 'Please update to the latest version.', {
           progress: false,
           duration: 8000,
@@ -728,13 +736,77 @@ function openProject(){
       }
     }
 
-    var fs = require('fs');
+    function ideLatest() {
+        var data;
 
-      try {
-        fs.statSync('C:\\Program Files (x86)\\HaxPro SDK');
-      } catch(e) {
-        document.getElementById('btn-update').style.display = 'block';
-      }
+        function readFile(file)
+        {
+          var f = new XMLHttpRequest();
+          f.open("GET", file, false);
+          f.onreadystatechange = function ()
+          {
+              if(f.readyState === 4)
+              {
+                  if(f.status === 200 || f.status == 0)
+                  {
+                      var res= f.responseText;
+                      setData(res); 
+                  }
+              }
+            }
+
+          f.send(null);
+        }
+
+
+        function setData(xhr)
+        {
+          data = xhr;
+        }
+
+        readFile("https://alamshafil.github.io/HaxPro/updates/haxpro.hax");
+
+        return data;
+    }
+
+    function sdkLatest() {
+        var data;
+
+        function readFile(file)
+        {
+          var f = new XMLHttpRequest();
+          f.open("GET", file, false);
+          f.onreadystatechange = function ()
+          {
+              if(f.readyState === 4)
+              {
+                  if(f.status === 200 || f.status == 0)
+                  {
+                      var res= f.responseText;
+                      setData(res); 
+                  }
+              }
+            }
+
+          f.send(null);
+        }
+
+
+        function setData(xhr)
+        {
+          data = xhr;
+        }
+
+        readFile("https://alamshafil.github.io/HaxPro/updates/sdk.hax");
+
+        return data;
+    }
+
+    function settings() {
+      document.getElementById('update-ver').innerHTML = document.getElementById('bar-ver').innerText;
+      document.getElementById('update-ver').innerHTML = document.getElementById('bar-ver').innerText;
+    }
+
    
     $("#defaultOpen").click();
 
@@ -750,6 +822,7 @@ function openProject(){
         document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Checking for updates...</i>';
         setTimeout(function(){document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.';}, 5000);
         update();
+        settings();
       });
       </script>
 
