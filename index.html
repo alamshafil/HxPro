@@ -97,6 +97,8 @@
     <span onclick="openTab(event, 'apps')"><i class="fas fa-store"></i></span>
     <span onclick="openTab(event, 'debug')"><i class="fas fa-bug"></i></span>
     <span onclick="openTab(event, 'debug')"><i class="fas fa-bell"></i></span>
+    <span onclick="openTab(event, 'settings')"><i class="fas fa-gear"></i></span>
+    <span id="btn-update" style="display: none;" onclick="openTab(event, 'update')"><i class="fas fa-sync"></i></span>
   </div>
 
     <div class="content" style="display: none;">
@@ -147,6 +149,14 @@
                 <i class="fa fa-cog" style="font-size: 50px; color: grey;"></i>
                 <figcaption style="color:gray"><i>wat</i></figcaption>
                 </figure> 
+              </div>
+            </div>
+
+            <div id="update" class="tabcontent" style="background-color: rgb(46, 46, 46);">
+              <div class="container" style="background: rgb(46, 46, 46); height: 100%; color: white; padding-top: 10px;">
+                <h1 class="display-3">Updates</h1>
+                <br>
+                <p class="lead"><span style="color: grey">Current version:</span> <script>document.write(document.getElementById('bar-update'))</script></p>
               </div>
             </div>
 
@@ -533,7 +543,7 @@ function newJSON(name, type, tabs){
 }
 
 function newProject_gui(){
-checkSDK();
+updateEditor();
 $('.content').css('display', 'block');
 $('.sidenav').css('display', 'block');
 $('.pre').css('display', 'none');
@@ -602,7 +612,7 @@ dialog.showOpenDialog({
 
 
 function openProject(){
-  checkSDK();
+  updateEditor();
   $('.content').css('display', 'block');
   $('.pre').css('display', 'none');
   $('.sidenav').css('display', 'block');
@@ -670,17 +680,10 @@ function openProject(){
 
     }
 
-    function checkSDK(){
+    function updateEditor(){
       editor.onKeyDown(function(){
               updateBar();
           });
-
-      var fs = require('fs');
-      try {
-        fs.statSync('C:\\Program Files (x86)\\HaxPro SDK');
-      } catch(e) {
-        bootbox.alert("Please install the HaxPro SDK in order to use HaxPro. It can be downloaded here: <a href='https://github.com/alamshafil/haxpro-cli/'>HaxPro SDK Download</a>.");
-      }
     }
 
     function update() {
@@ -711,8 +714,27 @@ function openProject(){
         data = xhr;
       }
 
-      readFile("");
+      readFile("https://alamshafil.github.io/HaxPro/updates/update.hax");
+
+      var cur = document.getElementById('bar-ver').innerText;
+
+      if(cur == data){
+      } else {
+        document.getElementById('btn-update').style.display = 'block';
+        tata.text('Update', 'Please update to the latest version.', {
+          progress: false,
+          duration: 8000,
+        })
+      }
     }
+
+    var fs = require('fs');
+
+      try {
+        fs.statSync('C:\\Program Files (x86)\\HaxPro SDK');
+      } catch(e) {
+        document.getElementById('btn-update').style.display = 'block';
+      }
    
     $("#defaultOpen").click();
 
@@ -726,8 +748,8 @@ function openProject(){
         $('.pre').css('display', 'block');
         $('.content').css('display', 'none');
         document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Checking for updates...</i>';
+        setTimeout(function(){document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.';}, 5000);
         update();
-        setTimeout(function(){document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.';}, 10000);
       });
       </script>
 
@@ -738,7 +760,7 @@ function openProject(){
 
           <span id='status' data-toggle="tooltip" title="Status" style="padding-left: 10px"><i class="fa fa-check"></i> Everything is okay.</span>
 
-          <span data-toggle="tooltip" title="Version" style="text-align: right; float: right; padding-right: 10px"><i>v0.4-alpha</i></span>
+          <span id='bar-ver' data-toggle="tooltip" title="Version" style="text-align: right; float: right; padding-right: 10px"><i>v0.4-alpha</i></span>
           
           <span data-toggle="tooltip" title="Cursor Position" id="bar-ln" style="text-align: right; float: right; padding-right: 10px">Ln 0, Col 0</span>
 
