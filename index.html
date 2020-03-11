@@ -140,7 +140,6 @@
                 <h1 class="display-3"><i class="fas fa-gear"></i> Settings</h1>
                 <hr style="border: 1px solid grey;">
                 <p class="h6">HAXPRO IDE</p>
-                <br>
                 <p class="h5"><span>Current version:</span> <span id="update-ver" style="color: grey"></span></p>
                 <p class="h5"><span>Latest version:</span> <span id="update-latest" style="color: grey"></span></p>
                 <a href="https://github.com/alamshafil/HaxPro/releases/download/v0.3-alpha/haxpro-win.exe" class="btn btn-dark">Update</a>
@@ -742,8 +741,8 @@ function openProject(){
 
       if(cur == data){
       } else {
-        tata.text('Update', 'Please update to the latest version.', {
-          progress: false,
+        tata.text('Update', 'Please update to the latest version, by going to the settings tab.', {
+          progress: true,
           duration: 8000,
         })
       }

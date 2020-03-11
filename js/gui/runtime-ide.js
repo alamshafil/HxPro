@@ -1,5 +1,9 @@
 function run_gui(dat, html, css, js)
 {
+  tata.text('Running', 'Your app is running, please go to the output tab.', {
+    progress: true,
+    duration: 5000,
+  })
 
   document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Running <i>main.hax</i>'
 
@@ -101,6 +105,29 @@ function compile_gui(code)
   }
 
   readFile(require('electron').remote.app.getAppPath() + "/html/compile.html");
+
+  if(checkSDK() == false){
+    bootbox.dialog({
+      title: 'Missing HaxPro SDK',
+      message: "You are missing the HaxPro SDK, this is needed to build apps. You can install it by pressing <b>Install</b>.",
+      buttons: {
+          ok: {
+          label: "Install",
+              className: 'btn-info',
+              callback: function(){
+                bootbox.alert("ok you have big problem idk")
+              }
+            },
+            report: {
+              label: "CLose",
+                  className: 'btn-info',
+                  callback: function(){
+                    return;
+                  }
+                }
+      }
+    })
+  } else if(checkSDK() == true){
 
   bootbox.dialog({
     title: 'Compile App',
@@ -342,8 +369,29 @@ function compile_gui(code)
             });
             }
         }
-    }
-});
-
+      }
+    });
+  } else {
+    bootbox.dialog({
+      title: 'Internal Error',
+      message: "Failed to compile app for unknown reason. Please report this to my GitHub page.",
+      buttons: {
+          ok: {
+          label: "OK",
+              className: 'btn-info',
+              callback: function(){
+              return;
+              }
+            },
+            report: {
+              label: "Report",
+                  className: 'btn-info',
+                  callback: function(){
+                  bootbox.alert("ok you have big problem")
+                  }
+                }
+      }
+    })
+  }
 
 }
