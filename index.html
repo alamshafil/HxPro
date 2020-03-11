@@ -142,14 +142,14 @@
                 <p class="h6">HAXPRO IDE</p>
                 <p class="h5"><span>Current version:</span> <span id="update-ver" style="color: grey"></span></p>
                 <p class="h5"><span>Latest version:</span> <span id="update-latest" style="color: grey"></span></p>
-                <a href="https://github.com/alamshafil/HaxPro/releases/download/v0.3-alpha/haxpro-win.exe" class="btn btn-dark">Update</a>
+                <button onclick="window.location = ideLink()" class="btn btn-dark">Update</button>
                 <br>
                 <br>
                 <hr style="border: 1px solid grey;">
                 <p class="h6">HAXPRO SDK</p>
                 <p class="h5"><span>Current version:</span> <span id="sdk-ver" style="color: grey"></span></p>
                 <p class="h5"><span>Latest version:</span> <span id="sdk-latest" style="color: grey"></span></p>
-                <a href="https://github.com/alamshafil/haxpro-cli/releases/download/v0.1/haxpro-sdk-win.exe" class="btn btn-dark">Update</a>
+                <button onclick="window.location = sdkLink()" class="btn btn-dark">Update</button>
                 <button onclick="bootbox.alert('wat?')" class="btn btn-dark">Select Path</button>
                 <br>
                 <br>
@@ -746,6 +746,72 @@ function openProject(){
           duration: 8000,
         })
       }
+    }
+
+    function ideLink() {
+        var data;
+
+        function readFile(file)
+        {
+          var f = new XMLHttpRequest();
+          f.open("GET", file, false);
+          f.onreadystatechange = function ()
+          {
+              if(f.readyState === 4)
+              {
+                  if(f.status === 200 || f.status == 0)
+                  {
+                      var res= f.responseText;
+                      setData(res); 
+                  }
+              }
+            }
+
+          f.send(null);
+        }
+
+
+        function setData(xhr)
+        {
+          data = xhr;
+        }
+
+        readFile("https://alamshafil.github.io/HaxPro/updates/link_haxpro.hax");
+
+        return data;
+    }
+
+    function sdkLink() {
+        var data;
+
+        function readFile(file)
+        {
+          var f = new XMLHttpRequest();
+          f.open("GET", file, false);
+          f.onreadystatechange = function ()
+          {
+              if(f.readyState === 4)
+              {
+                  if(f.status === 200 || f.status == 0)
+                  {
+                      var res= f.responseText;
+                      setData(res); 
+                  }
+              }
+            }
+
+          f.send(null);
+        }
+
+
+        function setData(xhr)
+        {
+          data = xhr;
+        }
+
+        readFile("https://alamshafil.github.io/HaxPro/updates/link_sdk.hax");
+
+        return data;
     }
 
     function ideLatest() {
