@@ -140,8 +140,17 @@
                 <h1 class="display-3"><i class="fas fa-gear"></i> Settings</h1>
                 <br>
                 <p class="h6">HAXPRO IDE</p>
-                <p class="h4"><span>Current version:</span> <span id="update-ver" style="color: grey"></span></p>
-                <p class="h4"><span>Latest version:</span> <span id="update-latest" style="color: grey"></span></p>
+                <p class="h5"><span>Current version:</span> <span id="update-ver" style="color: grey"></span></p>
+                <p class="h5"><span>Latest version:</span> <span id="update-latest" style="color: grey"></span></p>
+                <a href="https://github.com/alamshafil/HaxPro/releases/download/v0.3-alpha/haxpro-win.exe" class="btn btn-light">Update</a>
+                <br>
+                <br>
+                <hr style="border: 1px solid grey;">
+                <p class="h6">HAXPRO SDK</p>
+                <p class="h5"><span>Current version:</span> <span id="sdk-ver" style="color: grey"></span></p>
+                <p class="h5"><span>Latest version:</span> <span id="sdk-latest" style="color: grey"></span></p>
+                <a href="https://github.com/alamshafil/haxpro-cli/releases/download/v0.1/haxpro-sdk-win.exe" class="btn btn-light">Update</a>
+                <button onclick="bootbox.alert('wat?')" class="btn btn-light">Select Path</button>
               </div>
             </div>
 
@@ -804,7 +813,10 @@ function openProject(){
 
     function settings() {
       document.getElementById('update-ver').innerHTML = document.getElementById('bar-ver').innerText;
-      document.getElementById('update-ver').innerHTML = document.getElementById('bar-ver').innerText;
+      document.getElementById('update-latest').innerHTML = ideLatest();
+
+      document.getElementById('sdk-ver').innerHTML = "v0.2-alpha1-rc2"
+      document.getElementById('sdk-latest').innerHTML = sdkLatest();
     }
 
    
