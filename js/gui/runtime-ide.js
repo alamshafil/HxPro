@@ -2,7 +2,7 @@ function run_gui(dat, html, css, js)
 {
   tata.text('Running', 'Your app is running, please go to the output tab.', {
     progress: true,
-    duration: 5000,
+    duration: 3000,
   })
 
   document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Running <i>main.hax</i>'
