@@ -135,101 +135,195 @@ function compile_gui(code)
     size: 'large',
     buttons: {
         win: {
-            label: "Windows",
+            label: "<i class='fab fa-windows'></i> Windows",
             className: 'btn-info',
+
             callback: function(){
-              var fs_ = require("fs-extra");
-              var fs = require("fs");
-
-              document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Compiling to Windows...'
-           
-              var dir = require('electron').remote.app.getAppPath() + '/';
-              var source = 'C:/Program Files (x86)/HaxPro SDK/compilers-win/gui/nw-win'
-              var rnd = `/builds/win32_${Math.random().toString(36).slice(2)}`
-              var destination = sessionStorage["project"] + `${rnd}/temp/`
-              var outer_dist = sessionStorage["project"] + `${rnd}/`
-              var nsis = 'C:/Program Files (x86)/HaxPro SDK/compilers-win/gui/nsis/'
-              var res = outer_dist + "/temp/res/";
-          
-              fs.mkdirSync(outer_dist);
-              fs.mkdirSync(outer_dist + '/temp/');
-              fs.mkdirSync(res + '');
-              fs.mkdirSync(res + "/hax/");
-              fs.mkdirSync(res + "/files/");
-          
-              fs_.copy(source, destination, function (err) {
-                if (err){
-                    bootbox.alert(err);
-                }
-          
-              fs_.copy(dir+'/js/gui/runtime.js', res + "hax/runtime.js");
+              bootbox.dialog({
+                title: 'Compile App',
+                message: "Pick the type of app you want to compile.",
+                size: 'large',
+                buttons: {
+                    ok: {
+                    label: "<i class='fas fa-download'></i> Installer",
+                        className: 'btn-info',
+                        callback: function(){
+                          var fs_ = require("fs-extra");
+                          var fs = require("fs");
+            
+                          document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Compiling to Windows...'
+                       
+                          var dir = require('electron').remote.app.getAppPath() + '/';
+                          var source = 'C:/Program Files (x86)/HaxPro SDK/compilers-win/gui/nw-win'
+                          var rnd = `/builds/win32_${Math.random().toString(36).slice(2)}`
+                          var destination = sessionStorage["project"] + `${rnd}/temp/`
+                          var outer_dist = sessionStorage["project"] + `${rnd}/`
+                          var nsis = 'C:/Program Files (x86)/HaxPro SDK/compilers-win/gui/nsis/'
+                          var res = outer_dist + "/temp/res/";
+                      
+                          fs.mkdirSync(outer_dist);
+                          fs.mkdirSync(outer_dist + '/temp/');
+                          fs.mkdirSync(res + '');
+                          fs.mkdirSync(res + "/hax/");
+                          fs.mkdirSync(res + "/files/");
+                      
+                          fs_.copy(source, destination, function (err) {
+                            if (err){
+                                bootbox.alert(err);
+                            }
+                      
+                          fs_.copy(dir+'/js/gui/runtime.js', res + "hax/runtime.js");
+                          
+                          fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
+                              if (err){
+                                bootbox.alert(err);
+                                return;
+                              }
+                      
+                              var html = initData_gui(ui.getHtml(), ui.getCss(), ui.getJs());
+                              //var html = '';
+                      
+                          html.replace(/\r/g, "").replace(/\n/g, "");
+                      
+                          if(editor.getValue().includes('use: haxpro.ui'))
+                          {
+                            data = data.replace('<hax></hax>', html);
+                          } else {
+                            data = data.replace('<hax></hax>', '');
+                          }
+                      
+                          data = data.replace('hax_app', sessionStorage["app"]);
+                      
+                          data = data.replace('[hax.code]', c);
+                      
+                          fs.writeFile(res + "hax/"+'ui.html', data, (err) => {
+                            if(err){
+                              bootbox.alert("An error ocurred creating the file "+ err.message)
+                            }
+                          }); 
+                      
+                          var c = code;
+                      
+                          fs.writeFile(res + "hax/"+'main.hax', c, (err) => {
+                            if(err){
+                              bootbox.alert("An error ocurred creating the file "+ err.message)
+                            }
+                          });
+            
+                          fs_.copy(dir+'/extras/nsis/app.nsi', outer_dist + '/app.nsi', function (err) {
+                            if (err){
+                                bootbox.alert(err);
+                            }
+                          });
+            
+                          bootbox.alert("Please wait until HaxPro is done compiling. Check the status bar for infomation.")
+            
+                          const nodeCmd = require('node-cmd');
+                          nodeCmd.get(`cd ${nsis} && makensis.exe /DNAME=${sessionStorage['name']} "/XOutFile ${outer_dist+'\\haxpro_app.exe'}" ${outer_dist+'/app.nsi'}`, (err, data, stderr) => done());
+                    
+                          function done(){
+                            document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.';
+                            let fs_extra = require("fs-extra");
+                            fs_extra.emptyDir(destination);
+                            fs_extra.remove( outer_dist + '/app.nsi');
+            
+                            const {shell} = require('electron');
+                            bootbox.alert("Finished compiling file!")
+                            shell.showItemInFolder(outer_dist);
+                          }
+                      
+                          });  
+                      
+                        });
+                      
+                        }
+                        },
+                      
+                      report: {
+                        label: "<i class='far fa-window-maximize'></i> Standalone",
+                            className: 'btn-info',
+                            callback: function(){
+                              var fs_ = require("fs-extra");
+                              var fs = require("fs");
+                
+                              document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Compiling to Windows...'
+                           
+                              var dir = require('electron').remote.app.getAppPath() + '/';
+                              var source = 'C:/Program Files (x86)/HaxPro SDK/compilers-win/gui/nw-win'
+                              var rnd = `/builds/win32_${Math.random().toString(36).slice(2)}`
+                              var destination = sessionStorage["project"] + `${rnd}/`
+                              var res = destination + "res/";
+                          
+                              fs.mkdirSync(destination);
+                              fs.mkdirSync(res);
+                              fs.mkdirSync(res + "/hax/");
+                              fs.mkdirSync(res + "/files/");
+                          
+                              fs_.copy(source, destination, function (err) {
+                                if (err){
+                                    bootbox.alert(err);
+                                }
+                          
+                              fs_.copy(dir+'/js/gui/runtime.js', res + "hax/runtime.js");
+                              
+                              fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
+                                  if (err){
+                                    bootbox.alert(err);
+                                    return;
+                                  }
+                          
+                                  var html = initData_gui(ui.getHtml(), ui.getCss(), ui.getJs());
+                                  //var html = '';
+                          
+                              html.replace(/\r/g, "").replace(/\n/g, "");
+                          
+                              if(editor.getValue().includes('use: haxpro.ui'))
+                              {
+                                data = data.replace('<hax></hax>', html);
+                              } else {
+                                data = data.replace('<hax></hax>', '');
+                              }
+                          
+                              data = data.replace('hax_app', sessionStorage["app"]);
+                          
+                              data = data.replace('[hax.code]', c);
+                          
+                              fs.writeFile(res + "hax/"+'ui.html', data, (err) => {
+                                if(err){
+                                  bootbox.alert("An error ocurred creating the file "+ err.message)
+                                }
+                              }); 
+                          
+                              var c = code;
+                          
+                              fs.writeFile(res + "hax/"+'main.hax', c, (err) => {
+                                if(err){
+                                  bootbox.alert("An error ocurred creating the file "+ err.message)
+                                }
+                              });
               
-              fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
-                  if (err){
-                    bootbox.alert(err);
-                    return;
-                  }
-          
-                  var html = initData_gui(ui.getHtml(), ui.getCss(), ui.getJs());
-                  //var html = '';
-          
-              html.replace(/\r/g, "").replace(/\n/g, "");
-          
-              if(editor.getValue().includes('use: haxpro.ui'))
-              {
-                data = data.replace('<hax></hax>', html);
-              } else {
-                data = data.replace('<hax></hax>', '');
-              }
-          
-              data = data.replace('hax_app', sessionStorage["app"]);
-          
-              data = data.replace('[hax.code]', c);
-          
-              fs.writeFile(res + "hax/"+'ui.html', data, (err) => {
-                if(err){
-                  bootbox.alert("An error ocurred creating the file "+ err.message)
-                }
-              }); 
-          
-              var c = code;
-          
-              fs.writeFile(res + "hax/"+'main.hax', c, (err) => {
-                if(err){
-                  bootbox.alert("An error ocurred creating the file "+ err.message)
-                }
-              });
+                        
+                                document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.';
+                
+                                const {shell} = require('electron');
+                                bootbox.alert("Finished compiling file!")
+                                shell.showItemInFolder(destination);
+                              
+                          
+                              });  
+                          
+                            });
+                        
+                            }
+                      }
+                    }
+                
+              })
 
-              fs_.copy(dir+'/extras/nsis/app.nsi', outer_dist + '/app.nsi', function (err) {
-                if (err){
-                    bootbox.alert(err);
-                }
-              });
-
-              fs_.copy(dir+'/extras/nsis/System.nsh', outer_dist + '/System.nsh', function (err) {
-                if (err){
-                    bootbox.alert(err);
-                }
-              });
-
-              bootbox.alert("Please wait until HaxPro is done compiling. Check the status bar for infomation.")
-
-              const nodeCmd = require('node-cmd');
-              nodeCmd.get(`cd ${nsis} && makensis.exe "/XOutFile ${outer_dist+'\\haxpro_app.exe'}" ${outer_dist+'/app.nsi'}`, (err, data, stderr) => done());
-        
-              function done(){
-              bootbox.alert("Finished compiling file!")
-              document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.';
-              }
-          
-              });  
-          
-            });
-          
             }
         },
         noclose: {
-            label: "Linux",
+            label: "<i class='fab fa-linux'></i> Linux",
             className: 'btn-info',
             callback: function(){
               var fs_ = require("fs-extra");
@@ -264,7 +358,7 @@ function compile_gui(code)
           
               html.replace(/\r/g, "").replace(/\n/g, "");
           
-              if(editor.getValue().includes('use: hax.ui'))
+              if(editor.getValue().includes('use: haxpro.ui'))
               {
                 data = data.replace('<hax></hax>', html);
               } else {
@@ -299,7 +393,7 @@ function compile_gui(code)
             }
         },
         ok: {
-            label: "macOS",
+            label: "<i class='fab fa-apple'></i> macOS",
             className: 'btn-info',
             callback: function(){
               var fs_ = require("fs-extra");

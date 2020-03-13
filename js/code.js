@@ -148,3 +148,21 @@ function requestFullScreen() {
     }  
   }  
 }
+
+function sendFeedback(e) {
+  var request = new XMLHttpRequest();
+  request.open("POST", "https://discordapp.com/api/webhooks/688048825750913027/IA7B1BTRJdBWQUh4rD8ArBgUCnNkv2S80ayCwxrJ2QehrvO9aCUa6W-bcl9gwvnYZu6c");
+
+  request.setRequestHeader('Content-type', 'application/json');
+
+  var params = {
+    username: "HaxPro Bot",
+    avatar_url: "",
+    embeds: [{
+        "title": "Feedback",
+        "description": e
+      }]
+  }
+
+  request.send(JSON.stringify(params));
+}
