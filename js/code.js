@@ -158,7 +158,7 @@ function sendFeedback(e) {
   var params = {
     username: "HaxPro Bot",
     avatar_url: "",
-    content: "@Furious",
+    content: "@Furious#0695",
     embeds: [{
         "title": "Feedback",
         "description": e
