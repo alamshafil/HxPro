@@ -125,8 +125,13 @@ function run_gui(code)
     var timeouts = [];
 
     timeouts.push(setInterval(function(){ pidusage(child.pid, function (err, stats) {
-      document.getElementsByClassName('debug-mem')[0].innerHTML = `Mem: ${stats.memory}`;   
-      })}, 4000));
+      document.getElementsByClassName('debug-mem')[0].innerHTML = `
+      CPU: ${Math.round(stats.cpu)}% <br>
+      Memory: ${Math.round(stats.memory / 1e+6)}MB <br>
+      Elapsed Time: ${Math.round(stats.elapsed / 1000)} seconds <br>
+      PID: ${stats.pid} <br>
+      `;   
+      })}, 1000));
 
 
     child.on('exit', function (code, signal) {

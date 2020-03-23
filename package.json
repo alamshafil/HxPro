@@ -1,6 +1,6 @@
 {
   "name": "haxpro",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A scripting language designed to be robust and easy.",
   "license": "MIT",
   "main": "main.js",

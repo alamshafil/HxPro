@@ -268,6 +268,20 @@ body {
   background: #E81123;
 }
 
+.warp {
+  justify-content: space-between;
+}
+
+#login {
+  -webkit-app-region: no-drag;
+}
+
+.login-btn {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  text-transform: none !important;
+}
+
 .output {
   background-color: #343a40;
 	position: relative;
