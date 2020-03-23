@@ -1,29 +1,149 @@
-function run_gui(dat, html, css, js)
+function run_gui(code)
 {
-  tata.text('Running', 'Your app is running, please go to the output tab.', {
-    progress: true,
-    duration: 3000,
-  })
+  var data;
 
-  document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Running <i>main.hax</i>'
+  function readFile(file)
+  {
+    var f = new XMLHttpRequest();
+    f.open("GET", file, false);
+    f.onreadystatechange = function ()
+    {
+        if(f.readyState === 4)
+        {
+            if(f.status === 200 || f.status == 0)
+            {
+                var res= f.responseText;
+                setData(res); 
+            }
+        }
+      }
 
-  setTimeout(function(){document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.'}, 3000);
+    f.send(null);
+  }
+
+
+  function setData(xhr)
+  {
+    data = xhr;
+  }
+
+  readFile(require('electron').remote.app.getAppPath() + "/html/compile.html");
+
+  
+  if(checkSDK() == false){
+    bootbox.dialog({
+      title: 'Missing HaxPro SDK',
+      message: "You are missing the HaxPro SDK, this is needed to build apps. You can install it by pressing <b>Install</b>.",
+      buttons: {
+          ok: {
+          label: "Install",
+              className: 'btn-info',
+              callback: function(){
+                bootbox.alert("ok you have big problem idk")
+              }
+            },
+            report: {
+              label: "CLose",
+                  className: 'btn-info',
+                  callback: function(){
+                    return;
+                  }
+                }
+      }
+    })
+  } else if(checkSDK() == true){
+
+  var fs_ = require("fs-extra");
+  var fs = require("fs");
+
+  document.getElementById('status').innerHTML = '<i class="fa fa-sync"></i> Building ~/code/main.hax to ~/builds/temp...'
+
+  var dir = require('electron').remote.app.getAppPath() + '/';
+  var source = 'C:/Program Files (x86)/HaxPro SDK/compilers-win/gui/nw-win'
+  var rnd = `/builds/temp/win32_${Math.random().toString(36).slice(2)}`
+  var destination = sessionStorage["project"] + `${rnd}/`
+  var res = destination + "res/";
+
+  fs.mkdirSync(destination);
+  fs.mkdirSync(res);
+  fs.mkdirSync(res + "/hax/");
+  fs.mkdirSync(res + "/files/");
+
+  fs_.copy(source, destination, function (err) {
+    if (err){
+        bootbox.alert(err);
+    }
+
+  fs_.copy(dir+'/js/gui/runtime.js', res + "hax/runtime.js");
+  
+  fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
+      if (err){
+        bootbox.alert(err);
+        return;
+      }
+
+      var html = initData_gui(ui.getHtml(), ui.getCss(), ui.getJs());
+      //var html = '';
+
+  html.replace(/\r/g, "").replace(/\n/g, "");
 
   if(editor.getValue().includes('use: haxpro.ui'))
   {
-  var data = initData_gui(html, css, js)
-  //data = '';
+    data = data.replace('<hax></hax>', html);
   } else {
-    data = 'Using basic rendering window. <br>'
+    data = data.replace('<hax></hax>', '');
   }
 
-  $('#output').css('background', 'white');
+  data = data.replace('hax_app', sessionStorage["app"]);
 
-  $('#console').empty();
-  $('#output').empty();
-  $('#output').off();
-  $('#output').append(data);
-  runEditor_gui(dat);
+  data = data.replace('[hax.code]', c);
+
+  fs.writeFile(res + "hax/"+'ui.html', data, (err) => {
+    if(err){
+      bootbox.alert("An error ocurred creating the file "+ err.message)
+    }
+  }); 
+
+  var c = code;
+
+  fs.writeFile(res + "hax/"+'main.hax', c, (err) => {
+    if(err){
+      bootbox.alert("An error ocurred creating the file "+ err.message)
+    }
+  });
+
+
+    document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.';
+
+    openTab(event, 'output');
+    debug(true);
+
+    const { spawn } = require('child_process');
+    const child = spawn(destination + '/haxpro_runtime.exe');
+    let pidusage = require('pidusage');
+
+    var timeouts = [];
+
+    timeouts.push(setInterval(function(){ pidusage(child.pid, function (err, stats) {
+      document.getElementsByClassName('debug-mem')[0].innerHTML = `Mem: ${stats.memory}`;   
+      })}, 4000));
+
+
+    child.on('exit', function (code, signal) {
+        for (var i = 0; i < timeouts.length; i++) {
+          clearTimeout(timeouts[i]);
+      }
+      timeouts = [];
+      let fs_ = require('fs-extra');
+      fs_.emptyDir(sessionStorage["project"] + "/builds/temp/")
+      console.log('Child process exited with ' + `code ${code} and signal ${signal}`);
+      debug(false);
+    });
+  
+
+        });   
+     });
+  }
 }
 
 // Gets data ready to compile

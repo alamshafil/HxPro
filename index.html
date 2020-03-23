@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/theme.css">
         
-        <link rel="stylesheet" href="js/fa/css/all.min.css"/>
+        <link rel="stylesheet" href="extras//fa/css/all.min.css"/>
 
         <link rel="stylesheet" href="css/bootstrap.css">
 
@@ -22,9 +22,10 @@
 
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
+        <link rel="stylesheet" href="extras/hack/hack-subset.css">
 
-<link type="text/css" rel="stylesheet" href="https://golden-layout.com/assets/css/goldenlayout-base.css" />
-<link type="text/css" rel="stylesheet" href="https://golden-layout.com/assets/css/goldenlayout-dark-theme.css" />
+<link type="text/css" rel="stylesheet" href="css/gl.css" />
+<link type="text/css" rel="stylesheet" href="css/gl-dark.css" />
 
     </head>
 
@@ -43,7 +44,7 @@
                       <button class="btn btn-dark btn-flat" onclick="saveProject()"><i class="fa fa-save"></i> Save</button>
                       <button class="btn btn-dark btn-flat" onclick="openProject()"><i class="fa fa-folder-open"></i></i> Open</button>
                       <!--Fix-->
-                      <button id="run-btn" class="btn btn-dark btn-flat" onclick="if(sessionStorage['type'] == 'gui'){if(editor.getValue().includes('use: haxpro.ui')){run_gui(editor.getValue(), ui.getHtml(), ui.getCss(), ui.getJs())} else {run_gui(editor.getValue())}} else if(sessionStorage['type'] == 'cmd'){}"><i class="fa fa-wrench"></i> Run</button>
+                      <button id="run-btn" class="btn btn-dark btn-flat" onclick="if(sessionStorage['type'] == 'gui'){run_gui(editor.getValue())} else if(sessionStorage['type'] == 'cmd'){}"><i class="fa fa-wrench"></i> Run</button>
                       <button class="btn btn-dark btn-flat" onclick="if(sessionStorage['type'] == 'gui'){compile_gui(editor.getValue())} else if(sessionStorage['type'] == 'cmd'){}"><i class="fa fa-cogs"></i> Compile</button>
                         <button class="btn btn-dark dropdown-toggle btn-flat" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fa fa-ellipsis-h"></i> More
@@ -91,11 +92,9 @@
   <div class="sidenav" style="display: none;">
     <span onclick="openTab(event, 'code')"><i class="fas fa-code"></i></span>
     <span onclick="openTab(event, 'ui')"><i class="fas fa-pen"></i></span>
-    <span onclick="openTab(event, 'output')"><i class="fas fa-wrench"></i></span>
-    <span onclick="openTab(event, 'git')"><i class="fas fa-code-branch"></i></span>
+    <span onclick="openTab(event, 'output')"><i class="fas fa-bug"></i></span>
     <span onclick="openTab(event, 'docs')"><i class="fas fa-book"></i></span>
     <span onclick="openTab(event, 'apps')"><i class="fas fa-store"></i></span>
-    <span onclick="openTab(event, 'debug')"><i class="fas fa-bug"></i></span>
     <span onclick="openTab(event, 'settings')"><i class="fas fa-gear"></i></span>
     <span onclick="openTab(event, 'feedback')"><i class="fas fa-comment-alt"></i></span>
   </div>
@@ -104,28 +103,38 @@
           
           <div id="main">  
 
-            <div id="code" class="tabcontent" style="display: block;"></div>
-          
-            <div id="ui" class="tabcontent">
-              <h3>UI</h3>
+            <div id="code" class="tabcontent" style="display: block;">
             </div>
+          
+            <div id="ui" class="tabcontent"></div>
             
             <div id="output" class="tabcontent">
-              <div style="background: rgb(46, 46, 46); height: 100%;" id="window"> <figure style="text-align:center; padding: 70px 0;">
+              <div style="background: rgb(46, 46, 46); height: 100%;" id="debug-hide"> <figure style="text-align:center; padding: 70px 0;">
                 <i class="fa fa-code" style="font-size: 50px; color: grey;"></i>
-                <figcaption style="color:gray"><i>Press 'Run' to see your project here.</i></figcaption>
+                <figcaption style="color:gray"><i>Press 'Run' to see your app console here.</i></figcaption>
                 </figure> 
               </div>
-            </div>
-
-            <div id="git" class="tabcontent">
-              <div style="background: rgb(46, 46, 46); height: 100%;" id="window"> <figure style="text-align:center; padding: 70px 0;">
-                <i class="fa fa-code" style="font-size: 50px; color: grey;"></i>
-                <figcaption style="color:gray"><i>Git is coming soon</i></figcaption>
-                </figure> 
+              <div style="background: rgb(46, 46, 46); height: 100%; color: white; padding-top: 30px; display: none;" id="debug-window">
+                <div class="container">
+                  <h1 class="display-3"><i class="fas fa-gear"></i> Debug</h1>
+                  <br>
+                  <p class="h6">Mem Usage</p>
+                  <div id="console-inner" style="height: 100%; background-color: rgb(46, 46, 46);">
+                    <div id="console" class="debug-mem" style="height: 150px;">          
+                    </div>
+                  </div>
+                  <br>
+                  <p class="h6">Console</p>
+                  <div id="console-inner" style="height: 100%; background-color: rgb(46, 46, 46);">
+                    <div id="console" class="debug-console" style="height: 150px;">          
+                      Building <font color="grey">main.hax</font>
+                      Running <font color="grey">haxpro_runtime.exe</font>
+                      Started app.
+                    </div>
+                  </div>
+              </div>
               </div>
             </div>
-            
             
             <div id="docs" class="tabcontent">
               <iframe id="webview" src="https://alamshafil.github.io/HaxPro/docs/use"></iframe>
@@ -179,14 +188,6 @@
               </div>
             </div>
 
-            <div id="debug" class="tabcontent">
-              <div style="background: rgb(46, 46, 46); height: 100%;" id="window"> <figure style="text-align:center; padding: 70px 0;">
-                <i class="fa fa-cog" style="font-size: 50px; color: grey;"></i>
-                <figcaption style="color:gray"><i>wat</i></figcaption>
-                </figure> 
-              </div>
-            </div>
-
 
           </div>
         </div> 
@@ -197,7 +198,116 @@
   <script>window.golden = require('golden-layout');</script>
 
   <script>
-  var config = {"settings":{"hasHeaders":true,"constrainDragToContainer":true,"reorderEnabled":true,"selectionEnabled":false,"popoutWholeStack":false,"blockedPopoutsThrowError":true,"closePopoutsOnUnload":true,"showPopoutIcon":true,"showMaximiseIcon":true,"showCloseIcon":true,"responsiveMode":"onload","tabOverlapAllowance":0,"reorderOnTabMenuClick":true,"tabControlOffset":10},"dimensions":{"borderWidth":5,"borderGrabWidth":15,"minItemHeight":10,"minItemWidth":10,"headerHeight":20,"dragProxyWidth":300,"dragProxyHeight":200},"labels":{"close":"close","maximise":"maximise","minimise":"minimise","popout":"open in new window","popin":"pop in","tabDropdown":"additional tabs"},"content":[{"type":"column","isClosable":true,"reorderEnabled":true,"title":"","content":[{"type":"stack","width":100,"height":80.34800409416582,"isClosable":true,"reorderEnabled":true,"title":"","activeItemIndex":0,"content":[{"type":"component","componentName":"Code Editor","componentState":{"label":"code"},"isClosable":true,"reorderEnabled":true,"title":"Code Editor"}]},{"type":"stack","header":{},"isClosable":true,"reorderEnabled":true,"title":"","activeItemIndex":0,"height":19.651995905834184,"content":[{"type":"component","componentName":"Terminal","componentState":{"label":"term"},"isClosable":true,"reorderEnabled":true,"title":"Terminal"},{"type":"component","componentName":"Errors","componentState":{"label":"error"},"isClosable":true,"reorderEnabled":true,"title":"Errors"}]}]}],"isClosable":true,"reorderEnabled":true,"title":"","openPopouts":[],"maximisedItemId":null}
+  var config = {
+  "settings": {
+    "hasHeaders": true,
+    "constrainDragToContainer": true,
+    "reorderEnabled": true,
+    "selectionEnabled": false,
+    "popoutWholeStack": false,
+    "blockedPopoutsThrowError": true,
+    "closePopoutsOnUnload": true,
+    "showPopoutIcon": true,
+    "showMaximiseIcon": true,
+    "showCloseIcon": true,
+    "responsiveMode": "onload",
+    "tabOverlapAllowance": 0,
+    "reorderOnTabMenuClick": true,
+    "tabControlOffset": 10
+  },
+  "dimensions": {
+    "borderWidth": 5,
+    "borderGrabWidth": 15,
+    "minItemHeight": 10,
+    "minItemWidth": 10,
+    "headerHeight": 20,
+    "dragProxyWidth": 300,
+    "dragProxyHeight": 200
+  },
+  "labels": {
+    "close": "close",
+    "maximise": "maximise",
+    "minimise": "minimise",
+    "popout": "open in new window",
+    "popin": "pop in",
+    "tabDropdown": "additional tabs"
+  },
+  "content": [
+    {
+      "type": "column",
+      "isClosable": true,
+      "reorderEnabled": true,
+      "title": "",
+      "content": [
+        {
+          "type": "stack",
+          "width": 100,
+          "height": 80.34800409416582,
+          "isClosable": true,
+          "reorderEnabled": true,
+          "title": "",
+          "activeItemIndex": 0,
+          "content": [
+           { "type": "component",
+              "componentName": "Welcome",
+              "componentState": {
+                "label": "welcome"
+              },
+              "isClosable": true,
+              "reorderEnabled": true,
+              "title": "Welcome"
+            }, {
+              "type": "component",
+              "componentName": "Code Editor",
+              "componentState": {
+                "label": "code"
+              },
+              "isClosable": true,
+              "reorderEnabled": true,
+              "title": "Code Editor"
+            },
+          ]
+        },
+        {
+          "type": "stack",
+          "header": {},
+          "isClosable": true,
+          "reorderEnabled": true,
+          "title": "",
+          "activeItemIndex": 0,
+          "height": 19.651995905834184,
+          "content": [
+            {
+              "type": "component",
+              "componentName": "Terminal",
+              "componentState": {
+                "label": "term"
+              },
+              "isClosable": true,
+              "reorderEnabled": true,
+              "title": "Terminal"
+            },
+            {
+              "type": "component",
+              "componentName": "Errors",
+              "componentState": {
+                "label": "error"
+              },
+              "isClosable": true,
+              "reorderEnabled": true,
+              "title": "Errors"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "isClosable": true,
+  "reorderEnabled": true,
+  "title": "",
+  "openPopouts": [],
+  "maximisedItemId": null
+}
 
 
 var myLayout = new golden( config, $('#code') );
@@ -211,7 +321,11 @@ container.getElement().html( '<div style="height: 130px;" class="left" id="term"
 });
 
 myLayout.registerComponent( 'Errors', function( container, componentState ){
-container.getElement().html( '<div id="console-inner" style="height: 150px; background-color: rgb(46, 46, 46);"> <div class="left" style="height: 150px; background-color: rgb(46, 46, 46);" id="console"> <p><font color="red">Error</font> HaxProInvaild - haxpro.main is a invaild object</p> </div> </div> ' );
+container.getElement().html( '<div id="console-inner" style="height: 100%; background-color: rgb(46, 46, 46);"> <div class="left" style="height: 150px; background-color: rgb(46, 46, 46);" id="console"> <p><font color="red">Error</font> HaxProInvaild - haxpro.main is a invaild object</p> </div> </div> ' );
+});
+
+myLayout.registerComponent( 'Welcome', function( container, componentState ){
+container.getElement().html( '<div id="welcome" style="width: 100%; height: 100%;"></div>' );
 });
 
 
@@ -233,7 +347,6 @@ myLayout.updateSize($("#code").width(), $("#code").height());
     tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
   document.getElementById(TabName).style.display = "block";
-  evt.currentTarget.className += " active";
 }
   </script>
 
@@ -514,6 +627,7 @@ function term_init(){
     theme: {
       background: '#222222'
     },
+    fontFamily: 'Hack, monospace',
     fontSize: 12,
     experimentalCharAtlas: 'dynamic'
   });
@@ -603,6 +717,7 @@ dialog.showOpenDialog({
         fs.mkdirSync(path+'/code');
         fs.mkdirSync(path+'/files');
         fs.mkdirSync(path+'/builds');
+        fs.mkdirSync(path+'/builds/temp');
 
         fs.writeFile(path+'/code/main.hax', 'use: haxpro.main \nuse: haxpro.ui\n\nMain<> \n\n', (err) => {
             if(err){
@@ -938,6 +1053,7 @@ function openProject(){
         setTimeout(function(){document.getElementById('status').innerHTML = '<i class="fa fa-check"></i> Everything is okay.';}, 5000);
         update();
         settings();
+        
       });
       </script>
 

@@ -167,3 +167,13 @@ function sendFeedback(e) {
 
   request.send(JSON.stringify(params));
 }
+
+function debug(bool) {
+  if(bool){
+    $("#debug-window").css('display', 'block');
+    $("#debug-hide").css('display', 'none');
+  } else if(!bool) {
+    $("#debug-window").css('display', 'none');
+    $("#debug-hide").css('display', 'block');
+  }
+}
