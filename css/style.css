@@ -78,7 +78,7 @@
   left: 60px;
 }
 
-#u {
+#cloud {
   position: absolute;
   width: calc(100% - 60px );
   height: 94.5%;

@@ -61,7 +61,7 @@
                 </div>
                </div>
                   <div id="login" style="margin-left: auto; margin-right: 5px;">
-                    <i class="fas fa-user" style="margin-right: 8px;"></i><button class="btn btn-dark btn-flat login-btn" onclick="login()">Login</button>
+                    <i class="fas fa-user" style="margin-right: 8px;"></i><button class="btn btn-dark btn-flat login-btn" onclick="openTab(event, 'cloud')">Login</button>
                   </div>
               </div>
               
@@ -100,6 +100,7 @@
     <span onclick="openTab(event, 'output')"><i class="fas fa-bug"></i></span>
     <span onclick="openTab(event, 'docs')"><i class="fas fa-book"></i></span>
     <span onclick="openTab(event, 'apps')"><i class="fas fa-store"></i></span>
+    <span onclick="openTab(event, 'cloud')"><i class="fas fa-cloud"></i></span>
     <span onclick="openTab(event, 'settings')"><i class="fas fa-gear"></i></span>
     <span onclick="openTab(event, 'feedback')"><i class="fas fa-comment-alt"></i></span>
   </div>
@@ -144,11 +145,15 @@
             </div>
             
             <div id="docs" class="tabcontent">
-              <iframe id="webview" src="https://alamshafil.github.io/HaxPro/docs/use"></iframe>
+              <webview id="webview" src="https://alamshafil.github.io/HaxPro/docs/use"></webview>
             </div>
             
             <div id="apps" class="tabcontent">
-              <iframe id="webview" src="https://alamshafil.github.io/HaxPro/store"></iframe>
+              <webview id="webview" src="https://alamshafil.github.io/HaxPro/store"></webview>
+            </div>
+
+            <div id="cloud" class="tabcontent">
+              <webview id="webview" src="https://haxpro.cpct.com:3000/"></webview>
             </div>
 
             <div id="settings" class="tabcontent" style="background: rgb(46, 46, 46); height: 100%; color: white; padding-top: 30px;">
