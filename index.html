@@ -56,12 +56,14 @@
                           <a style="color:black" class="dropdown-item" onclick="browser()"><i class="fa fa-file-code"></i> App Store</a>
                           <a style="color:black" class="dropdown-item" onclick="UI()"><i class="fa fa-file-code"></i> UI Editor</a>
                           <div class="dropdown-divider"></div>
+                          <a style="color:black" class="dropdown-item" onclick="gitDownload()"><i class="fab fa-github"></i> Clone GitHub Repo</a>
+                          <div class="dropdown-divider"></div>
                           <a style="color:black" class="dropdown-item" onclick=""><i class="fa fa-info"></i> About</a>
                         </div>
                 </div>
                </div>
-                  <div id="login" style="margin-left: auto; margin-right: 5px;">
-                    <i class="fas fa-user" style="margin-right: 8px;"></i><button class="btn btn-dark btn-flat login-btn" onclick="openTab(event, 'cloud')">Login</button>
+                  <div id="login" style="margin-left: auto; margin-right: 10px;">
+                  
                   </div>
               </div>
               
@@ -383,10 +385,6 @@ myLayout.updateSize($("#code").width(), $("#code").height());
         
         <script src="js/gui/runtime-ide.js"></script>
 
-        <script src="js/gui/runtime-jit.js"></script>
-
-        <script src="js/tabs.js"></script>
-
         <script src="js/modernizr.js"></script>
 
         <script src="js/tabby.js"></script>
@@ -576,8 +574,6 @@ myLayout.updateSize($("#code").width(), $("#code").height());
 
           });
 
-  //window.toastr = require('toastr');
-
     require('./js/window.js');
 
   window.onerror = function(error, url, line) {
@@ -728,6 +724,7 @@ dialog.showOpenDialog({
         fs.mkdirSync(path+'/code');
         fs.mkdirSync(path+'/files');
         fs.mkdirSync(path+'/builds');
+        fs.mkdirSync(path+'/git');
         fs.mkdirSync(path+'/builds/temp');
 
         fs.writeFile(path+'/code/main.hax', 'use: haxpro.main \nuse: haxpro.ui\n\nMain<> \n\n', (err) => {
@@ -743,8 +740,15 @@ dialog.showOpenDialog({
               bootbox.alert("An error ocurred creating the file "+ err.message)
             }
         }); 
-        
-        fs.readFile(path+'/code/main.hax', 'utf-8', (err, data) => {
+
+        loadProject(sessionStorage['project']);
+      }
+});
+}
+
+function loadProject(e) {
+  var path = e;
+  fs.readFile(path+'/code/main.hax', 'utf-8', (err, data) => {
             if(err){
                 bootbox.alert("An error ocurred reading the file :" + err.message);
                 return;
@@ -768,9 +772,7 @@ dialog.showOpenDialog({
             sessionStorage["type"] = type;
 
             document.getElementById('current').innerHTML = `<i class="fa fa-folder-open"></i> ${sessionStorage["name"]}`;
-        }); 
-      }
-});
+      });
 }
 
 
@@ -1057,6 +1059,7 @@ function openProject(){
       }
 
       $(document).ready(function(){
+        $(".se-pre-con").fadeOut("slow");
         $('[data-toggle="tooltip"]').tooltip();
         $('.pre').css('display', 'block');
         $('.content').css('display', 'none');
