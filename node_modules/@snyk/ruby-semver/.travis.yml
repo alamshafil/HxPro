@@ -1,4 +1,5 @@
 sudo: false
+dist: bionic
 language: node_js
 cache:
   directories:
@@ -7,8 +8,8 @@ notifications:
   email: false
   slack: snyk:5hknLE8muATMpE75TgeVFZzz
 node_js:
-  - 6
-  - 8
+  - 10
+  - 12
 install:
   - npm install
 script:
@@ -16,7 +17,7 @@ script:
 jobs:
   include:
     - stage: Release
-      node_js: "8"
+      node_js: "10"
       script:
       - test "${TRAVIS_PULL_REQUEST}" != "false" || npx semantic-release
 branches:
