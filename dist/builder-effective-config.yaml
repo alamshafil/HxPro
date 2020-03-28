@@ -1,8 +1,0 @@
-directories:
-  output: dist
-  buildResources: build
-appId: com.alamshafil.haxpro
-asar: true
-productName: HaxPro
-icon: logos/logo.png
-electronVersion: 5.0.13
