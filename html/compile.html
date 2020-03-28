@@ -86,6 +86,61 @@ return;
 }
 }
 
+function API() {
+
+  var data;
+
+  function readFile(file)
+  {
+    var f = new XMLHttpRequest();
+    f.open("GET", file, false);
+    f.onreadystatechange = function ()
+    {
+        if(f.readyState === 4)
+        {
+            if(f.status === 200 || f.status == 0)
+            {
+                var res= f.responseText;
+                setData(res); 
+            }
+        }
+      }
+    f.send(null);
+  }
+
+
+  function setData(xhr)
+  {
+    data = xhr;
+  }
+
+  readFile('main.hax');
+
+  function initData() {
+    return data;
+  }
+
+  function parse(e) {
+    return e.toString().match(/function[^{]+\{([\s\S]*)\}$/)[1];
+  }
+
+  function initAPI(e) {
+    var _eval = e;
+    eval(_eval);
+  }
+
+  function getWindow() {
+    return document.getElementById('window');
+  }
+
+  return {
+    initData: initData,
+    parse: parse,
+    initAPI: initAPI,
+    getWindow: getWindow
+  };
+}
+
 
     function run()
 {
@@ -127,23 +182,7 @@ var array = (n[x].replace(">", ""));
 var args = array.split(" ");
 
 if(args[0] == "use:") {
-        if(args.join(' ').replace(args[0], '').includes('"'))
-
-        if(url = "undefined") {
-          return;
-        }
-          
-            var url = args.join(' ').replace(args[0], '').split('"')[1];
-            loadAPI(url);
-          } else if(args.join(' ').replace(args[0], '').includes('files')) {        
-            var e = editor.getValue().replace(editor.getValue().split(' ')[0], '');
-            var file = e.split(".")[1];
-            var path;
-            if(sessionStorage['project'] == undefined){
-              console.log('No project is open.');
-            } else {
-              path = 'file:///' + (sessionStorage['project'] + '/files/' + file + '.js');
-            }
+        var path = args.join(' ').replace(args[0], '');
             loadAPI(path);
           }
 

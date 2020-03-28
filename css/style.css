@@ -31,7 +31,7 @@
 #code {
   position: absolute;
   width: calc(100% - 60px );
-  height: 94.5%;
+  height: calc(100% - 60px);
   top: 40px;
   /* left: 250px; */
   left: 60px;
@@ -40,7 +40,7 @@
 /* #file {
   position: absolute;
   width: calc(250px - 60px);
-  height: 94.5%;
+  height: calc(100% - 60px);
   left: 60px;
   top: 40px;
   background-color: rgb(59, 59, 59);
@@ -49,7 +49,7 @@
 #ui {
   position: absolute;
   width: calc(100% - 60px );
-  height: 94.5%;
+  height: calc(100% - 60px);
   top: 40px;
   left: 60px;
 }
@@ -57,7 +57,7 @@
 #output {
   position: absolute;
   width: calc(100% - 60px );
-  height: 94.5%;
+  height: calc(100% - 60px);
   top: 40px;
   left: 60px;
 }
@@ -65,7 +65,7 @@
 #docs {
   position: absolute;
   width: calc(100% - 60px );
-  height: 94.5%;
+  height: calc(100% - 60px);
   top: 40px;
   left: 60px;
 }
@@ -73,15 +73,15 @@
 #apps {
   position: absolute;
   width: calc(100% - 60px );
-  height: 94.5%;
+  height: calc(100% - 60px);
   top: 40px;
   left: 60px;
 }
 
-#cloud {
+#block {
   position: absolute;
   width: calc(100% - 60px );
-  height: 94.5%;
+  height: calc(100% - 60px);
   top: 40px;
   left: 60px;
 }
@@ -89,22 +89,21 @@
 #debug {
   position: absolute;
   width: calc(100% - 60px );
-  height: 94.5%;
+  height: calc(100% - 60px);
   top: 40px;
   left: 60px;
 }
 
 #webview {
-  position: absolute;
   width: 100%;
-  height: calc(100% - 1px );
+  height: 100%;
   border: 0;
 }
 
 #settings {
   position: absolute;
   width: calc(100% - 60px );
-  height: 94.5%;
+  height: calc(100% - 60px);
   top: 40px;
   left: 60px;
 }
@@ -112,7 +111,7 @@
 #feedback {
   position: absolute;
   width: calc(100% - 60px );
-  height: 94.5%;
+  height: calc(100% - 60px);
   top: 40px;
   left: 60px;
 }

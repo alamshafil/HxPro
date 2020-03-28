@@ -11,8 +11,7 @@ function createWindow () {
     icon: "./logos/logo.png",
     webPreferences: {
       nodeIntegration: true,
-      webSecurity: false,
-      webviewTag: true
+      webSecurity: false
     }
   })
 

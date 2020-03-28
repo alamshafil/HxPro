@@ -44,9 +44,8 @@
                       <button class="btn btn-dark btn-flat" onclick="initFS()"><i class="fa fa-plus-square"></i></i> New</button>
                       <button class="btn btn-dark btn-flat" onclick="saveProject()"><i class="fa fa-save"></i> Save</button>
                       <button class="btn btn-dark btn-flat" onclick="openProject()"><i class="fa fa-folder-open"></i></i> Open</button>
-                      <!--Fix-->
-                      <button id="run-btn" class="btn btn-dark btn-flat" onclick="if(sessionStorage['type'] == 'gui'){run_gui(editor.getValue())} else if(sessionStorage['type'] == 'cmd'){}"><i class="fa fa-wrench"></i> Run</button>
-                      <button class="btn btn-dark btn-flat" onclick="if(sessionStorage['type'] == 'gui'){compile_gui(editor.getValue())} else if(sessionStorage['type'] == 'cmd'){}"><i class="fa fa-cogs"></i> Compile</button>
+                      <button id="run-btn" class="btn btn-dark btn-flat" onclick="if(sessionStorage['type'] == 'gui'){run_gui(editor.getValue(), '', sessionStorage['editor'])} else if(sessionStorage['type'] == 'cmd'){}"><i class="fa fa-wrench"></i> Run</button>
+                      <button class="btn btn-dark btn-flat" onclick="if(sessionStorage['type'] == 'gui'){compile_gui(editor.getValue(), '', sessionStorage['editor'])} else if(sessionStorage['type'] == 'cmd'){}"><i class="fa fa-cogs"></i> Compile</button>
                         <button class="btn btn-dark dropdown-toggle btn-flat" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fa fa-ellipsis-h"></i> More
                         </button>
@@ -91,7 +90,7 @@
           <br>
           <button class="btn btn-light" onclick="initFS()"><i class="fa fa-plus-square"></i></i> New</button>
           <button class="btn btn-light" onclick="openProject()"><i class="fa fa-folder-open"></i></i> Open</button>
-          <button class="btn btn-light" onclick="compile(editor.getValue(), getData())"><i class="fa fa-cogs"></i> Compile</button>      
+          <button class="btn btn-light" style="color:black" onclick="gitDownload()"><i class="fab fa-github"></i> Clone Repo</button>        
         </div>
       </div>
     </div>
@@ -102,7 +101,7 @@
     <span onclick="openTab(event, 'output')"><i class="fas fa-bug"></i></span>
     <span onclick="openTab(event, 'docs')"><i class="fas fa-book"></i></span>
     <span onclick="openTab(event, 'apps')"><i class="fas fa-store"></i></span>
-    <span onclick="openTab(event, 'cloud')"><i class="fas fa-cloud"></i></span>
+    <span onclick="openTab(event, 'block')"><i class="fas fa-shapes"></i></span>
     <span onclick="openTab(event, 'settings')"><i class="fas fa-gear"></i></span>
     <span onclick="openTab(event, 'feedback')"><i class="fas fa-comment-alt"></i></span>
   </div>
@@ -147,15 +146,15 @@
             </div>
             
             <div id="docs" class="tabcontent">
-              <webview id="webview" src="https://alamshafil.github.io/HaxPro/docs/use"></webview>
+              <iframe id="webview" src="https://alamshafil.github.io/HaxPro/docs/use"></iframe>
             </div>
             
             <div id="apps" class="tabcontent">
-              <webview id="webview" src="https://alamshafil.github.io/HaxPro/store"></webview>
+              <iframe id="webview" src="https://alamshafil.github.io/HaxPro/store"></iframe>
             </div>
 
-            <div id="cloud" class="tabcontent">
-              <webview id="webview" src="https://haxpro.cpct.com:3000/"></webview>
+            <div id="block" class="tabcontent">
+              <iframe id="webview" src=""></iframe>
             </div>
 
             <div id="settings" class="tabcontent" style="background: rgb(46, 46, 46); height: 100%; color: white; padding-top: 30px;">
@@ -260,16 +259,7 @@
           "reorderEnabled": true,
           "title": "",
           "activeItemIndex": 0,
-          "content": [
-           { "type": "component",
-              "componentName": "Welcome",
-              "componentState": {
-                "label": "welcome"
-              },
-              "isClosable": true,
-              "reorderEnabled": true,
-              "title": "Welcome"
-            }, {
+          "content": [{
               "type": "component",
               "componentName": "Code Editor",
               "componentState": {
@@ -335,10 +325,6 @@ container.getElement().html( '<div style="height: 130px;" class="left" id="term"
 
 myLayout.registerComponent( 'Errors', function( container, componentState ){
 container.getElement().html( '<div id="console-inner" style="height: 100%; background-color: rgb(46, 46, 46);"> <div class="left" style="height: 150px; background-color: rgb(46, 46, 46);" id="console"> <p><font color="red">Error</font> HaxProInvaild - haxpro.main is a invaild object</p> </div> </div> ' );
-});
-
-myLayout.registerComponent( 'Welcome', function( container, componentState ){
-container.getElement().html( '<div id="welcome" style="width: 100%; height: 100%;"></div>' );
 });
 
 
@@ -673,21 +659,38 @@ function initFS()
   function pickProject(){ 
     bootbox.dialog({
     title: 'New Project',
-    message: "<p>Choose a project type to create.</p>",
+    message: `
+    <div class="container"> <h1 class="display-3"><i class="fas fa-comment-alt"></i> Project Settings</h1> <br>
+    <div class="form-group "> 
+      <div class="form-group row">
+    <label for="editor-s" class="col-sm-2 col-form-label">Editor</label>
+    <div class="col-sm-10">
+        <select id="editor-s" class="form-control">
+          <option>Code Editor</option>
+          <option>Block Editor</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+    <label for="type-s" class="col-sm-2 col-form-label">Type</label>
+    <div class="col-sm-10">
+        <select id="type-s" class="form-control">
+          <option>GUI App</option>
+          <option>CLI App</option>
+          <option>2D App</option>
+          <option>3D App</option>
+        </select>
+      </div>
+    </div>
+  </div>
+    `,
     size: 'large',
     buttons: {
-        gui: {
-            label: "GUI Application",
+        create: {
+            label: "Create",
             className: 'btn-info',
             callback: function(){ 
-              newProject_gui();
-            }
-          },
-        cmd: {
-            label: "Console Application",
-            className: 'btn-info',
-            callback: function(){ 
-
+              newProjectSetting(document.getElementById("editor-s"), document.getElementById("type-s"));
             }
           }
         }
@@ -695,12 +698,38 @@ function initFS()
     }
 }
 
-function newJSON(name, type, tabs){
-  var json = `{"project": {"name": "${name}", "type": "${type}", "tabs": ${tabs}}}`;
+function newProjectSetting(e1, e2){
+  var editor = e1.options[e1.selectedIndex].value;
+  var type = e2.options[e2.selectedIndex].value;
+
+  switch (type) {
+    case 'GUI App':
+      newProject_gui(editor)
+      break;
+
+    case 'CLI App':
+      
+      break;
+
+    case '2D App':
+      
+      break;
+
+    case '3D App':
+      
+      break;
+  
+    default:
+      break;
+  }
+}
+
+function newJSON(name, type, editor){
+  var json = `{"project": {"name": "${name}", "type": "${type}", "editor": "${editor}" }}`;
   return json;
 }
 
-function newProject_gui(){
+function newProject_gui(e){
 updateEditor();
 $('.content').css('display', 'block');
 $('.sidenav').css('display', 'block');
@@ -724,7 +753,6 @@ dialog.showOpenDialog({
         fs.mkdirSync(path+'/code');
         fs.mkdirSync(path+'/files');
         fs.mkdirSync(path+'/builds');
-        fs.mkdirSync(path+'/git');
         fs.mkdirSync(path+'/builds/temp');
 
         fs.writeFile(path+'/code/main.hax', 'use: haxpro.main \nuse: haxpro.ui\n\nMain<> \n\n', (err) => {
@@ -733,7 +761,15 @@ dialog.showOpenDialog({
             }
         }); 
 
-        var json = newJSON(sessionStorage['name'], "gui", '["ui_editor"]')
+        var editor;
+
+        if(e == 'Code Editor'){
+          editor = 'code'
+        } else if(e == 'Block Editor'){
+          editor = 'block'
+        }
+
+        var json = newJSON(sessionStorage['name'], "gui", editor)
 
         fs.writeFile(path+'/app.haxproj', json, (err) => {
             if(err){
@@ -768,8 +804,16 @@ function loadProject(e) {
             var dat = JSON.parse(data);
 
             var type = dat.project.type;   
+            var editor = dat.project.editor;
 
             sessionStorage["type"] = type;
+            sessionStorage["editor"] = editor;
+
+            if(editor == 'code'){
+              openTab(event, 'code');
+            } else if(editor == 'block'){
+              openTab(event, 'block');
+            }
 
             document.getElementById('current').innerHTML = `<i class="fa fa-folder-open"></i> ${sessionStorage["name"]}`;
       });
@@ -816,15 +860,19 @@ function openProject(){
                 bootbox.alert("An error ocurred reading the file :" + err.message);
                 return;
             }
-
             var dat = JSON.parse(data);
 
-            var name = dat.project.name;
-            var type = dat.project.type;
+            var type = dat.project.type;   
+            var editor = dat.project.editor;
 
-            sessionStorage["name"] = name;
             sessionStorage["type"] = type;
+            sessionStorage["editor"] = editor;
 
+            if(editor == 'code'){
+              openTab(event, 'code');
+            } else if(editor == 'block'){
+              openTab(event, 'block');
+}
             document.getElementById('current').innerHTML = `<i class="fa fa-folder-open"></i> ${sessionStorage["name"]}`;
         }); 
       }

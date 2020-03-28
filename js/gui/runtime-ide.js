@@ -1,6 +1,7 @@
-function run_gui(code)
+function run_gui(code, block, editor)
 {
   var data;
+  var c;
 
   function readFile(file)
   {
@@ -43,7 +44,7 @@ function run_gui(code)
               }
             },
             report: {
-              label: "CLose",
+              label: "Close",
                   className: 'btn-info',
                   callback: function(){
                     return;
@@ -52,6 +53,12 @@ function run_gui(code)
       }
     })
   } else if(checkSDK() == true){
+
+    if(editor == 'code'){
+      c = code;
+    } else if(editor == 'block'){
+      c = block;
+    }
 
   var fs_ = require("fs-extra");
   var fs = require("fs");
@@ -67,7 +74,7 @@ function run_gui(code)
   fs.mkdirSync(destination);
   fs.mkdirSync(res);
   fs.mkdirSync(res + "/hax/");
-  fs.mkdirSync(res + "/files/");
+  fs.mkdirSync(res + "/hax/files");
 
   fs_.copy(source, destination, function (err) {
     if (err){
@@ -76,7 +83,7 @@ function run_gui(code)
 
   fs_.copy(dir+'/js/gui/runtime.js', res + "hax/runtime.js");
   
-  fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
+  fs_.copy(sessionStorage["project"]+'/files/', res + "hax/files", function (err) {
       if (err){
         bootbox.alert(err);
         return;
@@ -87,7 +94,7 @@ function run_gui(code)
 
   html.replace(/\r/g, "").replace(/\n/g, "");
 
-  if(editor.getValue().includes('use: haxpro.ui'))
+  if(c.includes('use: haxpro.ui'))
   {
     data = data.replace('<hax></hax>', html);
   } else {
@@ -103,8 +110,6 @@ function run_gui(code)
       bootbox.alert("An error ocurred creating the file "+ err.message)
     }
   }); 
-
-  var c = code;
 
   fs.writeFile(res + "hax/"+'main.hax', c, (err) => {
     if(err){
@@ -200,9 +205,10 @@ function initData_gui(h, c, j)
 }
 
 // Compiles code, and turns it into a exe file.
-function compile_gui(code)
+function compile_gui(code, block, editor)
 {
   var data;
+  var c;
 
   function readFile(file)
   {
@@ -254,6 +260,13 @@ function compile_gui(code)
     })
   } else if(checkSDK() == true){
 
+    if(editor == 'code'){
+      c = code;
+    } else if(editor == 'block'){
+      c = block;
+    }
+
+
   bootbox.dialog({
     title: 'Compile App',
     message: "<p>Choose a platform to compile your app.</p>",
@@ -290,7 +303,7 @@ function compile_gui(code)
                           fs.mkdirSync(outer_dist + '/temp/');
                           fs.mkdirSync(res + '');
                           fs.mkdirSync(res + "/hax/");
-                          fs.mkdirSync(res + "/files/");
+                          fs.mkdirSync(res + "/hax/files/");
                       
                           fs_.copy(source, destination, function (err) {
                             if (err){
@@ -299,7 +312,7 @@ function compile_gui(code)
                       
                           fs_.copy(dir+'/js/gui/runtime.js', res + "hax/runtime.js");
                           
-                          fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
+                          fs_.copy(sessionStorage["project"]+'/files/', res + "/hax/files/", function (err) {
                               if (err){
                                 bootbox.alert(err);
                                 return;
@@ -310,7 +323,7 @@ function compile_gui(code)
                       
                           html.replace(/\r/g, "").replace(/\n/g, "");
                       
-                          if(editor.getValue().includes('use: haxpro.ui'))
+                          if(c.includes('use: haxpro.ui'))
                           {
                             data = data.replace('<hax></hax>', html);
                           } else {
@@ -326,8 +339,6 @@ function compile_gui(code)
                               bootbox.alert("An error ocurred creating the file "+ err.message)
                             }
                           }); 
-                      
-                          var c = code;
                       
                           fs.writeFile(res + "hax/"+'main.hax', c, (err) => {
                             if(err){
@@ -382,7 +393,7 @@ function compile_gui(code)
                               fs.mkdirSync(destination);
                               fs.mkdirSync(res);
                               fs.mkdirSync(res + "/hax/");
-                              fs.mkdirSync(res + "/files/");
+                              fs.mkdirSync(res + "/hax/files/");
                           
                               fs_.copy(source, destination, function (err) {
                                 if (err){
@@ -391,7 +402,7 @@ function compile_gui(code)
                           
                               fs_.copy(dir+'/js/gui/runtime.js', res + "hax/runtime.js");
                               
-                              fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
+                              fs_.copy(sessionStorage["project"]+'/files/', res + "/hax/files/", function (err) {
                                   if (err){
                                     bootbox.alert(err);
                                     return;
@@ -402,7 +413,7 @@ function compile_gui(code)
                           
                               html.replace(/\r/g, "").replace(/\n/g, "");
                           
-                              if(editor.getValue().includes('use: haxpro.ui'))
+                              if(c.includes('use: haxpro.ui'))
                               {
                                 data = data.replace('<hax></hax>', html);
                               } else {
@@ -419,7 +430,6 @@ function compile_gui(code)
                                 }
                               }); 
                           
-                              var c = code;
                           
                               fs.writeFile(res + "hax/"+'main.hax', c, (err) => {
                                 if(err){
@@ -464,7 +474,7 @@ function compile_gui(code)
               fs.mkdirSync(destination);
               fs.mkdirSync(res);
               fs.mkdirSync(res + "hax/");
-              fs.mkdirSync(res + "files/");
+              fs.mkdirSync(res + "hax/files/");
           
               fs_.copy(source, destination, function (err) {
                 if (err){
@@ -473,7 +483,7 @@ function compile_gui(code)
           
               fs_.copy(dir+'/js/commands.js', res + "hax/commands.js");
               
-              fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
+              fs_.copy(sessionStorage["project"]+'/files/', res + "hax/files/", function (err) {
                   if (err){
                       bootbox.alert(err);
                       return;
@@ -483,7 +493,7 @@ function compile_gui(code)
           
               html.replace(/\r/g, "").replace(/\n/g, "");
           
-              if(editor.getValue().includes('use: haxpro.ui'))
+              if(c.includes('use: haxpro.ui'))
               {
                 data = data.replace('<hax></hax>', html);
               } else {
@@ -499,8 +509,6 @@ function compile_gui(code)
                   bootbox.alert("An error ocurred creating the file "+ err.message)
                 }
               }); 
-          
-              var c = code;
           
               fs.writeFile(res + "hax/"+'main.hax', c, (err) => {
                 if(err){
@@ -540,11 +548,11 @@ function compile_gui(code)
 
                 fs.mkdirSync(res);
                 fs.mkdirSync(res + "hax/");
-                fs.mkdirSync(res + "files/");
+                fs.mkdirSync(res + "hax/files/");
           
               fs_.copy(dir+'/js/commands.js', res + "hax/commands.js");
               
-              fs_.copy(sessionStorage["project"]+'/files/', res + "files/", function (err) {
+              fs_.copy(sessionStorage["project"]+'/files/', res + "hax/files/", function (err) {
                   if (err){
                     bootbox.alert(err);
                     return;
@@ -554,7 +562,7 @@ function compile_gui(code)
           
               html.replace(/\r/g, "").replace(/\n/g, "");
           
-              if(editor.getValue().includes('use: haxpro.ui'))
+              if(c.includes('use: haxpro.ui'))
               {
                 data = data.replace('<hax></hax>', html);
               } else {
@@ -571,7 +579,6 @@ function compile_gui(code)
                 }
               }); 
           
-              var c = code;
           
               fs.writeFile(res + "hax/"+'main.hax', c, (err) => {
                 if(err){

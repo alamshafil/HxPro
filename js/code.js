@@ -63,23 +63,6 @@ function openPage(pageName, elmnt, color) {
   elmnt.style.backgroundColor = color;
 }
 
-// Load HaxPro API apps 
-function loadAPI(url) {
-
-  var e = document.createElement("script");
-  e.src = url;
-
-  if (document.head.innerHTML.toString().includes(e.outerHTML)) {
-    return;
-  } else {
-
-    var script = document.createElement("script");  // create a script DOM node
-    script.src = url;  // set its src to the provided URL
-
-    document.head.appendChild(script);  // add it to the end of the head section of the page (could change 'head' to 'body' to add it to the end of the body section instead)
-    return;
-  }
-}
 
 function startFocusOut() {
   $(document).on("click", function () {
