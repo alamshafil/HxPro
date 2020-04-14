@@ -14,7 +14,7 @@
     "electron-updater": "^4.2.5",
     "fs-extra": "^8.1.0",
     "golden-layout": "^1.5.9",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "lodash.clonedeep": "^4.5.0",
     "monaco-editor": "^0.19.3",
     "node-cmd": "^3.0.0",
